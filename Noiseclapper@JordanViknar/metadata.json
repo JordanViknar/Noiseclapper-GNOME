@@ -1,0 +1,9 @@
+{
+ 	"name": "Noiseclapper",
+	"description": "GNOME Shell extension that allows control of Soundcore Life Q30 Headphones (and others).",
+	"url": "https://github.com/JordanViknar/Noiseclapper-Native",
+	"uuid": "Noiseclapper@JordanViknar",
+	"shell-version": [
+		"42"
+	]
+}
