@@ -15,9 +15,9 @@ const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 //const MessageTray = imports.ui.messageTray;
 const Util = imports.misc.util;
-//const ExtensionUtils = imports.misc.extensionUtils;
+const ExtensionUtils = imports.misc.extensionUtils;
 //const ExtensionManager = imports.ui.main.extensionManager;
-//const Me = ExtensionUtils.getCurrentExtension();
+const Me = ExtensionUtils.getCurrentExtension();
 //const Format = imports.format;
 //const Gettext = imports.gettext.domain('noiseclapper');
 //const _ = Gettext.gettext;
@@ -26,8 +26,8 @@ const Util = imports.misc.util;
 //---------------------Extension Initialization---------------------
 function init () {}
 
-const API_NOISE_REDUCTION="~/.config/argos/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
-const API_EQUALIZER="~/.config/argos/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
+const API_NOISE_REDUCTION=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
+const API_EQUALIZER=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
 
 function runCommand (command) {
 	command = PYTHON_TYPE+" "+command+" "+MAC
