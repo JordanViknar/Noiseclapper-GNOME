@@ -1,40 +1,49 @@
+const PYTHON_TYPE="python3"
+const DEBUG=false				//Requires gnome-terminal
+const MAC=""
+
 //------------------------------Libraries----------------------------
 const Clutter = imports.gi.Clutter;
-
 const St = imports.gi.St;
 const GObject = imports.gi.GObject;
 //const GLib = imports.gi.GLib;
 //const Gio = imports.gi.Gio;
 //const Gtk = imports.gi.Gtk;
-
 const Main = imports.ui.main;
 //const Panel = imports.ui.panel;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 //const MessageTray = imports.ui.messageTray;
-
-//const Util = imports.misc.util;
+const Util = imports.misc.util;
 //const ExtensionUtils = imports.misc.extensionUtils;
 //const ExtensionManager = imports.ui.main.extensionManager;
 //const Me = ExtensionUtils.getCurrentExtension();
-
 //const Format = imports.format;
 //const Gettext = imports.gettext.domain('noiseclapper');
 //const _ = Gettext.gettext;
 
+
 //---------------------Extension Initialization---------------------
 function init () {}
+
+const API_NOISE_REDUCTION="~/.config/argos/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
+const API_EQUALIZER="~/.config/argos/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
+
+function runCommand (command) {
+	command = PYTHON_TYPE+" "+command+" "+MAC
+	
+	if (DEBUG == true){
+		command = "gnome-terminal -- /bin/sh -c '"+command+"'"
+	} else {
+		command = "/bin/sh -c '"+command+"'";
+	}
+	console.log("[Noiseclapper] Attempting to run : "+command);
+	Util.spawnCommandLine(command);
+}
 
 //------------------------Indicator Setup---------------------------
 const NoiseclapperIndicator = GObject.registerClass({},
 class NoiseclapperIndicator extends PanelMenu.Button {
-	_addAllInListAsButtons (List, Submenu, APItoUse) {
-		for (let i = 0; i < List.length; i++) {
-			this.Normal = new PopupMenu.PopupMenuItem(_(List[i].label));
-			Submenu.menu.box.add(this.Normal);
-		}
-	}
-
 	_init () {
 		super._init(0);
 		
@@ -67,7 +76,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			{ label: '🚫 Normal / No ANC', command: 'Normal' },
 			{ label: '🪟 Transparency / No NC', command: 'Transparency' },
 		];
-		this._addAllInListAsButtons(NoiseCancellationModeList, this.NoiseCancellationModeMenu);
+		this._addAllInListAsButtons(NoiseCancellationModeList, this.NoiseCancellationModeMenu, API_NOISE_REDUCTION);
 
 		let EqualizerPresetList = [
 			{ label: '🎵 Soundcore Signature', command: 'SoundCore Signature' },
@@ -93,10 +102,22 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			{ label: '🎼 Treble Booster', command: 'Treble Booster' },
 			{ label: '🚫 Treble Reducer', command: 'Treble Reducer' },
 		]
-		this._addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu);
+		this._addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu, API_EQUALIZER);
 
 		//We add the box to the panel
 		this.add_child(box);
+	}
+
+	_addAllInListAsButtons (List, Submenu, APItoUse) {
+		for (let i = 0; i < List.length; i++) {
+			this.Button = new PopupMenu.PopupMenuItem(_(List[i].label));
+			Submenu.menu.box.add(this.Button);
+			
+			//Bind button to command
+			this.Button.connect('activate', () => {
+				runCommand(APItoUse+' "'+List[i].command+'"')
+			})
+		}
 	}
 });
 
