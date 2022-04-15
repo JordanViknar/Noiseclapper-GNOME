@@ -119,6 +119,10 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			})
 		}
 	}
+
+	_destroy () {
+		super._destroy();
+	}
 });
 
 //-----------------------Enabling Extension-------------------------
@@ -129,4 +133,6 @@ function enable() {
 }
 
 //------------------------Disabling Extension------------------------
-function disable() {}
+function disable() {
+	noiseclapperindicator.destroy();
+}
