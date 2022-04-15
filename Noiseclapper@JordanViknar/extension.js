@@ -1,4 +1,4 @@
-//Some nice library imports here
+//------------------------------Libraries----------------------------
 const Clutter = imports.gi.Clutter;
 
 const St = imports.gi.St;
@@ -22,15 +22,19 @@ const PopupMenu = imports.ui.popupMenu;
 //const Gettext = imports.gettext.domain('noiseclapper');
 //const _ = Gettext.gettext;
 
-//Extension initialization
-function init () {
-	//String.prototype.format = Format.format;
-	//ExtensionUtils.initTranslations("noiseclapper");
-}
+//---------------------Extension Initialization---------------------
+function init () {}
 
-//The magic is here.
+//------------------------Indicator Setup---------------------------
 const NoiseclapperIndicator = GObject.registerClass({},
 class NoiseclapperIndicator extends PanelMenu.Button {
+	_addAllInListAsButtons (List, Submenu, APItoUse) {
+		for (let i = 0; i < List.length; i++) {
+			this.Normal = new PopupMenu.PopupMenuItem(_(List[i].label));
+			Submenu.menu.box.add(this.Normal);
+		}
+	}
+
 	_init () {
 		super._init(0);
 		
@@ -54,16 +58,54 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		this.EqualizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem('Equalizer Preset');
 		this.menu.addMenuItem(this.EqualizerPresetMenu);
 
+		//The submenus' buttons
+		let NoiseCancellationModeList = [
+			{ label: '🚋 Transport', command: 'ANCTransport' },
+			{ label: '🏠 Indoor', command: 'ANCIndoor' },
+			{ label: '🌳 Outdoor', command: 'ANCOutdoor' },
+			{ label: '🔇 Default', command: 'ANC'},
+			{ label: '🚫 Normal / No ANC', command: 'Normal' },
+			{ label: '🪟 Transparency / No NC', command: 'Transparency' },
+		];
+		this._addAllInListAsButtons(NoiseCancellationModeList, this.NoiseCancellationModeMenu);
+
+		let EqualizerPresetList = [
+			{ label: '🎵 Soundcore Signature', command: 'SoundCore Signature' },
+			{ label: '🎸 Acoustic', command: 'Acoustic' },
+			{ label: '🎸 Bass Booster', command: 'Base Booster' },
+			{ label: '🚫 Bass Reducer', command: 'Base Reducer' },
+			{ label: '🎻 Classical', command: 'Classical' },
+			{ label: '🎤 Podcast', command: 'Podcast' },
+			{ label: '🪩 Dance', command: 'Dance' },
+			{ label: '🖴 Deep', command: 'Deep' },
+			{ label: '⚡ Electronic', command: 'Electronic' },
+			{ label: '🚫 Flat', command: 'Flat' },
+			{ label: '🎹 Hip-Hop', command: 'Hip-hop' },
+			{ label: '🎷 Jazz', command: 'Jazz' },
+			{ label: '💃🏽 Latin', command: 'Latin' },
+			{ label: '🍸 Lounge', command: 'Lounge' },
+			{ label: '🎹 Piano', command: 'Piano' },
+			{ label: '🎸 Pop', command: 'Pop' },
+			{ label: '🎹 RnB', command: 'R+B' },
+			{ label: '🎸 Rock', command: 'Rock' },
+			{ label: '🔉 Small Speaker(s)', command: 'Small Speakers' },
+			{ label: '👄 Spoken Word', command: 'Spoken Word' },
+			{ label: '🎼 Treble Booster', command: 'Treble Booster' },
+			{ label: '🚫 Treble Reducer', command: 'Treble Reducer' },
+		]
+		this._addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu);
+
 		//We add the box to the panel
 		this.add_child(box);
 	}
 });
 
-
+//-----------------------Enabling Extension-------------------------
 let noiseclapperindicator;
 function enable() {
 	noiseclapperindicator = new NoiseclapperIndicator();
 	Main.panel.addToStatusArea('NoiseclapperIndicator', noiseclapperindicator);
 }
 
+//------------------------Disabling Extension------------------------
 function disable() {}
