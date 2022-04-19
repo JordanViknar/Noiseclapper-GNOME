@@ -114,7 +114,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
 		this._settings.connect('changed', this._PositionChanged.bind(this));
 		this._settingsChangedId = this._settings.connect('changed', this._ApplySettings.bind(this));
-		this._ApplySettings;
+		this._ApplySettings();
 	}
 
 	//Allows turning our lists of modes/presets into actual buttons
