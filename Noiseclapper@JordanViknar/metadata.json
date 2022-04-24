@@ -4,6 +4,8 @@
 	"url": "https://github.com/JordanViknar/Noiseclapper",
 	"uuid": "Noiseclapper@JordanViknar",
 	"shell-version": [
+		"40",
+		"41",
 		"42"
 	]
 }
