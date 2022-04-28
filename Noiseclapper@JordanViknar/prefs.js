@@ -1,25 +1,24 @@
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 const Gio = imports.gi.Gio;
-//const Lang = imports.lang;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-//const Gettext = imports.gettext.domain('noiseclapper');
-//const _ = Gettext.gettext;
+const Gettext = imports.gettext.domain("Noiseclapper");
+const _ = Gettext.gettext;
 
 let settings;
 
 function init() {
 	settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
-	//ExtensionUtils.initTranslations("noiseclapper");
+	ExtensionUtils.initTranslations("Noiseclapper");
 }
 
 function buildPrefsWidget(){
 
 	// Prepare labels and controls
 	let buildable = new Gtk.Builder();
-	buildable.add_from_file( Me.dir.get_path() + '/prefs.xml' );
+	buildable.add_from_file( Me.dir.get_path() + '/prefs.ui' );
 	let box = buildable.get_object('prefs_widget');
 
 	// Bind fields to settings

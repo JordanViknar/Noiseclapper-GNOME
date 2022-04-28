@@ -1,0 +1,194 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-28 23:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: extension.js:64
+msgid "Noise Cancelling Mode"
+msgstr ""
+
+#: extension.js:66
+msgid "Equalizer Preset"
+msgstr ""
+
+#: extension.js:71
+msgid "🚋 Transport"
+msgstr ""
+
+#: extension.js:72
+msgid "🏠 Indoor"
+msgstr ""
+
+#: extension.js:73
+msgid "🌳 Outdoor"
+msgstr ""
+
+#: extension.js:74
+msgid "🔇 Default"
+msgstr ""
+
+#: extension.js:75
+msgid "🚫 Normal / No ANC"
+msgstr ""
+
+#: extension.js:76
+msgid "🪟 Transparency / No NC"
+msgstr ""
+
+#: extension.js:81
+msgid "🎵 Soundcore Signature"
+msgstr ""
+
+#: extension.js:82
+msgid "🎸 Acoustic"
+msgstr ""
+
+#: extension.js:83
+msgid "🎸 Bass Booster"
+msgstr ""
+
+#: extension.js:84
+msgid "🚫 Bass Reducer"
+msgstr ""
+
+#: extension.js:85
+msgid "🎻 Classical"
+msgstr ""
+
+#: extension.js:86
+msgid "🎤 Podcast"
+msgstr ""
+
+#: extension.js:87
+msgid "🪩 Dance"
+msgstr ""
+
+#: extension.js:88
+msgid "🖴 Deep"
+msgstr ""
+
+#: extension.js:89
+msgid "⚡ Electronic"
+msgstr ""
+
+#: extension.js:90
+msgid "🚫 Flat"
+msgstr ""
+
+#: extension.js:91
+msgid "🎹 Hip-Hop"
+msgstr ""
+
+#: extension.js:92
+msgid "🎷 Jazz"
+msgstr ""
+
+#: extension.js:93
+msgid "💃🏽 Latin"
+msgstr ""
+
+#: extension.js:94
+msgid "🍸 Lounge"
+msgstr ""
+
+#: extension.js:95
+msgid "🎹 Piano"
+msgstr ""
+
+#: extension.js:96
+msgid "🎸 Pop"
+msgstr ""
+
+#: extension.js:97
+msgid "🎹 RnB"
+msgstr ""
+
+#: extension.js:98
+msgid "🎸 Rock"
+msgstr ""
+
+#: extension.js:99
+msgid "🔉 Small Speaker(s)"
+msgstr ""
+
+#: extension.js:100
+msgid "👄 Spoken Word"
+msgstr ""
+
+#: extension.js:101
+msgid "🎼 Treble Booster"
+msgstr ""
+
+#: extension.js:102
+msgid "🚫 Treble Reducer"
+msgstr ""
+
+#: extension.js:107
+msgid "Settings"
+msgstr ""
+
+#: prefs.ui:47
+msgid "Noiseclapper settings"
+msgstr ""
+
+#: prefs.ui:64
+msgid "Headphones MAC address"
+msgstr ""
+
+#: prefs.ui:85
+msgid "Icon position settings"
+msgstr ""
+
+#: prefs.ui:100
+msgid "Position"
+msgstr ""
+
+#: prefs.ui:113
+msgid "Left"
+msgstr ""
+
+#: prefs.ui:114
+msgid "Center"
+msgstr ""
+
+#: prefs.ui:115
+msgid "Right"
+msgstr ""
+
+#: prefs.ui:130
+msgid "Priority"
+msgstr ""
+
+#: prefs.ui:149
+msgid "Basic"
+msgstr ""
+
+#: prefs.ui:169
+msgid "Miscellaneous"
+msgstr ""
+
+#: prefs.ui:184
+msgid "Python binary name"
+msgstr ""
+
+#: prefs.ui:206
+msgid "Enable terminal (requires gnome-terminal)"
+msgstr ""
+
+#: prefs.ui:225
+msgid "Misc."
+msgstr ""

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<interface domain="noiseclapper">
+<interface domain="Noiseclapper">
 
 <object class="GtkAdjustment" id="Adjust_1">
 	<property name="lower">5</property>
