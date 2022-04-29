@@ -1,4 +1,4 @@
-### Note : This version of Noiseclapper is still in heavy development. Keep an eye out for changes that may need you to modify your configuration.
+### Note : This version of Noiseclapper is still in heavy development. Keep an eye out for updates.
 
 # :mute::clap: Noiseclapper
 
