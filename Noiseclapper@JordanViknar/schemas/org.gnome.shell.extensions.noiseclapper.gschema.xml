@@ -33,6 +33,12 @@
 			<description>0:python3, 1:python</description>
 			<range min="0" max="1"/>
 		</key>
+
+		<key name="logging-enabled" type="b">
+			<default>false</default>
+			<summary>Enables or disables logging. Useful for debugging.</summary>
+			<description>"false" will disable logging, this is the default parameter. "true" will enable it.</description>
+		</key>
 		
 	</schema>
 </schemalist>

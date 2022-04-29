@@ -4,6 +4,7 @@ let DEBUG_TERMINAL=false
 let MAC=""
 let POSITION = 2;
 let POSITION_NUMBER = 0;
+let LOGGING = false;
 
 //------------------------------Libraries----------------------------
 const Clutter = imports.gi.Clutter;
@@ -40,7 +41,6 @@ const NoiseclapperIndicator = GObject.registerClass({},
 class NoiseclapperIndicator extends PanelMenu.Button {
 	_init () {
 		super._init(0);
-		console.log("[Noiseclapper] Initializing...");
 
 		//This will add a box object to the panel. It's basically the extension's button.
 		let box = new St.BoxLayout({ vertical: false, style_class: 'panel-status-menu-box' });
@@ -110,11 +110,15 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		this.add_child(box);
 
 		//We apply the settings.
-		console.log("[Noiseclapper] Grabbing Noiseclapper settings...");
 		this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
 		this._settings.connect('changed', this._PositionChanged.bind(this));
 		this._settingsChangedId = this._settings.connect('changed', this._ApplySettings.bind(this));
 		this._ApplySettings();
+
+		//Logs that startup was successful.
+		if (LOGGING == true) {
+			console.log("[Noiseclapper] Startup successful.");
+		}
 	}
 
 	//Allows turning our lists of modes/presets into actual buttons
@@ -144,7 +148,9 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			command = "/bin/sh -c '"+command+"'";
 		}
 		//Logging to the GNOME Shell journal
-		console.log("[Noiseclapper] Attempting to run : "+command);
+		if (LOGGING == true) {
+			console.log("[Noiseclapper] Running : "+command);
+		}
 
 		//Actually runs the command
 		Util.spawnCommandLine(command);
@@ -171,8 +177,11 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		} else {
 			PYTHON_TYPE = "python";
 		}
-
-		console.log("[Noiseclapper] Settings applied.");
+		LOGGING = this._settings.get_boolean('logging-enabled');
+		
+		if (LOGGING == true) {
+			console.log("[Noiseclapper] Settings applied.");
+		}
 	}
 
 	_PositionChanged(){
@@ -196,7 +205,9 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 //-----------------------Enabling Extension-------------------------
 let noiseclapperindicator;
 function enable() {
-	console.log("[Noiseclapper] Noiseclapper is enabled. Spawning indicator...");
+	if (LOGGING == true) {
+		console.log("[Noiseclapper] Noiseclapper is enabled. Spawning indicator...");
+	}
 
 	//Creates the indicator
 	noiseclapperindicator = new NoiseclapperIndicator();

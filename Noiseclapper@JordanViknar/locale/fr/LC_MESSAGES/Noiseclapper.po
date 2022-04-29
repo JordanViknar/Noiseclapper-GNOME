@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-28 23:08+0200\n"
-"PO-Revision-Date: 2022-04-28 23:11+0200\n"
+"POT-Creation-Date: 2022-04-29 21:07+0200\n"
+"PO-Revision-Date: 2022-04-29 21:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -18,127 +18,127 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:64
+#: extension.js:60
 msgid "Noise Cancelling Mode"
 msgstr "Mode de réduction de bruit"
 
-#: extension.js:66
+#: extension.js:62
 msgid "Equalizer Preset"
 msgstr "Type d'égaliseur"
 
-#: extension.js:71
+#: extension.js:67
 msgid "🚋 Transport"
 msgstr "🚋 Transport"
 
-#: extension.js:72
+#: extension.js:68
 msgid "🏠 Indoor"
 msgstr "🏠 Intérieur"
 
-#: extension.js:73
+#: extension.js:69
 msgid "🌳 Outdoor"
 msgstr "🌳 Extérieur"
 
-#: extension.js:74
+#: extension.js:70
 msgid "🔇 Default"
 msgstr "🔇 Par défaut"
 
-#: extension.js:75
+#: extension.js:71
 msgid "🚫 Normal / No ANC"
 msgstr "🚫 Normal / Sans RBA"
 
-#: extension.js:76
+#: extension.js:72
 msgid "🪟 Transparency / No NC"
 msgstr "🪟 Transparence / Sans RB"
 
-#: extension.js:81
+#: extension.js:77
 msgid "🎵 Soundcore Signature"
 msgstr "🎵 Signature Soundcore"
 
-#: extension.js:82
+#: extension.js:78
 msgid "🎸 Acoustic"
 msgstr "🎸 Acoustique"
 
-#: extension.js:83
+#: extension.js:79
 msgid "🎸 Bass Booster"
 msgstr "🎸 Amplification des graves"
 
-#: extension.js:84
+#: extension.js:80
 msgid "🚫 Bass Reducer"
 msgstr "🚫 Réduction des graves"
 
-#: extension.js:85
+#: extension.js:81
 msgid "🎻 Classical"
 msgstr "🎻 Classique"
 
-#: extension.js:86
+#: extension.js:82
 msgid "🎤 Podcast"
 msgstr "🎤 Podcast"
 
-#: extension.js:87
+#: extension.js:83
 msgid "🪩 Dance"
 msgstr "🪩 Dance"
 
-#: extension.js:88
+#: extension.js:84
 msgid "🖴 Deep"
 msgstr "🖴 Deep"
 
-#: extension.js:89
+#: extension.js:85
 msgid "⚡ Electronic"
 msgstr "⚡ Électronique"
 
-#: extension.js:90
+#: extension.js:86
 msgid "🚫 Flat"
 msgstr "🚫 Flat"
 
-#: extension.js:91
+#: extension.js:87
 msgid "🎹 Hip-Hop"
 msgstr "🎹 Hip-Hop"
 
-#: extension.js:92
+#: extension.js:88
 msgid "🎷 Jazz"
 msgstr "🎷 Jazz"
 
-#: extension.js:93
+#: extension.js:89
 msgid "💃🏽 Latin"
 msgstr "💃🏽 Latino"
 
-#: extension.js:94
+#: extension.js:90
 msgid "🍸 Lounge"
 msgstr "🍸 Lounge"
 
-#: extension.js:95
+#: extension.js:91
 msgid "🎹 Piano"
 msgstr "🎹 Piano"
 
-#: extension.js:96
+#: extension.js:92
 msgid "🎸 Pop"
 msgstr "🎸 Pop"
 
-#: extension.js:97
+#: extension.js:93
 msgid "🎹 RnB"
 msgstr "🎹 R&B"
 
-#: extension.js:98
+#: extension.js:94
 msgid "🎸 Rock"
 msgstr "🎸 Rock"
 
-#: extension.js:99
+#: extension.js:95
 msgid "🔉 Small Speaker(s)"
 msgstr "🔉 Petit(s) haut-parleur(s)"
 
-#: extension.js:100
+#: extension.js:96
 msgid "👄 Spoken Word"
 msgstr "👄 Mot parlé"
 
-#: extension.js:101
+#: extension.js:97
 msgid "🎼 Treble Booster"
 msgstr "🎼 Amplification des aigus"
 
-#: extension.js:102
+#: extension.js:98
 msgid "🚫 Treble Reducer"
 msgstr "🚫 Réduction des aigus"
 
-#: extension.js:107
+#: extension.js:103
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -191,5 +191,9 @@ msgid "Enable terminal (requires gnome-terminal)"
 msgstr "Activer le terminal (nécessite gnome-terminal)"
 
 #: prefs.ui:225
+msgid "Enable log messages"
+msgstr "Activer la journalisation"
+
+#: prefs.ui:244
 msgid "Misc."
 msgstr "Etc."
