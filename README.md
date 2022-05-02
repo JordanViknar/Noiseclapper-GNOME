@@ -1,6 +1,13 @@
 ### Note : This version of Noiseclapper is still in heavy development. Keep an eye out for updates.
 
+---
+
 # :mute::clap: Noiseclapper
+
+![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
+![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=yellow)
+![Commit activity](https://img.shields.io/github/commit-activity/m/JordanViknar/Noiseclapper?color=orange)
+![Repo size](https://img.shields.io/github/repo-size/JordanViknar/Noiseclapper)
 
 ## Disclaimer
 This is an **unofficial** GNOME Shell extension, designed for use with the Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
@@ -44,3 +51,9 @@ You do not need SoundCoreLifeAPI. This extension comes bundled with its own vers
 
 ## Bug Reports / Contributions / Suggestions
 You can report bugs or suggest features by making an issue, or you can contribute to this extension directly by forking it and then sending a pull request. Any help will be very much appreciated. Thank you !
+
+[Badge Issues]: https://img.shields.io/github/issues/JordanViknar/Noiseclapper
+[Badge Pull Requests]: https://img.shields.io/github/issues-pr/JordanViknar/Noiseclapper
+[Badge Language]: https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper
+[Badge License]: https://img.shields.io/github/license/JordanViknar/Noiseclapper
+[Badge Lines]: https://img.shields.io/tokei/lines/github/JordanViknar/Noiseclapper
