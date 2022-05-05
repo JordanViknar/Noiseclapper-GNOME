@@ -44,7 +44,7 @@
 						<property name="spacing">12</property>
 						<child>
 							<object class="GtkLabel">
-								<property name="label" translatable="yes">Noiseclapper settings</property>
+								<property name="label" translatable="yes">Soundcore Life settings</property>
 								<property name="hexpand">true</property>
 								<property name="halign">1</property>
 								<attributes>
@@ -146,7 +146,7 @@
 
 <child type="tab">
 	<object class="GtkLabel">
-		<property name="label" translatable="yes">Basic</property>
+		<property name="label" translatable="yes">Main</property>
 	</object>
 </child>
 
@@ -241,7 +241,75 @@
 
 <child type="tab">
 	<object class="GtkLabel">
-		<property name="label" translatable="yes">Misc.</property>
+		<property name="label" translatable="yes">Misc</property>
+	</object>
+</child>
+
+<child>
+	<object class="GtkGrid">
+		<property name="margin-top">18</property>
+		<property name="margin-start">18</property>
+		<property name="margin-end">18</property>
+		<property name="margin-bottom">18</property>
+		<property name="row-spacing">18</property>
+		<property name="row-homogeneous">false</property>
+		<property name="orientation">vertical</property>
+
+		<child>
+			<object class="GtkBox">
+			<property name="orientation">vertical</property>
+			<property name="spacing">6</property>
+				<child>
+					<object class="GtkLabel">
+						<property name="label" translatable="yes">Credits</property>
+						<property name="hexpand">true</property>
+						<property name="halign">1</property>
+						<attributes>
+							<attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
+						</attributes>
+					</object>
+				</child>
+
+				<child>
+					<object class="GtkFrame">
+						<property name="margin-start">12</property>
+						<property name="margin-end">12</property>
+						<property name="margin-top">1</property>
+						<property name="margin-bottom">1</property>
+
+						<child>
+							<object class="GtkLabel">
+								<property name="margin-start">12</property>
+								<property name="margin-end">12</property>
+
+								<property name="label" translatable="no">
+Noiseclapper is a free software, made by JordanViknar.
+You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
+
+This project would not have been possible without :
+	- SoundcoreLifeAPI, by KillerBOSS2019, licensed under the GNU GPL-3.0 License.
+	- arch-update, by RaphaelRochet, licensed under the GNU GPL-3.0 License.
+
+This project is not affiliated, associated, authorized, endorsed by,
+or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
+
+The name Soundcore as well as related names, marks, emblems and images are
+registered trademarks of their respective owners.
+								</property>
+								<property name="hexpand">true</property>
+								<property name="halign">1</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+	</object>
+</child>
+
+<child type="tab">
+	<object class="GtkImage">
+		<property name="icon-name">help-about</property>
 	</object>
 </child>
 

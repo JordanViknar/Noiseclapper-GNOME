@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 21:07+0200\n"
+"POT-Creation-Date: 2022-05-05 22:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,7 +142,7 @@ msgid "Settings"
 msgstr ""
 
 #: prefs.ui:47
-msgid "Noiseclapper settings"
+msgid "Soundcore Life settings"
 msgstr ""
 
 #: prefs.ui:64
@@ -174,7 +174,7 @@ msgid "Priority"
 msgstr ""
 
 #: prefs.ui:149
-msgid "Basic"
+msgid "Main"
 msgstr ""
 
 #: prefs.ui:169
@@ -194,5 +194,9 @@ msgid "Enable log messages"
 msgstr ""
 
 #: prefs.ui:244
-msgid "Misc."
+msgid "Misc"
+msgstr ""
+
+#: prefs.ui:264
+msgid "Credits"
 msgstr ""

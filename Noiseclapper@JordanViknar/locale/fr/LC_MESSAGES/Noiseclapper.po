@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 21:07+0200\n"
-"PO-Revision-Date: 2022-04-29 21:08+0200\n"
+"POT-Creation-Date: 2022-05-05 22:55+0200\n"
+"PO-Revision-Date: 2022-05-05 22:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -143,8 +143,8 @@ msgid "Settings"
 msgstr "Paramètres"
 
 #: prefs.ui:47
-msgid "Noiseclapper settings"
-msgstr "Paramètres de Noiseclapper"
+msgid "Soundcore Life settings"
+msgstr "Paramètres Soundcore Life"
 
 #: prefs.ui:64
 msgid "Headphones MAC address"
@@ -175,8 +175,8 @@ msgid "Priority"
 msgstr "Priorité"
 
 #: prefs.ui:149
-msgid "Basic"
-msgstr "Base"
+msgid "Main"
+msgstr "Principal"
 
 #: prefs.ui:169
 msgid "Miscellaneous"
@@ -188,12 +188,25 @@ msgstr "Nom de l'exécutable Python"
 
 #: prefs.ui:206
 msgid "Enable terminal (requires gnome-terminal)"
-msgstr "Activer le terminal (nécessite gnome-terminal)"
+msgstr "Activer le terminal (requiert gnome-terminal)"
 
 #: prefs.ui:225
 msgid "Enable log messages"
 msgstr "Activer la journalisation"
 
 #: prefs.ui:244
-msgid "Misc."
-msgstr "Etc."
+msgid "Misc"
+msgstr "Extras"
+
+#: prefs.ui:264
+msgid "Credits"
+msgstr "Crédits"
+
+#~ msgid "Noiseclapper settings"
+#~ msgstr "Paramètres de Noiseclapper"
+
+#~ msgid "Noiseclapper Credits"
+#~ msgstr "Crédits de Noiseclapper"
+
+#~ msgid "Basic"
+#~ msgstr "Base"
