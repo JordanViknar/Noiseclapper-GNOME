@@ -1,0 +1,23 @@
+name: zip-generation
+
+on: [ push, pull_request ]
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Create extension zip
+      shell: bash
+      run: ./generate-release-bundle.sh
+    - name: Extract current branch name
+      shell: bash
+      run: ref="${GITHUB_REF#refs/heads/}" && echo "::set-output name=branch::${ref////-}"
+      id: ref
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: noiseclapper-artifacts-${{ steps.ref.outputs.branch }}
+        path: Noiseclapper@JordanViknar.zip
