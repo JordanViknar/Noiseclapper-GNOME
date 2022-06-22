@@ -3,7 +3,7 @@ name: zip-generation
 on: [ push, pull_request ]
 
 jobs:
-  build_linux:
+  generate-zip:
     runs-on: ubuntu-latest
 
     steps:
