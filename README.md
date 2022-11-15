@@ -45,10 +45,6 @@ If your device works despite not being marked as supported, don't hesitate to cr
 
 You do not need SoundCoreLifeAPI. This extension comes bundled with its own version of SoundCoreLifeAPI, modified slightly to fit Noiseclapper.
 
-## Known Bugs
-- The extension can be used while your headphones aren't connected to your computer (and turned on), but it will often bring up "Host is down"/"Host is busy" errors *(can be seen when using the terminal)*. To prevent that from happening, you can connect your computer to your headphones at the same time as the other device you're using. Be careful to mute your computer, or to use another audio source.
-- Under the same conditions, if you do not encounter the "Host is down"/"Host is busy" error, you will hear the "Bluetooth Search" sound, almost always followed by the "Bluetooth Connected" sound. It can disrupt what you're listening to on your headphones, and it gets very annoying. The workaround is the exact same one as the previous bug.
-
 ## Bug Reports / Contributions / Suggestions
 You can report bugs or suggest features by making an issue, or you can contribute to this extension directly by forking it and then sending a pull request. Any help will be very much appreciated. Thank you !
 

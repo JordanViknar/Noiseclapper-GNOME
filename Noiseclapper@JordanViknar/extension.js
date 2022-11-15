@@ -1,7 +1,6 @@
 //----------------------------Default Settings------------------------------
 let PYTHON_TYPE="python3"
 let DEBUG_TERMINAL=false
-let MAC=""
 let POSITION = 2;
 let POSITION_NUMBER = 0;
 let LOGGING = false;
@@ -19,11 +18,11 @@ const Util = imports.misc.util;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Format = imports.format;
+const GnomeBluetooth = imports.gi.GnomeBluetooth;
 
 //Used for translations
 const Gettext = imports.gettext.domain("Noiseclapper");
 const _ = Gettext.gettext;
-
 
 //---------------------Extension Initialization---------------------
 function init () {
@@ -33,8 +32,16 @@ function init () {
 	ExtensionUtils.initTranslations("Noiseclapper");
 }
 
+//APIs
 const API_NOISE_REDUCTION=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
 const API_EQUALIZER=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
+//Bluetooth
+let NoiseclapperBluetoothClient = null
+//Supported Devices
+const SupportedDeviceNames = [
+	"Soundcore Life Q30",
+	"BES_BLE" //Buggy name sometimes applied to the Q30
+]
 
 //------------------------Indicator Setup---------------------------
 const NoiseclapperIndicator = GObject.registerClass({},
@@ -138,9 +145,35 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	_runCommand (command) {
+		//Detect connected Bluetooth devices using GnomeBluetooth, and extract MAC address of first Soundcore device
+		let deviceObject = NoiseclapperBluetoothClient.get_devices()
+
+		//CATCH sould be added
+
+		//Convert object into array
+		let numberOfDevices = deviceObject.get_n_items()
+		let devices = []
+		for (let i = 0; i < numberOfDevices; i++) {
+			devices.push(deviceObject.get_item(i))
+		}
+		
+		let MAC
+		for (let i = 0; i < devices.length; i++) {
+			if (devices[i].connected && devices[i].paired && SupportedDeviceNames.includes(devices[i].name)) {
+				MAC = devices[i].address;
+				if (LOGGING == true){
+					console.log("[Noiseclapper] Found Soundcore device with MAC address "+MAC);
+				}
+			}
+		}
+		
+		//SUPPORT FOR MULTIPLE DEVICES SHOULD BE ADDED
+
 		command = PYTHON_TYPE+" "+command+" "+MAC
 		
 		if (DEBUG_TERMINAL == true){
+			//ADD DETECTION AND USE OF GNOME-CONSOLE IF AVAILABLE
+
 			//This will execute the command in the GNOME terminal, allowing easy error diagnosis... most of the time.
 			command = "gnome-terminal -- /bin/sh -c '"+command+" ; echo Done - Press enter to exit; read _'"
 		} else {
@@ -165,9 +198,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			null);
 	}
 
-	_ApplySettings () {
-		MAC = this._settings.get_string('mac-address');
-
+	_ApplySettings(){
 		POSITION = this._settings.get_int('position');
 		POSITION_NUMBER = this._settings.get_int('position-number');
 
@@ -209,6 +240,9 @@ function enable() {
 		console.log("[Noiseclapper] Noiseclapper is enabled. Spawning indicator...");
 	}
 
+	//We enable the bluetooth client
+	NoiseclapperBluetoothClient = new GnomeBluetooth.Client();
+
 	//Creates the indicator
 	noiseclapperindicator = new NoiseclapperIndicator();
 	//Adds it to the panel
@@ -219,5 +253,8 @@ function enable() {
 
 //------------------------Disabling Extension------------------------
 function disable() {
+	//Disable Bluetooth client if enabled
+
+
 	noiseclapperindicator.destroy();
 }
