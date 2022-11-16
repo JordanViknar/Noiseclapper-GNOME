@@ -1,8 +1,4 @@
-### Note : This version of Noiseclapper is still in heavy development. Keep an eye out for updates.
-
----
-
-# Noiseclapper
+# Noiseclapper (Soundcore Life for GNOME)
 
 ![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
 ![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=yellow)
