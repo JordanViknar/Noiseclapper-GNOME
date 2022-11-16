@@ -162,7 +162,7 @@
 						<property name="margin-start">12</property>
 						<child>
 							<object class="GtkLabel">
-								<property name="label" translatable="yes">Enable terminal (requires gnome-terminal)</property>
+								<property name="label" translatable="yes">Use GNOME Console/Terminal</property>
 								<property name="hexpand">true</property>
 								<property name="halign">1</property>
 							</object>
@@ -245,9 +245,10 @@
 Noiseclapper is a free software, made by JordanViknar.
 You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
 
-This project would not have been possible without :
+This project would not have been possible without source code from :
 	- SoundcoreLifeAPI, by KillerBOSS2019, licensed under the GNU GPL-3.0 License.
-	- arch-update, by RaphaelRochet, licensed under the GNU GPL-3.0 License.
+	- Arch Linux Updates Indicator, by RaphaelRochet, licensed under the GNU GPL-3.0 License.
+	- Bluetooth Quick Connect, by bjarosze, licensed under the GNU GPL-3.0 License.
 
 This project is not affiliated, associated, authorized, endorsed by,
 or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.

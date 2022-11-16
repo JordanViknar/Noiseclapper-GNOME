@@ -1,9 +1,10 @@
-//----------------------------Default Settings------------------------------
-let PYTHON_TYPE="python3"
-let DEBUG_TERMINAL=false
-let POSITION = 2;
-let POSITION_NUMBER = 0;
-let LOGGING = false;
+//----------------------------Variables------------------------------
+let PYTHON_TYPE;
+let DEBUG_TERMINAL;
+let POSITION;
+let POSITION_NUMBER;
+let LOGGING;
+let NoiseclapperBluetoothClient = null
 
 //------------------------------Libraries----------------------------
 const Clutter = imports.gi.Clutter;
@@ -35,11 +36,13 @@ function init () {
 //APIs
 const API_NOISE_REDUCTION=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
 const API_EQUALIZER=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
-//Bluetooth
-let NoiseclapperBluetoothClient = null
 //Supported Devices
 const SupportedDeviceNames = [
+	"Soundcore Life Q35",		//Not tested
 	"Soundcore Life Q30",
+	"Soundcore Life Q20+",		//Not tested
+	"Soundcore Life Q20",		//Not tested
+	"Soundcore Life Q10",		//Not tested, only partially compatible
 	"BES_BLE" //Buggy name sometimes applied to the Q30
 ]
 
@@ -74,11 +77,11 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			{ label: _('🚋 Transport'), command: 'ANCTransport' },
 			{ label: _('🏠 Indoor'), command: 'ANCIndoor' },
 			{ label: _('🌳 Outdoor'), command: 'ANCOutdoor' },
-			{ label: _('🔇 Default'), command: 'ANC'},
+			//{ label: _('🔇 Default'), command: 'ANC'}, //Not really necessary, probably better to keep it as a comment.
 			{ label: _('🚫 Normal / No ANC'), command: 'Normal' },
 			{ label: _('🪟 Transparency / No NC'), command: 'Transparency' },
 		];
-		this._addAllInListAsButtons(NoiseCancellingModeList, this.NoiseCancellingModeMenu, API_NOISE_REDUCTION);
+		this.addAllInListAsButtons(NoiseCancellingModeList, this.NoiseCancellingModeMenu, API_NOISE_REDUCTION);
 
 		let EqualizerPresetList = [
 			{ label: _('🎵 Soundcore Signature'), command: 'SoundCore Signature' },
@@ -104,12 +107,12 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			{ label: _('🎼 Treble Booster'), command: 'Treble Booster' },
 			{ label: _('🚫 Treble Reducer'), command: 'Treble Reducer' },
 		]
-		this._addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu, API_EQUALIZER);
+		this.addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu, API_EQUALIZER);
 
 		//Add settings button
 		this.settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
 		this.settingsButton.connect('activate', () => {
-			this._OpenSettings();
+			this.openSettings();
 		})
 		this.menu.addMenuItem(this.settingsButton);
 
@@ -118,9 +121,9 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 
 		//We apply the settings.
 		this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
-		this._settings.connect('changed', this._PositionChanged.bind(this));
-		this._settingsChangedId = this._settings.connect('changed', this._ApplySettings.bind(this));
-		this._ApplySettings();
+		this._settings.connect('changed', this.applyNewPosition.bind(this));
+		this._settingsChangedId = this._settings.connect('changed', this.applySettings.bind(this));
+		this.applySettings();
 
 		//Logs that startup was successful.
 		if (LOGGING == true) {
@@ -129,7 +132,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	//Allows turning our lists of modes/presets into actual buttons
-	_addAllInListAsButtons (List, Submenu, APItoUse) {
+	addAllInListAsButtons (List, Submenu, APItoUse) {
 		for (let i = 0; i < List.length; i++) {
 			//Creates the button
 			this.Button = new PopupMenu.PopupMenuItem(List[i].label);
@@ -139,16 +142,26 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			
 			//Binds button to command
 			this.Button.connect('activate', () => {
-				this._runCommand(APItoUse+' "'+List[i].command+'"')
+				this.runCommand(APItoUse+' "'+List[i].command+'"')
 			})
 		}
 	}
 
-	_runCommand (command) {
+	runCommand (command) {
 		//Detect connected Bluetooth devices using GnomeBluetooth, and extract MAC address of first Soundcore device
-		let deviceObject = NoiseclapperBluetoothClient.get_devices()
-
-		//CATCH sould be added
+		let deviceObject
+		try{
+			if(LOGGING == true){
+				console.log("[Noiseclapper] Obtaining connected devices...");
+			}
+			deviceObject = NoiseclapperBluetoothClient.get_devices();
+		} catch (error) {
+			Main.notifyError(_('Noiseclapper failed to obtain Bluetooth devices ('+ error.message +').'));
+			if (LOGGING == true) {
+				console.log("[Noiseclapper] Error: Could not get Bluetooth devices : " + error);
+			}
+			return;
+		}
 
 		//Convert object into array
 		let numberOfDevices = deviceObject.get_n_items()
@@ -157,39 +170,50 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			devices.push(deviceObject.get_item(i))
 		}
 		
-		let MAC
+		let hasFoundAtLeastOneDevice = false;
 		for (let i = 0; i < devices.length; i++) {
+			//For every compatible device, run the command
 			if (devices[i].connected && devices[i].paired && SupportedDeviceNames.includes(devices[i].name)) {
-				MAC = devices[i].address;
+				//We found a compatible device.
+				hasFoundAtLeastOneDevice = true;
 				if (LOGGING == true){
-					console.log("[Noiseclapper] Found Soundcore device with MAC address "+MAC);
+					console.log("[Noiseclapper] Found Soundcore device with MAC address "+devices[i].address);
 				}
+
+				//We generate the command.
+				command = PYTHON_TYPE+" "+command+" "+devices[i].address
+				
+				if (DEBUG_TERMINAL == true && GLib.file_test('/usr/bin/kgx', GLib.FileTest.EXISTS)){
+					//We prioritize GNOME Console if it's installed.
+					command = "kgx -- /bin/sh -c '"+command+" ; echo Done - Press enter to exit ; read _'"
+				} else if (DEBUG_TERMINAL == true && GLib.file_test('/usr/bin/gnome-terminal', GLib.FileTest.EXISTS)) {
+					//Fallback to GNOME Terminal
+					command = "gnome-terminal -- /bin/sh -c '"+command+" ; echo Done - Press enter to exit; read _'"
+				} else {
+					//We run it in background.
+					command = "/bin/sh -c '"+command+"'";
+				}
+
+				//Logging to the journal
+				if (LOGGING == true) {
+					console.log("[Noiseclapper] Running : "+command);
+				}
+
+				//Actually runs the command
+				Util.spawnCommandLine(command);
 			}
 		}
-		
-		//SUPPORT FOR MULTIPLE DEVICES SHOULD BE ADDED
 
-		command = PYTHON_TYPE+" "+command+" "+MAC
-		
-		if (DEBUG_TERMINAL == true){
-			//ADD DETECTION AND USE OF GNOME-CONSOLE IF AVAILABLE
-
-			//This will execute the command in the GNOME terminal, allowing easy error diagnosis... most of the time.
-			command = "gnome-terminal -- /bin/sh -c '"+command+" ; echo Done - Press enter to exit; read _'"
-		} else {
-			//This will run the command in the background, without getting in the user's way.
-			command = "/bin/sh -c '"+command+"'";
+		//If we DID find devices, but none were compatible.
+		if (hasFoundAtLeastOneDevice == false) {
+			Main.notifyError(_("Noiseclapper couldn't find a connected compatible device."));
+			if (LOGGING == true) {
+				console.log("[Noiseclapper] Error : No compatible devices found.");
+			}
 		}
-		//Logging to the GNOME Shell journal
-		if (LOGGING == true) {
-			console.log("[Noiseclapper] Running : "+command);
-		}
-
-		//Actually runs the command
-		Util.spawnCommandLine(command);
 	}
 
-	_OpenSettings () {
+	openSettings () {
 		Gio.DBus.session.call('org.gnome.Shell.Extensions','/org/gnome/Shell/Extensions','org.gnome.Shell.Extensions','OpenExtensionPrefs',
 			new GLib.Variant('(ssa{sv})', [Me.uuid, '', {}]),
 			null,
@@ -198,7 +222,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			null);
 	}
 
-	_ApplySettings(){
+	applySettings(){
 		POSITION = this._settings.get_int('position');
 		POSITION_NUMBER = this._settings.get_int('position-number');
 
@@ -215,7 +239,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		}
 	}
 
-	_PositionChanged(){
+	applyNewPosition(){
 		this.container.get_parent().remove_actor(this.container);
 		let boxes = {
 			0: Main.panel._leftBox,
@@ -248,13 +272,16 @@ function enable() {
 	//Adds it to the panel
 	Main.panel.addToStatusArea('NoiseclapperIndicator', noiseclapperindicator);
 	//Sets position
-	noiseclapperindicator._PositionChanged()
+	noiseclapperindicator.applyNewPosition()
 }
 
 //------------------------Disabling Extension------------------------
 function disable() {
 	//Disable Bluetooth client if enabled
+	if (NoiseclapperBluetoothClient != null) {
+		NoiseclapperBluetoothClient = null;
+	}
 
-
+	//Removes the indicator
 	noiseclapperindicator.destroy();
 }
