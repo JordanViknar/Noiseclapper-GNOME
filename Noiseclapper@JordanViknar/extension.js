@@ -103,6 +103,9 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		]
 		this.addAllInListAsButtons(EqualizerPresetList, this.EqualizerPresetMenu, API_EQUALIZER);
 
+		//Separation
+		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
 		//Add settings button
 		this.settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
 		this.settingsButton.connect('activate', () => {
