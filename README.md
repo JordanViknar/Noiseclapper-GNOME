@@ -2,7 +2,7 @@
 
 ---
 
-# :mute::clap: Noiseclapper
+# Noiseclapper
 
 ![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
 ![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=yellow)

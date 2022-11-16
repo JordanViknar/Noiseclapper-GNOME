@@ -55,16 +55,10 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		//This will add a box object to the panel. It's basically the extension's button.
 		let box = new St.BoxLayout({ vertical: false, style_class: 'panel-status-menu-box' });
 
-		//We create the emoji icon in the status box.
-		this.label = new St.Label({ text: '🔇👏',
-			y_expand: true,
-			y_align: Clutter.ActorAlign.CENTER });
-		box.add_actor(this.label);
-
-		//Noiseclapper Title
-		this.NoiseclapperTitle = new PopupMenu.PopupMenuItem('Noiseclapper 🔇👏');
-		this.NoiseclapperTitle.reactive = false;
-		this.menu.addMenuItem(this.NoiseclapperTitle);
+		//We create a GTK symbolic icon in the panel
+		this.icon = new St.Icon({ icon_name: 'audio-headphones-symbolic',
+			style_class: 'system-status-icon' });
+		box.add_actor(this.icon);
 
 		//The 2 submenus
 		this.NoiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(_('Noise Cancelling Mode'));
