@@ -17,7 +17,7 @@ jobs:
       run: ref="${GITHUB_REF#refs/heads/}" && echo "::set-output name=branch::${ref////-}"
       id: ref
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: noiseclapper-artifacts-${{ steps.ref.outputs.branch }}
         path: Noiseclapper@JordanViknar.zip

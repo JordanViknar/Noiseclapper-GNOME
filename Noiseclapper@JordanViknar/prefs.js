@@ -22,8 +22,6 @@ function buildPrefsWidget(){
 	let box = buildable.get_object('prefs_widget');
 
 	// Bind fields to settings
-	settings.bind('mac-address' , buildable.get_object('field_mac') , 'text' , Gio.SettingsBindFlags.DEFAULT);
-
 	settings.bind('position' , buildable.get_object('field_position') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 	settings.bind('position-number' , buildable.get_object('field_position_number') , 'value' , Gio.SettingsBindFlags.DEFAULT);
 

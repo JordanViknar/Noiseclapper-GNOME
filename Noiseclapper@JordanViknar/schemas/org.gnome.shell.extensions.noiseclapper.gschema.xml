@@ -2,13 +2,7 @@
 	<schema id="org.gnome.shell.extensions.noiseclapper"
 		path="/org/gnome/shell/extensions/noiseclapper/">
 
-    	<key name="mac-address" type="s">
-    		<default>""</default>
-    		<summary>The MAC address of your Soundcore headphones.</summary>
-      		<description>This key manages the MAC address of your Soundcore headphones. Without it, Noiseclapper cannot function.</description>
-    	</key>
-
-		<key name="position" type="i">
+    	<key name="position" type="i">
 			<default>2</default>
 			<summary>Position in the panel</summary>
 			<description>Side of the panel where the Noiseclapper icon will be displayed (left/center/right).</description>

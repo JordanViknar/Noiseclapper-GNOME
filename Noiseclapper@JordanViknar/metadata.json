@@ -1,8 +1,9 @@
 {
- 	"name": "Noiseclapper 🔇👏",
+ 	"name": "Noiseclapper",
 	"description": "Provides control of Soundcore Life Q30 Headphones (and others).",
 	"url": "https://github.com/JordanViknar/Noiseclapper",
 	"uuid": "Noiseclapper@JordanViknar",
+	"version": 1,
 	"shell-version": [
 		"42",
 		"43"
