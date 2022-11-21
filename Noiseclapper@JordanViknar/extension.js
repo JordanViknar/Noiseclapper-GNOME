@@ -211,12 +211,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	openSettings () {
-		Gio.DBus.session.call('org.gnome.Shell.Extensions','/org/gnome/Shell/Extensions','org.gnome.Shell.Extensions','OpenExtensionPrefs',
-			new GLib.Variant('(ssa{sv})', [Me.uuid, '', {}]),
-			null,
-			Gio.DBusCallFlags.NONE,
-			-1,
-			null);
+		ExtensionUtils.openPrefs();
 	}
 
 	applySettings(){
@@ -281,4 +276,5 @@ function disable() {
 
 	//Removes the indicator
 	noiseclapperindicator.destroy();
+	noiseclapperindicator = null;
 }

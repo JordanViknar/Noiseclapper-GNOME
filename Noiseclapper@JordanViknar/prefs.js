@@ -10,11 +10,11 @@ const _ = Gettext.gettext;
 let settings;
 
 function init() {
-	settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
 	ExtensionUtils.initTranslations("Noiseclapper");
 }
 
 function buildPrefsWidget(){
+	settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
 
 	// Prepare labels and controls
 	let buildable = new Gtk.Builder();
