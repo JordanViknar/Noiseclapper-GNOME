@@ -1,11 +1,3 @@
-**I no longer use GNOME and have since switched to KDE Plasma. As such, this extension won't be maintained personally anymore.**
-**However, pull requests are still welcome and I will accept them (after sufficient testing).**
-**As such, I don't intend to archive this project for the time being.**
-
-To KDE Plasma users, I may work on either a plasmoid or a QT version of this extension.
-
----
-
 # Noiseclapper (Soundcore Life for GNOME)
 
 ![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
