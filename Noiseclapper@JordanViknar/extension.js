@@ -43,9 +43,6 @@ export default class Noiseclapper extends Extension {
 	}
 	init() {
 		String.prototype.format = Format.format;
-
-		API_NOISE_REDUCTION = this.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
-		API_EQUALIZER = this.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
 	}
     enable() {
 		if (LOGGING == true) {
@@ -80,6 +77,9 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	_init (ext) {
 		super._init(0);
 		this._extension = ext
+
+		API_NOISE_REDUCTION = this._extension.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
+		API_EQUALIZER = this._extension.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
 
 		//This will add a box object to the panel. It's basically the extension's button.
 		let box = new St.BoxLayout({ vertical: false, style_class: 'panel-status-menu-box' });
@@ -174,8 +174,6 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	runCommand (command) {
-		LOGGING = true;
-
 		//Detect connected Bluetooth devices using GnomeBluetooth, and extract MAC address of first Soundcore device
 		let deviceObject
 		try{

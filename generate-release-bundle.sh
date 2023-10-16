@@ -4,7 +4,7 @@
 
 cd Noiseclapper@JordanViknar
 mv ../LICENSE ./LICENSE
-zip -r9 Noiseclapper@JordanViknar.zip . --exclude=locale/\*.pot --exclude=locale/\*.po
+zip -r9 Noiseclapper@JordanViknar.zip . --exclude=locale/\*.pot --exclude=locale/\*.po --exclude=locale/\*.compiled
 mv ./LICENSE ../LICENSE
 mv ./Noiseclapper@JordanViknar.zip ../Noiseclapper@JordanViknar.zip
 cd ..
