@@ -9,7 +9,7 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 	fillPreferencesWindow(window){
 		// Prepare labels and controls
 		let buildable = new Gtk.Builder();
-		buildable.add_from_file( this.dir.get_path() + '/prefs.ui' );
+		buildable.add_from_file( this.dir.get_path() + '/prefs.xml' );
 	
 		// Bind fields to settings
 		let settings = this.getSettings();
@@ -19,6 +19,7 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 		settings.bind('terminal-enabled' , buildable.get_object('field_terminal') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 		settings.bind('logging-enabled' , buildable.get_object('field_logging') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 	
-		window.add(buildable.get_object('prefs_widget'));
+		window.add(buildable.get_object('page_basic'));
+		window.add(buildable.get_object('page_about'));
 	};
 }
