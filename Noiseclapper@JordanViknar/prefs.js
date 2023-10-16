@@ -1,33 +1,24 @@
-const GObject = imports.gi.GObject;
-const Gtk = imports.gi.Gtk;
-const Gio = imports.gi.Gio;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+// GI Library Imports
+import Gtk from 'gi://Gtk';
+import Gio from 'gi://Gio';
 
-const Gettext = imports.gettext.domain("Noiseclapper");
-const _ = Gettext.gettext;
+// Extension Libraries
+import {ExtensionPreferences} from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js"
 
-let settings;
-
-function init() {
-	ExtensionUtils.initTranslations("Noiseclapper");
+export default class NoiseclapperPreferences extends ExtensionPreferences {
+	fillPreferencesWindow(window){
+		// Prepare labels and controls
+		let buildable = new Gtk.Builder();
+		buildable.add_from_file( this.dir.get_path() + '/prefs.ui' );
+	
+		// Bind fields to settings
+		let settings = this.getSettings();
+		settings.bind('position' , buildable.get_object('field_position') , 'active' , Gio.SettingsBindFlags.DEFAULT);
+		settings.bind('position-number' , buildable.get_object('field_position_number') , 'value' , Gio.SettingsBindFlags.DEFAULT);
+		settings.bind('python-type' , buildable.get_object('field_python_type') , 'active' , Gio.SettingsBindFlags.DEFAULT);
+		settings.bind('terminal-enabled' , buildable.get_object('field_terminal') , 'active' , Gio.SettingsBindFlags.DEFAULT);
+		settings.bind('logging-enabled' , buildable.get_object('field_logging') , 'active' , Gio.SettingsBindFlags.DEFAULT);
+	
+		window.add(buildable.get_object('prefs_widget'));
+	};
 }
-
-function buildPrefsWidget(){
-	settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
-
-	// Prepare labels and controls
-	let buildable = new Gtk.Builder();
-	buildable.add_from_file( Me.dir.get_path() + '/prefs.ui' );
-	let box = buildable.get_object('prefs_widget');
-
-	// Bind fields to settings
-	settings.bind('position' , buildable.get_object('field_position') , 'active' , Gio.SettingsBindFlags.DEFAULT);
-	settings.bind('position-number' , buildable.get_object('field_position_number') , 'value' , Gio.SettingsBindFlags.DEFAULT);
-
-	settings.bind('python-type' , buildable.get_object('field_python_type') , 'active' , Gio.SettingsBindFlags.DEFAULT);
-	settings.bind('terminal-enabled' , buildable.get_object('field_terminal') , 'active' , Gio.SettingsBindFlags.DEFAULT);
-	settings.bind('logging-enabled' , buildable.get_object('field_logging') , 'active' , Gio.SettingsBindFlags.DEFAULT);
-
-	return box;
-};

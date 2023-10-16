@@ -242,7 +242,7 @@
 								<property name="margin-end">12</property>
 
 								<property name="label" translatable="no">
-Noiseclapper is a free software, made by JordanViknar.
+Noiseclapper is free software, made by JordanViknar.
 You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
 
 This project would not have been possible without source code from :

@@ -7,35 +7,24 @@ let LOGGING;
 let NoiseclapperBluetoothClient = null
 
 //------------------------------Libraries----------------------------
-const Clutter = imports.gi.Clutter;
-const St = imports.gi.St;
-const GObject = imports.gi.GObject;
-const GLib = imports.gi.GLib;
-const Gio = imports.gi.Gio;
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-const Util = imports.misc.util;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Format = imports.format;
-const GnomeBluetooth = imports.gi.GnomeBluetooth;
+// GI Libraries
+import St from 'gi://St'
+import GObject from 'gi://GObject'
+import GLib from 'gi://GLib'
+import GnomeBluetooth from 'gi://GnomeBluetooth'
 
-//Used for translations
-const Gettext = imports.gettext.domain("Noiseclapper");
-const _ = Gettext.gettext;
+// Native GNOME Shell Modules
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Util from 'resource:///org/gnome/shell/misc/util.js';
+import {Extension, gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 //---------------------Extension Initialization---------------------
-function init () {
-	String.prototype.format = Format.format;
+//API Paths Variables
+let API_NOISE_REDUCTION
+let API_EQUALIZER
 
-	//Initiate translations
-	ExtensionUtils.initTranslations("Noiseclapper");
-}
-
-//APIs
-const API_NOISE_REDUCTION=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
-const API_EQUALIZER=Me.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
 //Supported Devices
 const SupportedDeviceNames = [
 	"Soundcore Life Q35",		//Not tested
@@ -43,14 +32,54 @@ const SupportedDeviceNames = [
 	"Soundcore Life Q20+",		//Not tested
 	"Soundcore Life Q20",		//Not tested
 	"Soundcore Life Q10",		//Not tested, only partially compatible
-	"BES_BLE" //Buggy name sometimes applied to the Q30
+	"BES_BLE"					//Buggy name sometimes applied to the Q30
 ]
+
+//--------------------- Enable and Disable functions ---------------------
+let noiseclapperindicator;
+export default class Noiseclapper extends Extension {
+	constructor(metadata) {
+		super(metadata);
+	}
+	init() {
+		String.prototype.format = Format.format;
+
+		API_NOISE_REDUCTION = this.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -AmbientSound"
+		API_EQUALIZER = this.dir.get_path()+"/soundcore-life-api/AnkerSoundcoreAPI.py -EQPresets"
+	}
+    enable() {
+		if (LOGGING == true) {
+			console.log("[Noiseclapper] Noiseclapper is enabled. Spawning indicator...");
+		}
+	
+		//We enable the bluetooth client
+		NoiseclapperBluetoothClient = new GnomeBluetooth.Client();
+	
+		//Creates the indicator
+		noiseclapperindicator = new NoiseclapperIndicator(this);
+		//Adds it to the panel
+		Main.panel.addToStatusArea('NoiseclapperIndicator', noiseclapperindicator);
+		//Sets position
+		noiseclapperindicator.applyNewPosition()
+	}
+	disable() {
+		//Disable Bluetooth client if enabled
+		if (NoiseclapperBluetoothClient != null) {
+			NoiseclapperBluetoothClient = null;
+		}
+
+		//Removes the indicator
+		noiseclapperindicator.destroy();
+		noiseclapperindicator = null;
+	}
+}
 
 //------------------------Indicator Setup---------------------------
 const NoiseclapperIndicator = GObject.registerClass({},
 class NoiseclapperIndicator extends PanelMenu.Button {
-	_init () {
+	_init (ext) {
 		super._init(0);
+		this._extension = ext
 
 		//This will add a box object to the panel. It's basically the extension's button.
 		let box = new St.BoxLayout({ vertical: false, style_class: 'panel-status-menu-box' });
@@ -117,7 +146,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		this.add_child(box);
 
 		//We apply the settings.
-		this._settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.noiseclapper');
+		this._settings = this._extension.getSettings();
 		this._settings.connect('changed', this.applyNewPosition.bind(this));
 		this._settingsChangedId = this._settings.connect('changed', this.applySettings.bind(this));
 		this.applySettings();
@@ -145,6 +174,8 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	runCommand (command) {
+		LOGGING = true;
+
 		//Detect connected Bluetooth devices using GnomeBluetooth, and extract MAC address of first Soundcore device
 		let deviceObject
 		try{
@@ -211,7 +242,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	openSettings () {
-		ExtensionUtils.openPrefs();
+		this._extension.openPreferences();
 	}
 
 	applySettings(){
@@ -248,33 +279,3 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		super._destroy();
 	}
 });
-
-//-----------------------Enabling Extension-------------------------
-let noiseclapperindicator;
-function enable() {
-	if (LOGGING == true) {
-		console.log("[Noiseclapper] Noiseclapper is enabled. Spawning indicator...");
-	}
-
-	//We enable the bluetooth client
-	NoiseclapperBluetoothClient = new GnomeBluetooth.Client();
-
-	//Creates the indicator
-	noiseclapperindicator = new NoiseclapperIndicator();
-	//Adds it to the panel
-	Main.panel.addToStatusArea('NoiseclapperIndicator', noiseclapperindicator);
-	//Sets position
-	noiseclapperindicator.applyNewPosition()
-}
-
-//------------------------Disabling Extension------------------------
-function disable() {
-	//Disable Bluetooth client if enabled
-	if (NoiseclapperBluetoothClient != null) {
-		NoiseclapperBluetoothClient = null;
-	}
-
-	//Removes the indicator
-	noiseclapperindicator.destroy();
-	noiseclapperindicator = null;
-}
