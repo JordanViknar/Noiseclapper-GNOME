@@ -8,38 +8,38 @@
 </object>
 
 <object class="AdwPreferencesPage" id="page_basic">
-	<property name="title" translatable="yes">Basic settings</property>
+	<property name="title" translatable="yes">Settings</property>
 	<property name="icon-name">preferences-system-symbolic</property>
 
 	<child>
 		<object class="AdwPreferencesGroup">
 			<property name="title" translatable="yes">Indicator</property>
+			<property name="description" translatable="yes">Settings related to the panel indicator.</property>
 
 			<child>
 				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Position</property>
-					<property name="activatable-widget">field_position</property>
+					<property name="title" translatable="yes">Position in Panel</property>
 					<child>
-						<object class="GtkComboBoxText" id="field_position">
-						<property name="valign">3</property>
-							<items>
-								<item translatable="yes" id="0">Left</item>
-								<item translatable="yes" id="1">Center</item>
-								<item translatable="yes" id="2">Right</item>
-							</items>
-						</object>
-					</child>
-				</object>
-			</child>
-
-			<child>
-				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Priority</property>
-					<property name="activatable-widget">field_position_number</property>
-					<child>
-						<object class="GtkSpinButton" id="field_position_number">
-							<property name="valign">3</property>
-							<property name="adjustment">PriorityAdjustement</property>
+						<object class="GtkBox">
+							<property name="spacing">12</property>
+							<property name="margin-start">12</property>
+							<property name="hexpand">false</property>
+							<child>
+								<object class="GtkComboBoxText" id="field_position">
+									<property name="valign">3</property>
+									<items>
+										<item translatable="yes" id="0">Left</item>
+										<item translatable="yes" id="1">Center</item>
+										<item translatable="yes" id="2">Right</item>
+									</items>
+								</object>
+							</child>
+							<child>
+								<object class="GtkSpinButton" id="field_position_number">
+									<property name="valign">3</property>
+									<property name="adjustment">PriorityAdjustement</property>
+								</object>
+							</child>
 						</object>
 					</child>
 				</object>
@@ -51,6 +51,7 @@
 	<child>
 		<object class="AdwPreferencesGroup">
 			<property name="title" translatable="yes">Advanced</property>
+			<property name="description" translatable="yes">Only modify these settings if you know what you're doing.</property>
 
 			<child>
 				<object class="AdwActionRow">
@@ -105,50 +106,71 @@
 
 	<child>
 		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Information</property>
+
 			<child>
 				<object class="GtkBox">
-				<property name="orientation">vertical</property>
-				<property name="spacing">6</property>
+					<property name="orientation">vertical</property>
+					<property name="spacing">20</property>
+
 					<child>
-						<object class="GtkLabel">
-							<property name="label" translatable="yes">Credits</property>
-							<property name="hexpand">true</property>
-							<property name="halign">1</property>
-							<attributes>
-								<attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-							</attributes>
+						<object class="GtkBox">
+							<property name="orientation">horizontal</property>
+							<property name="halign">3</property>
+							<property name="spacing">12</property>
+							<child>
+								<object class="GtkLabel" id="about_name">
+								</object>
+							</child>
+							<child>
+								<object class="GtkLabel" id="about_version">
+								</object>
+							</child>
 						</object>
 					</child>
 
 					<child>
-						<object class="GtkFrame">
-							<property name="margin-start">12</property>
-							<property name="margin-end">12</property>
-							<property name="margin-top">1</property>
-							<property name="margin-bottom">1</property>
+						<object class="GtkLabel" id="about_description">
+							<property name="wrap">true</property>
+							<property name="justify">GTK_JUSTIFY_CENTER</property>
+						</object>
+					</child>
 
+					<child>
+						<object class="GtkLabel" id="about_url">
+						</object>
+					</child>
+				</object>
+			</child>
+		</object>
+	</child>
+
+	<child>
+		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Credits</property>
+			<property name="description" translatable="yes">Thank you for using Noiseclapper.</property>
+
+			<child>
+				<object class="GtkBox">
+					<property name="orientation">vertical</property>
+					<child>
+						<object class="GtkFrame">
 							<child>
 								<object class="GtkLabel">
-									<property name="margin-start">12</property>
-									<property name="margin-end">12</property>
-
 									<property name="label" translatable="no">
 Noiseclapper is free software, made by JordanViknar.
-It is licensed under the GNU GPL-3.0.
+You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
 
 This project would not have been possible without source code from :
 	- SoundcoreLifeAPI, by KillerBOSS2019.
 	- Arch Linux Updates Indicator, by RaphaelRochet.
 	- Bluetooth Quick Connect, by bjarosze.
 
-This project is not affiliated, associated, authorized, endorsed by,
-or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
+This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
 
-The name Soundcore as well as related names, marks, emblems and images are
-registered trademarks of their respective owners.
+The name Soundcore as well as related names, marks, emblems and images are registered trademarks of their respective owners.
 									</property>
-									<property name="hexpand">true</property>
-									<property name="halign">1</property>
+									<property name="wrap">true</property>
 								</object>
 							</child>
 						</object>

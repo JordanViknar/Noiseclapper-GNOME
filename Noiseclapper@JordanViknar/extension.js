@@ -96,7 +96,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		this.menu.addMenuItem(this.EqualizerPresetMenu);
 
 		//The submenus' mode/preset lists
-		let NoiseCancellingModeList = [
+		const NoiseCancellingModeList = [
 			{ label: _('🚋 Transport'), command: 'ANCTransport' },
 			{ label: _('🏠 Indoor'), command: 'ANCIndoor' },
 			{ label: _('🌳 Outdoor'), command: 'ANCOutdoor' },
@@ -106,7 +106,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		];
 		this.addAllInListAsButtons(NoiseCancellingModeList, this.NoiseCancellingModeMenu, API_NOISE_REDUCTION);
 
-		let EqualizerPresetList = [
+		const EqualizerPresetList = [
 			{ label: _('🎵 Soundcore Signature'), command: 'SoundCore Signature' },
 			{ label: _('🎸 Acoustic'), command: 'Acoustic' },
 			{ label: _('🎸 Bass Booster'), command: 'Base Booster' },
@@ -184,7 +184,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		} catch (error) {
 			Main.notifyError(_('Noiseclapper failed to obtain Bluetooth devices ('+ error.message +').'));
 			if (LOGGING == true) {
-				console.log("[Noiseclapper] Error: Could not get Bluetooth devices : " + error);
+				console.error("[Noiseclapper] Error: Could not get Bluetooth devices : " + error);
 			}
 			return;
 		}
@@ -234,7 +234,7 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		if (hasFoundAtLeastOneDevice == false) {
 			Main.notifyError(_("Noiseclapper couldn't find a connected compatible device."));
 			if (LOGGING == true) {
-				console.log("[Noiseclapper] Error : No compatible devices found.");
+				console.error("[Noiseclapper] Error : No compatible devices found.");
 			}
 		}
 	}
