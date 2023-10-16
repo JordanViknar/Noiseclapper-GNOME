@@ -34,7 +34,7 @@ If your device works despite not being marked as supported, don't hesitate to cr
 
 ## Requirements
 
-- GNOME Shell
+- GNOME Shell 45 (42 - 44 with previous versions of Noiseclapper)
 - Python 3
 - Bluetooth support on the computer
 - *(The Soundcore application must be inactive on your phone, else it will conflict for the control of your headphones with this extension.)*

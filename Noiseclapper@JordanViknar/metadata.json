@@ -3,10 +3,10 @@
 	"description": "Provides control of Soundcore Life Q30 Headphones (and others).",
 	"url": "https://github.com/JordanViknar/Noiseclapper",
 	"uuid": "Noiseclapper@JordanViknar",
-	"version": 1,
+	"gettext-domain": "Noiseclapper",
+	"settings-schema": "org.gnome.shell.extensions.noiseclapper",
 	"shell-version": [
-		"42",
-		"43",
-		"44"
-	]
+		"45"
+	],
+	"version": 1
 }

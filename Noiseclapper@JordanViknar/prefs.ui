@@ -1,277 +1,185 @@
 <?xml version="1.0"?>
 <interface domain="Noiseclapper">
 
-<object class="GtkAdjustment" id="Adjust_1">
-	<property name="lower">5</property>
-	<property name="upper">5000</property>
-	<property name="step_increment">1</property>
-</object>
-<object class="GtkAdjustment" id="Adjust_2">
-	<property name="lower">30</property>
-	<property name="upper">2000</property>
-	<property name="step_increment">30</property>
-</object>
-<object class="GtkAdjustment" id="Adjust_3">
-	<property name="lower">0</property>
-	<property name="upper">99</property>
-	<property name="step_increment">1</property>
-</object>
-<object class="GtkAdjustment" id="Adjust_4">
+<object class="GtkAdjustment" id="PriorityAdjustement">
 	<property name="lower">0</property>
 	<property name="upper">99</property>
 	<property name="step_increment">1</property>
 </object>
 
-<object class="GtkNotebook" id="prefs_widget">
+<object class="AdwPreferencesPage" id="page_basic">
+	<property name="title" translatable="yes">Settings</property>
+	<property name="icon-name">preferences-system-symbolic</property>
 
-<child>
-	<object class="GtkGrid">
-		<property name="margin-top">18</property>
-		<property name="margin-start">18</property>
-		<property name="margin-end">18</property>
-		<property name="margin-bottom">18</property>
-		<property name="row-spacing">18</property>
-		<property name="row-homogeneous">false</property>
-		<property name="orientation">vertical</property>
-			
-		<child>
-			<object class="GtkBox">
-			<property name="orientation">vertical</property>
-			<property name="spacing">6</property>
+	<child>
+		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Indicator</property>
+			<property name="description" translatable="yes">Settings related to the panel indicator.</property>
 
-				<child>
-					<object class="GtkLabel">
-						<property name="label" translatable="yes">Icon position settings</property>
-						<property name="hexpand">true</property>
-						<property name="halign">1</property>
-						<attributes>
-							<attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-						</attributes>
-					</object>
-				</child>
+			<child>
+				<object class="AdwActionRow">
+					<property name="title" translatable="yes">Position in Panel</property>
+					<child>
+						<object class="GtkBox">
+							<property name="spacing">12</property>
+							<property name="margin-start">12</property>
+							<property name="hexpand">false</property>
+							<child>
+								<object class="GtkComboBoxText" id="field_position">
+									<property name="valign">3</property>
+									<items>
+										<item translatable="yes" id="0">Left</item>
+										<item translatable="yes" id="1">Center</item>
+										<item translatable="yes" id="2">Right</item>
+									</items>
+								</object>
+							</child>
+							<child>
+								<object class="GtkSpinButton" id="field_position_number">
+									<property name="valign">3</property>
+									<property name="adjustment">PriorityAdjustement</property>
+								</object>
+							</child>
+						</object>
+					</child>
+				</object>
+			</child>
 
-				<child>
-					<object class="GtkBox">
-						<property name="spacing">12</property>
-						<property name="margin-start">12</property>
-						<child>
-							<object class="GtkLabel">
-								<property name="label" translatable="yes">Position</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-						<child>
-							<object class="GtkBox">
-								<property name="spacing">12</property>
-								<property name="margin-start">12</property>
-								<property name="hexpand">false</property>
-								<child>
-									<object class="GtkComboBoxText" id="field_position">
-										<items>
-											<item translatable="yes" id="0">Left</item>
-											<item translatable="yes" id="1">Center</item>
-											<item translatable="yes" id="2">Right</item>
-										</items>
-									</object>
-								</child>
-							</object>>
-						</child>
-					</object>
-				</child>
+		</object>
+	</child>
 
-				<child>
-					<object class="GtkBox">
-						<property name="spacing">12</property>
-						<property name="margin-start">12</property>
-						<child>
-							<object class="GtkLabel">
-								<property name="label" translatable="yes">Priority</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-						<child>
-							<object class="GtkSpinButton" id="field_position_number">
-								<property name="adjustment">Adjust_4</property>
-							</object>
-						</child>
-					</object>
-				</child>
-			</object>
-		</child>
-	</object>
-</child>
+	<child>
+		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Advanced</property>
+			<property name="description" translatable="yes">Only modify these settings if you know what you're doing.</property>
 
-<child type="tab">
-	<object class="GtkLabel">
-		<property name="label" translatable="yes">Main</property>
-	</object>
-</child>
+			<child>
+				<object class="AdwActionRow">
+					<property name="title" translatable="yes">Python binary name</property>
+					<property name="activatable-widget">field_python_type</property>
+					<child>
+						<object class="GtkComboBoxText" id="field_python_type">
+							<property name="valign">3</property>
+							<items>
+								<item translatable="no" id="0">python3</item>
+								<item translatable="no" id="1">python</item>
+							</items>
+						</object>
+					</child>
+				</object>
+			</child>
 
-<child>
-	<object class="GtkGrid">
-		<property name="margin-top">18</property>
-		<property name="margin-start">18</property>
-		<property name="margin-end">18</property>
-		<property name="margin-bottom">18</property>
-		<property name="row-spacing">18</property>
-		<property name="row-homogeneous">false</property>
-		<property name="orientation">vertical</property>
+			<child>
+				<object class="AdwActionRow">
+					<property name="title" translatable="yes">Use GNOME Console/Terminal</property>
+					<property name="activatable-widget">field_terminal</property>
+					<child>
+						<object class="GtkSwitch" id="field_terminal">
+							<property name="valign">3</property>
+							<property name="active">true</property>
+						</object>
+					</child>
+				</object>
+			</child>
 
-		<child>
-			<object class="GtkBox">
-			<property name="orientation">vertical</property>
-			<property name="spacing">6</property>
-				<child>
-					<object class="GtkLabel">
-						<property name="label" translatable="yes">Miscellaneous</property>
-						<property name="hexpand">true</property>
-						<property name="halign">1</property>
-						<attributes>
-							<attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-						</attributes>
-					</object>
-				</child>
+			<child>
+				<object class="AdwActionRow">
+					<property name="title" translatable="yes">Enable log messages</property>
+					<property name="activatable-widget">field_logging</property>
+					<child>
+						<object class="GtkSwitch" id="field_logging">
+							<property name="valign">3</property>
+							<property name="active">false</property>
+						</object>
+					</child>
+				</object>
+			</child>
 
-				<child>
-					<object class="GtkBox">
-						<property name="spacing">12</property>
-						<property name="margin-start">12</property>
-						<child>
-							<object class="GtkLabel">
-								<property name="label" translatable="yes">Python binary name</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-						<child>
-							<object class="GtkComboBoxText" id="field_python_type">
-								<items>
-									<item translatable="no" id="0">python3</item>
-									<item translatable="no" id="1">python</item>
-								</items>
-							</object>
-						</child>
-					</object>
-				</child>
+		</object>
+	</child>
 
-				<child>
-					<object class="GtkBox">
-						<property name="spacing">12</property>
-						<property name="margin-start">12</property>
-						<child>
-							<object class="GtkLabel">
-								<property name="label" translatable="yes">Use GNOME Console/Terminal</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-						<child>
-							<object class="GtkSwitch" id="field_terminal">
-								<property name="active">true</property>
-							</object>
-						</child>
-					</object>
-				</child>
+</object>
 
-				<child>
-					<object class="GtkBox">
-						<property name="spacing">12</property>
-						<property name="margin-start">12</property>
-						<child>
-							<object class="GtkLabel">
-								<property name="label" translatable="yes">Enable log messages</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-						<child>
-							<object class="GtkSwitch" id="field_logging">
-								<property name="active">false</property>
-							</object>
-						</child>
-					</object>
-				</child>
-			</object>
-		</child>
-	</object>
-</child>
+<object class="AdwPreferencesPage" id="page_about">
+	<property name="title" translatable="yes">About</property>
+	<property name="icon-name">help-about-symbolic</property>
 
-<child type="tab">
-	<object class="GtkLabel">
-		<property name="label" translatable="yes">Misc</property>
-	</object>
-</child>
+	<child>
+		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Information</property>
 
-<child>
-	<object class="GtkGrid">
-		<property name="margin-top">18</property>
-		<property name="margin-start">18</property>
-		<property name="margin-end">18</property>
-		<property name="margin-bottom">18</property>
-		<property name="row-spacing">18</property>
-		<property name="row-homogeneous">false</property>
-		<property name="orientation">vertical</property>
+			<child>
+				<object class="GtkBox">
+					<property name="orientation">vertical</property>
+					<property name="spacing">20</property>
 
-		<child>
-			<object class="GtkBox">
-			<property name="orientation">vertical</property>
-			<property name="spacing">6</property>
-				<child>
-					<object class="GtkLabel">
-						<property name="label" translatable="yes">Credits</property>
-						<property name="hexpand">true</property>
-						<property name="halign">1</property>
-						<attributes>
-							<attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
-						</attributes>
-					</object>
-				</child>
+					<child>
+						<object class="GtkBox">
+							<property name="orientation">horizontal</property>
+							<property name="halign">3</property>
+							<property name="spacing">12</property>
+							<child>
+								<object class="GtkLabel" id="about_name">
+								</object>
+							</child>
+							<child>
+								<object class="GtkLabel" id="about_version">
+								</object>
+							</child>
+						</object>
+					</child>
 
-				<child>
-					<object class="GtkFrame">
-						<property name="margin-start">12</property>
-						<property name="margin-end">12</property>
-						<property name="margin-top">1</property>
-						<property name="margin-bottom">1</property>
+					<child>
+						<object class="GtkLabel" id="about_description">
+							<property name="wrap">true</property>
+							<property name="justify">GTK_JUSTIFY_CENTER</property>
+						</object>
+					</child>
 
-						<child>
-							<object class="GtkLabel">
-								<property name="margin-start">12</property>
-								<property name="margin-end">12</property>
+					<child>
+						<object class="GtkLabel" id="about_url">
+						</object>
+					</child>
+				</object>
+			</child>
+		</object>
+	</child>
 
-								<property name="label" translatable="no">
-Noiseclapper is a free software, made by JordanViknar.
+	<child>
+		<object class="AdwPreferencesGroup">
+			<property name="title" translatable="yes">Credits</property>
+			<property name="description" translatable="yes">Thank you for using Noiseclapper.</property>
+
+			<child>
+				<object class="GtkBox">
+					<property name="orientation">vertical</property>
+					<child>
+						<object class="GtkFrame">
+							<child>
+								<object class="GtkLabel">
+									<property name="label" translatable="no">
+Noiseclapper is free software, made by JordanViknar.
 You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
 
 This project would not have been possible without source code from :
-	- SoundcoreLifeAPI, by KillerBOSS2019, licensed under the GNU GPL-3.0 License.
-	- Arch Linux Updates Indicator, by RaphaelRochet, licensed under the GNU GPL-3.0 License.
-	- Bluetooth Quick Connect, by bjarosze, licensed under the GNU GPL-3.0 License.
+	- SoundcoreLifeAPI, by KillerBOSS2019.
+	- Arch Linux Updates Indicator, by RaphaelRochet.
+	- Bluetooth Quick Connect, by bjarosze.
 
-This project is not affiliated, associated, authorized, endorsed by,
-or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
+This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
 
-The name Soundcore as well as related names, marks, emblems and images are
-registered trademarks of their respective owners.
-								</property>
-								<property name="hexpand">true</property>
-								<property name="halign">1</property>
-							</object>
-						</child>
-					</object>
-				</child>
-			</object>
-		</child>
-	</object>
-</child>
-
-<child type="tab">
-	<object class="GtkImage">
-		<property name="icon-name">help-about</property>
-	</object>
-</child>
+The name Soundcore as well as related names, marks, emblems and images are registered trademarks of their respective owners.
+									</property>
+									<property name="wrap">true</property>
+								</object>
+							</child>
+						</object>
+					</child>
+				</object>
+			</child>
+		</object>
+	</child>
 
 </object>
+
 </interface>
