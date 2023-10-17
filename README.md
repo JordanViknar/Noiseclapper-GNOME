@@ -9,6 +9,10 @@
 This is an **unofficial** GNOME Shell extension, designed for use with the Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
 I am **not** partnered with Soundcore or Anker in any way. Although I am using his API, [KillerBOSS2019](https://github.com/KillerBOSS2019) is **not** involved with the development of this extension.
 
+## Screenshot
+
+![Noiseclapper interface screenshot](./assets/screenshots/interface.png)
+
 ## What is Noiseclapper ?
 
 Noiseclapper is a GNOME Shell extension that allows you to control some settings in your Soundcore Life headphones. Normally, the official way of doing this would be to use the [official Android application](https://play.google.com/store/apps/details?id=com.oceanwing.soundcore) through your smartphone, and then set the Active Noise Cancellation mode and the Equalizer settings from there. Problem : the application is **exclusive to Android**.
