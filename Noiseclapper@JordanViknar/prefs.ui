@@ -1,164 +1,144 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.16.0 -->
 <interface domain="Noiseclapper">
-
-<object class="GtkAdjustment" id="PriorityAdjustement">
-	<property name="lower">0</property>
-	<property name="upper">99</property>
-	<property name="step_increment">1</property>
-</object>
-
-<object class="AdwPreferencesPage" id="page_basic">
-	<property name="title" translatable="yes">Settings</property>
-	<property name="icon-name">preferences-system-symbolic</property>
-
-	<child>
-		<object class="AdwPreferencesGroup">
-			<property name="title" translatable="yes">Indicator</property>
-			<property name="description" translatable="yes">Settings related to the panel indicator.</property>
-
-			<child>
-				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Position in Panel</property>
-					<child>
-						<object class="GtkBox">
-							<property name="spacing">12</property>
-							<property name="margin-start">12</property>
-							<property name="hexpand">false</property>
-							<child>
-								<object class="GtkComboBoxText" id="field_position">
-									<property name="valign">3</property>
-									<items>
-										<item translatable="yes" id="0">Left</item>
-										<item translatable="yes" id="1">Center</item>
-										<item translatable="yes" id="2">Right</item>
-									</items>
-								</object>
-							</child>
-							<child>
-								<object class="GtkSpinButton" id="field_position_number">
-									<property name="valign">3</property>
-									<property name="adjustment">PriorityAdjustement</property>
-								</object>
-							</child>
-						</object>
-					</child>
-				</object>
-			</child>
-
-		</object>
-	</child>
-
-	<child>
-		<object class="AdwPreferencesGroup">
-			<property name="title" translatable="yes">Advanced</property>
-			<property name="description" translatable="yes">Only modify these settings if you know what you're doing.</property>
-
-			<child>
-				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Python binary name</property>
-					<property name="activatable-widget">field_python_type</property>
-					<child>
-						<object class="GtkComboBoxText" id="field_python_type">
-							<property name="valign">3</property>
-							<items>
-								<item translatable="no" id="0">python3</item>
-								<item translatable="no" id="1">python</item>
-							</items>
-						</object>
-					</child>
-				</object>
-			</child>
-
-			<child>
-				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Use GNOME Console/Terminal</property>
-					<property name="activatable-widget">field_terminal</property>
-					<child>
-						<object class="GtkSwitch" id="field_terminal">
-							<property name="valign">3</property>
-							<property name="active">true</property>
-						</object>
-					</child>
-				</object>
-			</child>
-
-			<child>
-				<object class="AdwActionRow">
-					<property name="title" translatable="yes">Enable log messages</property>
-					<property name="activatable-widget">field_logging</property>
-					<child>
-						<object class="GtkSwitch" id="field_logging">
-							<property name="valign">3</property>
-							<property name="active">false</property>
-						</object>
-					</child>
-				</object>
-			</child>
-
-		</object>
-	</child>
-
-</object>
-
-<object class="AdwPreferencesPage" id="page_about">
-	<property name="title" translatable="yes">About</property>
-	<property name="icon-name">help-about-symbolic</property>
-
-	<child>
-		<object class="AdwPreferencesGroup">
-			<property name="title" translatable="yes">Information</property>
-
-			<child>
-				<object class="GtkBox">
-					<property name="orientation">vertical</property>
-					<property name="spacing">20</property>
-
-					<child>
-						<object class="GtkBox">
-							<property name="orientation">horizontal</property>
-							<property name="halign">3</property>
-							<property name="spacing">12</property>
-							<child>
-								<object class="GtkLabel" id="about_name">
-								</object>
-							</child>
-							<child>
-								<object class="GtkLabel" id="about_version">
-								</object>
-							</child>
-						</object>
-					</child>
-
-					<child>
-						<object class="GtkLabel" id="about_description">
-							<property name="wrap">true</property>
-							<property name="justify">GTK_JUSTIFY_CENTER</property>
-						</object>
-					</child>
-
-					<child>
-						<object class="GtkLabel" id="about_url">
-						</object>
-					</child>
-				</object>
-			</child>
-		</object>
-	</child>
-
-	<child>
-		<object class="AdwPreferencesGroup">
-			<property name="title" translatable="yes">Credits</property>
-			<property name="description" translatable="yes">Thank you for using Noiseclapper.</property>
-
-			<child>
-				<object class="GtkBox">
-					<property name="orientation">vertical</property>
-					<child>
-						<object class="GtkFrame">
-							<child>
-								<object class="GtkLabel">
-									<property name="label" translatable="no">
-Noiseclapper is free software, made by JordanViknar.
+  <!-- interface-name prefs.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <object class="AdwPreferencesPage" id="page_basic">
+    <property name="icon-name">preferences-system-symbolic</property>
+    <property name="title" translatable="yes">Settings</property>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="description" translatable="yes">Settings related to the panel indicator.</property>
+        <property name="title" translatable="yes">Indicator</property>
+        <child>
+          <object class="AdwActionRow">
+            <property name="activatable-widget">field_position</property>
+            <property name="icon-name">preferences-desktop-multitasking-symbolic</property>
+            <property name="title" translatable="yes">Position in Panel</property>
+            <child>
+              <object class="GtkBox">
+                <property name="margin-start">12</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkComboBoxText" id="field_position">
+                    <property name="valign">center</property>
+                    <!-- Custom fragments -->
+                    <items>
+                      <item translatable="yes" id="0">Left</item>
+                      <item translatable="yes" id="1">Center</item>
+                      <item translatable="yes" id="2">Right</item>
+                    </items>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="field_position_number">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">99.0</property>
+                      </object>
+                    </property>
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="description" translatable="yes">Only modify these settings if you know what you're doing.</property>
+        <property name="title" translatable="yes">Advanced</property>
+        <child>
+          <object class="AdwActionRow">
+            <property name="activatable-widget">field_python_type</property>
+            <property name="icon-name">application-x-executable-symbolic</property>
+            <property name="title" translatable="yes">Python binary name</property>
+            <child>
+              <object class="GtkComboBoxText" id="field_python_type">
+                <property name="valign">center</property>
+                <items>
+                  <item id="0">python3</item>
+                  <item id="1">python</item>
+                </items>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="activatable-widget">field_terminal</property>
+            <property name="icon-name">utilities-terminal-symbolic</property>
+            <property name="title" translatable="yes">Use GNOME Console/Terminal</property>
+            <child>
+              <object class="GtkSwitch" id="field_terminal">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwActionRow">
+            <property name="activatable-widget">field_logging</property>
+            <property name="icon-name">info-symbolic</property>
+            <property name="title" translatable="yes">Enable log messages</property>
+            <child>
+              <object class="GtkSwitch" id="field_logging">
+                <property name="valign">center</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="AdwPreferencesPage" id="page_about">
+    <property name="icon-name">help-about-symbolic</property>
+    <property name="title" translatable="yes">About</property>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="title" translatable="yes">Information</property>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">20</property>
+            <child>
+              <object class="GtkBox">
+                <property name="halign">center</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkLabel" id="about_name"/>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="about_version"/>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="about_description">
+                <property name="justify">center</property>
+                <property name="wrap">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="about_url"/>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesGroup">
+        <property name="description" translatable="yes">Thank you for using Noiseclapper.</property>
+        <property name="title" translatable="yes">Credits</property>
+        <child>
+          <object class="GtkFrame">
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Noiseclapper is free software, made by JordanViknar.
 You can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.
 
 This project would not have been possible without source code from :
@@ -168,18 +148,14 @@ This project would not have been possible without source code from :
 
 This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.
 
-The name Soundcore as well as related names, marks, emblems and images are registered trademarks of their respective owners.
-									</property>
-									<property name="wrap">true</property>
-								</object>
-							</child>
-						</object>
-					</child>
-				</object>
-			</child>
-		</object>
-	</child>
-
-</object>
-
+The name Soundcore as well as related names, marks, emblems and images are registered trademarks of their respective owners.</property>
+                <property name="wrap">True</property>
+                <!-- Custom fragments -->
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>

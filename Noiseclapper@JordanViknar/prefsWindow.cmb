@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
+<cambalache-project version="0.13.1" target_tk="gtk-4.0">
+  <ui>
+	(1,None,"prefs.ui","prefs.ui",None,None,None,None,"Noiseclapper",None,None)
+  </ui>
+  <object>
+	(1,4,"AdwPreferencesPage","page_basic",None,None,None,None,None,None),
+	(1,5,"AdwPreferencesGroup",None,4,None,None,None,None,None),
+	(1,6,"AdwActionRow",None,5,None,None,None,None,None),
+	(1,7,"GtkBox",None,6,None,None,None,None,None),
+	(1,9,"GtkSpinButton","field_position_number",7,None,None,None,1,None),
+	(1,10,"GtkAdjustment",None,9,None,None,None,None,None),
+	(1,11,"AdwPreferencesGroup",None,4,None,None,None,1,None),
+	(1,12,"AdwActionRow",None,11,None,None,None,None,None),
+	(1,14,"AdwActionRow",None,11,None,None,None,1,None),
+	(1,16,"AdwActionRow",None,11,None,None,None,2,None),
+	(1,18,"AdwPreferencesPage","page_about",None,None,None,None,None,None),
+	(1,19,"GtkComboBoxText","field_python_type",12,None,None,None,None,None),
+	(1,20,"GtkSwitch","field_terminal",14,None,None,None,None,None),
+	(1,21,"GtkSwitch","field_logging",16,None,None,None,None,None),
+	(1,22,"AdwPreferencesGroup",None,18,None,None,None,-1,None),
+	(1,28,"AdwPreferencesGroup",None,18,None,None,None,-1,None),
+	(1,29,"GtkFrame",None,28,None,None,None,-1,None),
+	(1,30,"GtkLabel",None,29,None,None,None,-1,""),
+	(1,31,"GtkBox",None,22,None,None,None,3,None),
+	(1,32,"GtkBox",None,31,None,None,None,None,None),
+	(1,33,"GtkLabel","about_name",32,None,None,None,None,None),
+	(1,34,"GtkLabel","about_version",32,None,None,None,1,None),
+	(1,38,"GtkLabel","about_description",31,None,None,None,1,None),
+	(1,42,"GtkLabel","about_url",31,None,None,None,2,None),
+	(1,43,"GtkComboBoxText","field_position",7,None,None,None,None,"&lt;items&gt;\n&lt;item translatable=\"yes\" id=\"0\"&gt;Left&lt;/item&gt;\n&lt;item translatable=\"yes\" id=\"1\"&gt;Center&lt;/item&gt;\n&lt;item translatable=\"yes\" id=\"2\"&gt;Right&lt;/item&gt;\n&lt;/items&gt;")
+  </object>
+  <object_property>
+	(1,4,"AdwPreferencesPage","icon-name","preferences-system-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,4,"AdwPreferencesPage","title","Settings",1,None,None,None,None,None,None,None,None),
+	(1,5,"AdwPreferencesGroup","description","Settings related to the panel indicator.",1,None,None,None,None,None,None,None,None),
+	(1,5,"AdwPreferencesGroup","title","Indicator",1,None,None,None,None,None,None,None,None),
+	(1,6,"AdwActionRow","activatable-widget","43",None,None,None,None,None,None,None,None,None),
+	(1,6,"AdwActionRow","icon-name","preferences-desktop-multitasking-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,6,"AdwPreferencesRow","title","Position in Panel",1,None,None,None,None,None,None,None,None),
+	(1,7,"GtkBox","spacing","12",None,None,None,None,None,None,None,None,None),
+	(1,7,"GtkWidget","margin-start","12",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkSpinButton","adjustment",None,None,None,None,None,10,None,None,None,None),
+	(1,9,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkAdjustment","step-increment","1.0",None,None,None,None,None,None,None,None,None),
+	(1,10,"GtkAdjustment","upper","99.0",None,None,None,None,None,None,None,None,None),
+	(1,11,"AdwPreferencesGroup","description","Only modify these settings if you know what you're doing.",1,None,None,None,None,None,None,None,None),
+	(1,11,"AdwPreferencesGroup","title","Advanced",1,None,None,None,None,None,None,None,None),
+	(1,12,"AdwActionRow","activatable-widget","19",None,None,None,None,None,None,None,None,None),
+	(1,12,"AdwActionRow","icon-name","application-x-executable-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,12,"AdwPreferencesRow","title","Python binary name",1,None,None,None,None,None,None,None,None),
+	(1,14,"AdwActionRow","activatable-widget","20",None,None,None,None,None,None,None,None,None),
+	(1,14,"AdwActionRow","icon-name","utilities-terminal-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,14,"AdwPreferencesRow","title","Use GNOME Console/Terminal",1,None,None,None,None,None,None,None,None),
+	(1,16,"AdwActionRow","activatable-widget","21",None,None,None,None,None,None,None,None,None),
+	(1,16,"AdwActionRow","icon-name","info-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,16,"AdwPreferencesRow","title","Enable log messages",1,None,None,None,None,None,None,None,None),
+	(1,18,"AdwPreferencesPage","icon-name","help-about-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,18,"AdwPreferencesPage","title","About",1,None,None,None,None,None,None,None,None),
+	(1,19,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,20,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,21,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
+	(1,22,"AdwPreferencesGroup","title","Information",1,None,None,None,None,None,None,None,None),
+	(1,28,"AdwPreferencesGroup","description","Thank you for using Noiseclapper.",1,None,None,None,None,None,None,None,None),
+	(1,28,"AdwPreferencesGroup","title","Credits",1,None,None,None,None,None,None,None,None),
+	(1,30,"GtkLabel","label","Noiseclapper is free software, made by JordanViknar.\nYou can redistribute it and/or modify it under the conditions of the GNU GPL-3.0 License.\n\nThis project would not have been possible without source code from :\n	- SoundcoreLifeAPI, by KillerBOSS2019.\n	- Arch Linux Updates Indicator, by RaphaelRochet.\n	- Bluetooth Quick Connect, by bjarosze.\n\nThis project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Anker, or any of its subsidiaries or its affiliates.\n\nThe name Soundcore as well as related names, marks, emblems and images are registered trademarks of their respective owners.",None,None,None,None,None,None,None,None,None),
+	(1,30,"GtkLabel","wrap","True",None,None,None,None,None,None,None,None,None),
+	(1,31,"GtkBox","spacing","20",None,None,None,None,None,None,None,None,None),
+	(1,31,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
+	(1,32,"GtkBox","spacing","12",None,None,None,None,None,None,None,None,None),
+	(1,32,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
+	(1,38,"GtkLabel","justify","center",None,None,None,None,None,None,None,None,None),
+	(1,38,"GtkLabel","wrap","True",None,None,None,None,None,None,None,None,None),
+	(1,43,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None)
+  </object_property>
+  <object_data>
+	(1,19,"GtkComboBoxText",1,1,None,None,None,None,None,None),
+	(1,19,"GtkComboBoxText",2,2,"python3",1,None,None,None,None),
+	(1,19,"GtkComboBoxText",2,3,"python",1,None,None,None,None)
+  </object_data>
+  <object_data_arg>
+	(1,19,"GtkComboBoxText",2,2,"id","0"),
+	(1,19,"GtkComboBoxText",2,3,"id","1")
+  </object_data_arg>
+</cambalache-project>

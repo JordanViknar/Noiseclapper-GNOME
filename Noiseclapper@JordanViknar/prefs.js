@@ -13,7 +13,7 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 
 		// Configure dynamic widgets
 		buildable.get_object('about_name').set_text(this.metadata.name.toString());
-		buildable.get_object('about_version').set_text("Version "+this.metadata.version.toString());
+		buildable.get_object('about_version').set_text(this.metadata.version.toString());
 		buildable.get_object('about_description').set_text(this.metadata.description.toString());
 		buildable.get_object('about_url').set_markup("<a href=\"" + this.metadata.url.toString() + "\">" + this.metadata.url.toString() + "</a>");
 	
