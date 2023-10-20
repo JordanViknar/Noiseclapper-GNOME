@@ -21,8 +21,6 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 		let settings = this.getSettings();
 		settings.bind('position' , buildable.get_object('field_position') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 		settings.bind('position-number' , buildable.get_object('field_position_number') , 'value' , Gio.SettingsBindFlags.DEFAULT);
-		settings.bind('python-type' , buildable.get_object('field_python_type') , 'active' , Gio.SettingsBindFlags.DEFAULT);
-		settings.bind('terminal-enabled' , buildable.get_object('field_terminal') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 		settings.bind('logging-enabled' , buildable.get_object('field_logging') , 'active' , Gio.SettingsBindFlags.DEFAULT);
 	
 		window.add(buildable.get_object('page_basic'));
