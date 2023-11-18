@@ -116,7 +116,6 @@ function sendSignal(signal, address) {
 	s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM);\
 	s.connect((\'"+address+"\', 12));\
 	s.send(bytearray.fromhex(\'"+signal+"\'));\
-	s.recv(4000);\
 	s.close();\"";
 
 	Util.spawnCommandLine(command);
