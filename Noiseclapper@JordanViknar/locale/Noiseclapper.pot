@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-16 21:32+0200\n"
+"POT-Creation-Date: 2023-10-20 16:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,190 +17,182 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:93
+#: extension.js:104 extension.js:258
+msgid "Noiseclapper - Error"
+msgstr ""
+
+#: extension.js:148
 msgid "Noise Cancelling Mode"
 msgstr ""
 
-#: extension.js:95
+#: extension.js:150
 msgid "Equalizer Preset"
 msgstr ""
 
-#: extension.js:100
+#: extension.js:156
 msgid "🚋 Transport"
 msgstr ""
 
-#: extension.js:101
+#: extension.js:157
 msgid "🏠 Indoor"
 msgstr ""
 
-#: extension.js:102
+#: extension.js:158
 msgid "🌳 Outdoor"
 msgstr ""
 
-#: extension.js:104
+#: extension.js:160
 msgid "🚫 Normal / No ANC"
 msgstr ""
 
-#: extension.js:105
+#: extension.js:161
 msgid "🪟 Transparency / No NC"
 msgstr ""
 
-#: extension.js:110
+#: extension.js:167
 msgid "🎵 Soundcore Signature"
 msgstr ""
 
-#: extension.js:111
+#: extension.js:168
 msgid "🎸 Acoustic"
 msgstr ""
 
-#: extension.js:112
+#: extension.js:169
 msgid "🎸 Bass Booster"
 msgstr ""
 
-#: extension.js:113
+#: extension.js:170
 msgid "🚫 Bass Reducer"
 msgstr ""
 
-#: extension.js:114
+#: extension.js:171
 msgid "🎻 Classical"
 msgstr ""
 
-#: extension.js:115
+#: extension.js:172
 msgid "🎤 Podcast"
 msgstr ""
 
-#: extension.js:116
+#: extension.js:173
 msgid "🪩 Dance"
 msgstr ""
 
-#: extension.js:117
+#: extension.js:174
 msgid "🖴 Deep"
 msgstr ""
 
-#: extension.js:118
+#: extension.js:175
 msgid "⚡ Electronic"
 msgstr ""
 
-#: extension.js:119
+#: extension.js:176
 msgid "🚫 Flat"
 msgstr ""
 
-#: extension.js:120
+#: extension.js:177
 msgid "🎹 Hip-Hop"
 msgstr ""
 
-#: extension.js:121
+#: extension.js:178
 msgid "🎷 Jazz"
 msgstr ""
 
-#: extension.js:122
+#: extension.js:179
 msgid "💃🏽 Latin"
 msgstr ""
 
-#: extension.js:123
+#: extension.js:180
 msgid "🍸 Lounge"
 msgstr ""
 
-#: extension.js:124
+#: extension.js:181
 msgid "🎹 Piano"
 msgstr ""
 
-#: extension.js:125
+#: extension.js:182
 msgid "🎸 Pop"
 msgstr ""
 
-#: extension.js:126
+#: extension.js:183
 msgid "🎹 RnB"
 msgstr ""
 
-#: extension.js:127
+#: extension.js:184
 msgid "🎸 Rock"
 msgstr ""
 
-#: extension.js:128
+#: extension.js:185
 msgid "🔉 Small Speaker(s)"
 msgstr ""
 
-#: extension.js:129
+#: extension.js:186
 msgid "👄 Spoken Word"
 msgstr ""
 
-#: extension.js:130
+#: extension.js:187
 msgid "🎼 Treble Booster"
 msgstr ""
 
-#: extension.js:131
+#: extension.js:188
 msgid "🚫 Treble Reducer"
 msgstr ""
 
-#: extension.js:139 prefs.ui:11
+#: extension.js:196 prefs.ui:9
 msgid "Settings"
 msgstr ""
 
-#: extension.js:185
-msgid "Noiseclapper failed to obtain Bluetooth devices ("
+#: extension.js:258
+msgid "No connected compatible devices found."
 msgstr ""
 
-#: extension.js:235
-msgid "Noiseclapper couldn't find a connected compatible device."
-msgstr ""
-
-#: prefs.ui:16
-msgid "Indicator"
-msgstr ""
-
-#: prefs.ui:17
+#: prefs.ui:12
 msgid "Settings related to the panel indicator."
 msgstr ""
 
-#: prefs.ui:21
+#: prefs.ui:13
+msgid "Indicator"
+msgstr ""
+
+#: prefs.ui:18
 msgid "Position in Panel"
 msgstr ""
 
-#: prefs.ui:31
+#: prefs.ui:28
 msgid "Left"
 msgstr ""
 
-#: prefs.ui:32
+#: prefs.ui:29
 msgid "Center"
 msgstr ""
 
-#: prefs.ui:33
+#: prefs.ui:30
 msgid "Right"
 msgstr ""
 
 #: prefs.ui:53
-msgid "Advanced"
-msgstr ""
-
-#: prefs.ui:54
 msgid "Only modify these settings if you know what you're doing."
 msgstr ""
 
-#: prefs.ui:58
-msgid "Python binary name"
+#: prefs.ui:54
+msgid "Advanced"
 msgstr ""
 
-#: prefs.ui:74
-msgid "Use GNOME Console/Terminal"
-msgstr ""
-
-#: prefs.ui:87
+#: prefs.ui:59
 msgid "Enable log messages"
 msgstr ""
 
-#: prefs.ui:104
+#: prefs.ui:72
 msgid "About"
 msgstr ""
 
-#: prefs.ui:109
+#: prefs.ui:75
 msgid "Information"
 msgstr ""
 
-#: prefs.ui:150
-msgid "Credits"
+#: prefs.ui:107
+msgid "Thank you for using Noiseclapper."
 msgstr ""
 
-#: prefs.ui:151
-msgid "Thank you for using Noiseclapper."
+#: prefs.ui:108
+msgid "Credits"
 msgstr ""

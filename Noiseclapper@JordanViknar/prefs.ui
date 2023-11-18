@@ -54,34 +54,6 @@
         <property name="title" translatable="yes">Advanced</property>
         <child>
           <object class="AdwActionRow">
-            <property name="activatable-widget">field_python_type</property>
-            <property name="icon-name">application-x-executable-symbolic</property>
-            <property name="title" translatable="yes">Python binary name</property>
-            <child>
-              <object class="GtkComboBoxText" id="field_python_type">
-                <property name="valign">center</property>
-                <items>
-                  <item id="0">python3</item>
-                  <item id="1">python</item>
-                </items>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwActionRow">
-            <property name="activatable-widget">field_terminal</property>
-            <property name="icon-name">utilities-terminal-symbolic</property>
-            <property name="title" translatable="yes">Use GNOME Console/Terminal</property>
-            <child>
-              <object class="GtkSwitch" id="field_terminal">
-                <property name="valign">center</property>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="AdwActionRow">
             <property name="activatable-widget">field_logging</property>
             <property name="icon-name">info-symbolic</property>
             <property name="title" translatable="yes">Enable log messages</property>
