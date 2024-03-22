@@ -35,7 +35,7 @@ export default class Noiseclapper extends Extension {
 	init() {
 		String.prototype.format = Format.format;
 	}
-    enable() {
+	enable() {
 		logIfEnabled("info","Enabling Noiseclapper...");
 	
 		//We enable the bluetooth client
