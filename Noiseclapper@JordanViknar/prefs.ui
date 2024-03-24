@@ -55,7 +55,7 @@ corresponding .blp file and regenerate this file with blueprint-compiler.
         <property name="description" translatable="true">Only modify these settings if you know what you're doing.</property>
         <child>
           <object class="AdwSwitchRow" id="field_logging">
-            <property name="icon-name">info-symbolic</property>
+            <property name="icon-name">emblem-documents-symbolic</property>
             <property name="title" translatable="true">Enable log messages</property>
           </object>
         </child>

@@ -135,7 +135,11 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 		//We create a GTK symbolic icon in the panel
 		this.icon = new St.Icon({ icon_name: 'audio-headphones-symbolic',
 			style_class: 'system-status-icon' });
-		box.add_actor(this.icon);
+		try {
+			box.add_child(this.icon); // GNOME 46+
+		} catch {
+			box.add_actor(this.icon); // GNOME 45
+		}
 
 		//The 2 submenus
 		this.NoiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(_('Noise Cancelling Mode'));
@@ -212,8 +216,11 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 			this.Button = new PopupMenu.PopupMenuItem(List[i].label);
 
 			//Adds it to its respective submenu
-			Submenu.menu.box.add(this.Button);
-			
+			try {
+				Submenu.menu.box.add_child(this.Button); // GNOME 46+	
+			} catch {
+				Submenu.menu.box.add(this.Button); // GNOME 45
+			}
 			//Binds button to command
 			this.Button.connect('activate', () => {
 				this.signalHandler(List[i].signal)
@@ -260,7 +267,11 @@ class NoiseclapperIndicator extends PanelMenu.Button {
 	}
 
 	applyNewPosition(){
-		this.container.get_parent().remove_actor(this.container);
+		try {
+			this.container.get_parent().remove_child(this.container); // GNOME 46+
+		} catch {
+			this.container.get_parent().remove_actor(this.container); // GNOME 45
+		}
 		const boxes = {
 			0: Main.panel._leftBox,
 			1: Main.panel._centerBox,
