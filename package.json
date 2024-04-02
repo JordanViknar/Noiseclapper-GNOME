@@ -1,0 +1,27 @@
+{
+	"name": "noiseclapper",
+	"version": "0.0.0",
+	"description": "Provides control of Soundcore Life Q30 Headphones (and others)",
+	"type": "module",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JordanViknar/Noiseclapper-GNOME.git"
+	},
+	"author": "JordanViknar",
+	"license": "MPL-2.0",
+	"bugs": {
+		"url": "https://github.com/JordanViknar/Noiseclapper-GNOME"
+	},
+	"homepage": "https://github.com/JordanViknar/Noiseclapper-GNOME#readme",
+	"sideEffects": false,
+	"devDependencies": {
+		"eslint": "^8.57.0",
+		"eslint-plugin-jsdoc": "^48.2.2",
+		"typescript": "^5.4.3"
+	},
+	"dependencies": {
+		"@girs/gjs": "^3.2.9",
+		"@girs/gnome-shell": "^45.0.0-beta9"
+	}
+}
