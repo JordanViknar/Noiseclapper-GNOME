@@ -9,12 +9,16 @@
 	  "lib": [
 		"ES2022"
 	  ],
+	  "skipLibCheck": true,
+	  "removeComments": true
 	},
 	"include": [
 	  "ambient.d.ts",
 	],
 	"files": [
 	  "extension.ts",
-	  "prefs.ts"
+	  "prefs.ts",
+	  "indicator.ts",
+	  "general.ts"
 	],
   }

@@ -1,2 +1,7 @@
-# Node modules
+# Node Modules
 node_modules/
+
+# Leftovers
+unused/
+dist/
+*.zip

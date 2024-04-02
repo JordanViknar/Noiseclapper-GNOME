@@ -14,20 +14,21 @@ dist/extension.js dist/prefs.js: node_modules
 schemas/gschemas.compiled: schemas/org.gnome.shell.extensions.$(NAME).gschema.xml
 	glib-compile-schemas schemas
 
-prefs.ui: prefs.blp
-	blueprint-compiler compile prefs.blp > prefs.ui
+dist/prefs.ui: ui/prefs.blp
+	blueprint-compiler compile ui/prefs.blp > dist/prefs.ui
 
-$(NAME).zip: dist/extension.js dist/prefs.js schemas/gschemas.compiled prefs.ui
+$(NAME)@$(DOMAIN).zip: dist/extension.js dist/prefs.js schemas/gschemas.compiled dist/prefs.ui
 	@cp -r schemas dist/
 	@cp metadata.json dist/
-	@(cd dist && zip ../$(NAME).zip -9r .)
+	@(cd dist && zip ../$(NAME)@$(DOMAIN).zip -9r .)
 
-pack: $(NAME).zip
+pack: $(NAME)@$(DOMAIN).zip
 
-install: $(NAME).zip
-	@touch ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
-	@rm -rf ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
-	@mv dist ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+install: $(NAME)@$(DOMAIN).zip
+#	@touch ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+#	@rm -rf ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+#	@mv dist ~/.local/share/gnome-shell/extensions/$(NAME)@$(DOMAIN)
+	gnome-extensions install $(NAME)@$(DOMAIN).zip --force
 
 clean:
-	@rm -rf dist node_modules $(NAME).zip
+	@rm -rf dist node_modules $(NAME)@$(DOMAIN).zip
