@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 15:49+0200\n"
-"PO-Revision-Date: 2024-04-03 15:50+0200\n"
+"POT-Creation-Date: 2024-04-03 16:13+0200\n"
+"PO-Revision-Date: 2024-04-03 16:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -26,13 +26,132 @@ msgstr "Erreur"
 msgid "No connected compatible devices found."
 msgstr "Aucun appareil compatible n'est connecté."
 
+#. The 2 submenus
+#: src/indicator.ts:28
+msgid "Noise Cancelling Mode"
+msgstr "Mode de réduction de bruit"
+
+#: src/indicator.ts:30
+msgid "Equalizer Preset"
+msgstr "Type d'égaliseur"
+
+#: src/indicator.ts:35
+msgid "Transport"
+msgstr "Transport"
+
+#: src/indicator.ts:36
+msgid "Indoor"
+msgstr "Intérieur"
+
+#: src/indicator.ts:37
+msgid "Outdoor"
+msgstr "Extérieur"
+
+#. { label: '🔇 '+_('Default'), signal: NoiseCancellingSignalList.default }, //Not really necessary, probably better to keep it as a comment.
+#: src/indicator.ts:39
+msgid "Normal / No ANC"
+msgstr "Normal / Sans RBA"
+
+#: src/indicator.ts:40
+msgid "Transparency / No NC"
+msgstr "Transparence / Sans RB"
+
+#: src/indicator.ts:44
+msgid "Soundcore Signature"
+msgstr "Signature Soundcore"
+
+#: src/indicator.ts:45
+msgid "Acoustic"
+msgstr "Acoustique"
+
+#: src/indicator.ts:46
+msgid "Bass Booster"
+msgstr "Amplification des graves"
+
+#: src/indicator.ts:47
+msgid "Bass Reducer"
+msgstr "Réduction des graves"
+
+#: src/indicator.ts:48
+msgid "Classical"
+msgstr "Classique"
+
+#: src/indicator.ts:49
+msgid "Podcast"
+msgstr "Podcast"
+
+#: src/indicator.ts:50
+msgid "Dance"
+msgstr "Dance"
+
+#: src/indicator.ts:51
+msgid "Deep"
+msgstr "Deep"
+
+#: src/indicator.ts:52
+msgid "Electronic"
+msgstr "Électronique"
+
+#: src/indicator.ts:53
+msgid "Flat"
+msgstr "Flat"
+
+#: src/indicator.ts:54
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: src/indicator.ts:55
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/indicator.ts:56
+msgid "Latin"
+msgstr ""
+
+#: src/indicator.ts:57
+msgid "Lounge"
+msgstr "Lounge"
+
+#: src/indicator.ts:58
+msgid "Piano"
+msgstr "Piano"
+
+#: src/indicator.ts:59
+msgid "Pop"
+msgstr ""
+
+#: src/indicator.ts:60
+msgid "RnB"
+msgstr ""
+
+#: src/indicator.ts:61
+msgid "Rock"
+msgstr "Rock"
+
+#: src/indicator.ts:62
+msgid "Small Speaker(s)"
+msgstr "Petit(s) haut-parleur(s)"
+
+#: src/indicator.ts:63
+msgid "Spoken Word"
+msgstr "Mot parlé"
+
+#: src/indicator.ts:64
+msgid "Treble Booster"
+msgstr "Amplification des aigus"
+
+#: src/indicator.ts:65
+msgid "Treble Reducer"
+msgstr "Réduction des aigus"
+
+#. Add settings button
+#: src/indicator.ts:73 ui/prefs.blp:8
+msgid "Settings"
+msgstr "Paramètres"
+
 #: src/utilities.ts:110
 msgid "Close the Soundcore application on your phone and try again."
 msgstr "Veuillez fermer l'application Soundcore sur votre téléphone et réessayer."
-
-#: ui/prefs.blp:8
-msgid "Settings"
-msgstr "Paramètres"
 
 #: ui/prefs.blp:11
 msgid "Indicator"
@@ -89,92 +208,14 @@ msgstr "Merci pour votre utilisation de Noiseclapper."
 #~ msgid "Noiseclapper - Error"
 #~ msgstr "Noiseclapper - Erreur"
 
-#~ msgid "Noise Cancelling Mode"
-#~ msgstr "Mode de réduction de bruit"
-
-#~ msgid "Equalizer Preset"
-#~ msgstr "Type d'égaliseur"
-
-#~ msgid "🚋 Transport"
-#~ msgstr "🚋 Transport"
-
-#~ msgid "🏠 Indoor"
-#~ msgstr "🏠 Intérieur"
-
-#~ msgid "🌳 Outdoor"
-#~ msgstr "🌳 Extérieur"
-
-#~ msgid "🚫 Normal / No ANC"
-#~ msgstr "🚫 Normal / Sans RBA"
-
-#~ msgid "🪟 Transparency / No NC"
-#~ msgstr "🪟 Transparence / Sans RB"
-
-#~ msgid "🎵 Soundcore Signature"
-#~ msgstr "🎵 Signature Soundcore"
-
-#~ msgid "🎸 Acoustic"
-#~ msgstr "🎸 Acoustique"
-
-#~ msgid "🎸 Bass Booster"
-#~ msgstr "🎸 Amplification des graves"
-
-#~ msgid "🚫 Bass Reducer"
-#~ msgstr "🚫 Réduction des graves"
-
-#~ msgid "🎻 Classical"
-#~ msgstr "🎻 Classique"
-
-#~ msgid "🎤 Podcast"
-#~ msgstr "🎤 Podcast"
-
-#~ msgid "🪩 Dance"
-#~ msgstr "🪩 Dance"
-
-#~ msgid "🖴 Deep"
-#~ msgstr "🖴 Deep"
-
-#~ msgid "⚡ Electronic"
-#~ msgstr "⚡ Électronique"
-
-#~ msgid "🚫 Flat"
-#~ msgstr "🚫 Flat"
-
-#~ msgid "🎹 Hip-Hop"
-#~ msgstr "🎹 Hip-Hop"
-
-#~ msgid "🎷 Jazz"
-#~ msgstr "🎷 Jazz"
-
 #~ msgid "💃🏽 Latin"
 #~ msgstr "💃🏽 Latino"
-
-#~ msgid "🍸 Lounge"
-#~ msgstr "🍸 Lounge"
-
-#~ msgid "🎹 Piano"
-#~ msgstr "🎹 Piano"
 
 #~ msgid "🎸 Pop"
 #~ msgstr "🎸 Pop"
 
 #~ msgid "🎹 RnB"
 #~ msgstr "🎹 R&B"
-
-#~ msgid "🎸 Rock"
-#~ msgstr "🎸 Rock"
-
-#~ msgid "🔉 Small Speaker(s)"
-#~ msgstr "🔉 Petit(s) haut-parleur(s)"
-
-#~ msgid "👄 Spoken Word"
-#~ msgstr "👄 Mot parlé"
-
-#~ msgid "🎼 Treble Booster"
-#~ msgstr "🎼 Amplification des aigus"
-
-#~ msgid "🚫 Treble Reducer"
-#~ msgstr "🚫 Réduction des aigus"
 
 #~ msgid "Noiseclapper failed to obtain Bluetooth devices ("
 #~ msgstr "Noiseclapper n'a pas pu obtenir les appareils Bluetooth ("
