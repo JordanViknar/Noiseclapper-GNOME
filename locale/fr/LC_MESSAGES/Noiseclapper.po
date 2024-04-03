@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-20 16:33+0200\n"
-"PO-Revision-Date: 2023-10-20 16:34+0200\n"
+"POT-Creation-Date: 2024-04-03 15:49+0200\n"
+"PO-Revision-Date: 2024-04-03 15:50+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -16,187 +16,165 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: extension.js:104 extension.js:258
-msgid "Noiseclapper - Error"
-msgstr "Noiseclapper - Erreur"
+#: src/extension.ts:66 src/utilities.ts:110
+msgid "Error"
+msgstr "Erreur"
 
-#: extension.js:148
-msgid "Noise Cancelling Mode"
-msgstr "Mode de réduction de bruit"
-
-#: extension.js:150
-msgid "Equalizer Preset"
-msgstr "Type d'égaliseur"
-
-#: extension.js:156
-msgid "🚋 Transport"
-msgstr "🚋 Transport"
-
-#: extension.js:157
-msgid "🏠 Indoor"
-msgstr "🏠 Intérieur"
-
-#: extension.js:158
-msgid "🌳 Outdoor"
-msgstr "🌳 Extérieur"
-
-#: extension.js:160
-msgid "🚫 Normal / No ANC"
-msgstr "🚫 Normal / Sans RBA"
-
-#: extension.js:161
-msgid "🪟 Transparency / No NC"
-msgstr "🪟 Transparence / Sans RB"
-
-#: extension.js:167
-msgid "🎵 Soundcore Signature"
-msgstr "🎵 Signature Soundcore"
-
-#: extension.js:168
-msgid "🎸 Acoustic"
-msgstr "🎸 Acoustique"
-
-#: extension.js:169
-msgid "🎸 Bass Booster"
-msgstr "🎸 Amplification des graves"
-
-#: extension.js:170
-msgid "🚫 Bass Reducer"
-msgstr "🚫 Réduction des graves"
-
-#: extension.js:171
-msgid "🎻 Classical"
-msgstr "🎻 Classique"
-
-#: extension.js:172
-msgid "🎤 Podcast"
-msgstr "🎤 Podcast"
-
-#: extension.js:173
-msgid "🪩 Dance"
-msgstr "🪩 Dance"
-
-#: extension.js:174
-msgid "🖴 Deep"
-msgstr "🖴 Deep"
-
-#: extension.js:175
-msgid "⚡ Electronic"
-msgstr "⚡ Électronique"
-
-#: extension.js:176
-msgid "🚫 Flat"
-msgstr "🚫 Flat"
-
-#: extension.js:177
-msgid "🎹 Hip-Hop"
-msgstr "🎹 Hip-Hop"
-
-#: extension.js:178
-msgid "🎷 Jazz"
-msgstr "🎷 Jazz"
-
-#: extension.js:179
-msgid "💃🏽 Latin"
-msgstr "💃🏽 Latino"
-
-#: extension.js:180
-msgid "🍸 Lounge"
-msgstr "🍸 Lounge"
-
-#: extension.js:181
-msgid "🎹 Piano"
-msgstr "🎹 Piano"
-
-#: extension.js:182
-msgid "🎸 Pop"
-msgstr "🎸 Pop"
-
-#: extension.js:183
-msgid "🎹 RnB"
-msgstr "🎹 R&B"
-
-#: extension.js:184
-msgid "🎸 Rock"
-msgstr "🎸 Rock"
-
-#: extension.js:185
-msgid "🔉 Small Speaker(s)"
-msgstr "🔉 Petit(s) haut-parleur(s)"
-
-#: extension.js:186
-msgid "👄 Spoken Word"
-msgstr "👄 Mot parlé"
-
-#: extension.js:187
-msgid "🎼 Treble Booster"
-msgstr "🎼 Amplification des aigus"
-
-#: extension.js:188
-msgid "🚫 Treble Reducer"
-msgstr "🚫 Réduction des aigus"
-
-#: extension.js:196 prefs.ui:9
-msgid "Settings"
-msgstr "Paramètres"
-
-#: extension.js:258
+#: src/extension.ts:66
 msgid "No connected compatible devices found."
 msgstr "Aucun appareil compatible n'est connecté."
 
-#: prefs.ui:12
-msgid "Settings related to the panel indicator."
-msgstr "Paramètres de l'icône de la barre supérieure."
+#: src/utilities.ts:110
+msgid "Close the Soundcore application on your phone and try again."
+msgstr "Veuillez fermer l'application Soundcore sur votre téléphone et réessayer."
 
-#: prefs.ui:13
+#: ui/prefs.blp:8
+msgid "Settings"
+msgstr "Paramètres"
+
+#: ui/prefs.blp:11
 msgid "Indicator"
 msgstr "Icône"
 
-#: prefs.ui:18
+#: ui/prefs.blp:12
+msgid "Settings related to the panel indicator."
+msgstr "Paramètres de l'icône de la barre supérieure."
+
+#: ui/prefs.blp:15
 msgid "Position in Panel"
 msgstr "Position dans la barre supérieure"
 
-#: prefs.ui:28
+#: ui/prefs.blp:27
 msgid "Left"
 msgstr "Gauche"
 
-#: prefs.ui:29
+#: ui/prefs.blp:28
 msgid "Center"
 msgstr "Centre"
 
-#: prefs.ui:30
+#: ui/prefs.blp:29
 msgid "Right"
 msgstr "Droite"
 
-#: prefs.ui:53
-msgid "Only modify these settings if you know what you're doing."
-msgstr "Ne modifiez ces paramètres que si vous savez ce que vous faites."
-
-#: prefs.ui:54
+#: ui/prefs.blp:46
 msgid "Advanced"
 msgstr "Avancé"
 
-#: prefs.ui:59
+#: ui/prefs.blp:47
+msgid "Only modify these settings if you know what you're doing."
+msgstr "Ne modifiez ces paramètres que si vous savez ce que vous faites."
+
+#: ui/prefs.blp:51
 msgid "Enable log messages"
 msgstr "Activer la journalisation"
 
-#: prefs.ui:72
+#: ui/prefs.blp:57
 msgid "About"
 msgstr "À propos"
 
-#: prefs.ui:75
+#: ui/prefs.blp:60
 msgid "Information"
 msgstr "Information"
 
-#: prefs.ui:107
+#: ui/prefs.blp:82
+msgid "Credits"
+msgstr "Crédits"
+
+#: ui/prefs.blp:83
 msgid "Thank you for using Noiseclapper."
 msgstr "Merci pour votre utilisation de Noiseclapper."
 
-#: prefs.ui:108
-msgid "Credits"
-msgstr "Crédits"
+#~ msgid "Noiseclapper - Error"
+#~ msgstr "Noiseclapper - Erreur"
+
+#~ msgid "Noise Cancelling Mode"
+#~ msgstr "Mode de réduction de bruit"
+
+#~ msgid "Equalizer Preset"
+#~ msgstr "Type d'égaliseur"
+
+#~ msgid "🚋 Transport"
+#~ msgstr "🚋 Transport"
+
+#~ msgid "🏠 Indoor"
+#~ msgstr "🏠 Intérieur"
+
+#~ msgid "🌳 Outdoor"
+#~ msgstr "🌳 Extérieur"
+
+#~ msgid "🚫 Normal / No ANC"
+#~ msgstr "🚫 Normal / Sans RBA"
+
+#~ msgid "🪟 Transparency / No NC"
+#~ msgstr "🪟 Transparence / Sans RB"
+
+#~ msgid "🎵 Soundcore Signature"
+#~ msgstr "🎵 Signature Soundcore"
+
+#~ msgid "🎸 Acoustic"
+#~ msgstr "🎸 Acoustique"
+
+#~ msgid "🎸 Bass Booster"
+#~ msgstr "🎸 Amplification des graves"
+
+#~ msgid "🚫 Bass Reducer"
+#~ msgstr "🚫 Réduction des graves"
+
+#~ msgid "🎻 Classical"
+#~ msgstr "🎻 Classique"
+
+#~ msgid "🎤 Podcast"
+#~ msgstr "🎤 Podcast"
+
+#~ msgid "🪩 Dance"
+#~ msgstr "🪩 Dance"
+
+#~ msgid "🖴 Deep"
+#~ msgstr "🖴 Deep"
+
+#~ msgid "⚡ Electronic"
+#~ msgstr "⚡ Électronique"
+
+#~ msgid "🚫 Flat"
+#~ msgstr "🚫 Flat"
+
+#~ msgid "🎹 Hip-Hop"
+#~ msgstr "🎹 Hip-Hop"
+
+#~ msgid "🎷 Jazz"
+#~ msgstr "🎷 Jazz"
+
+#~ msgid "💃🏽 Latin"
+#~ msgstr "💃🏽 Latino"
+
+#~ msgid "🍸 Lounge"
+#~ msgstr "🍸 Lounge"
+
+#~ msgid "🎹 Piano"
+#~ msgstr "🎹 Piano"
+
+#~ msgid "🎸 Pop"
+#~ msgstr "🎸 Pop"
+
+#~ msgid "🎹 RnB"
+#~ msgstr "🎹 R&B"
+
+#~ msgid "🎸 Rock"
+#~ msgstr "🎸 Rock"
+
+#~ msgid "🔉 Small Speaker(s)"
+#~ msgstr "🔉 Petit(s) haut-parleur(s)"
+
+#~ msgid "👄 Spoken Word"
+#~ msgstr "👄 Mot parlé"
+
+#~ msgid "🎼 Treble Booster"
+#~ msgstr "🎼 Amplification des aigus"
+
+#~ msgid "🚫 Treble Reducer"
+#~ msgstr "🚫 Réduction des aigus"
 
 #~ msgid "Noiseclapper failed to obtain Bluetooth devices ("
 #~ msgstr "Noiseclapper n'a pas pu obtenir les appareils Bluetooth ("

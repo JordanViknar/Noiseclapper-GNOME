@@ -8,139 +8,79 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-24 16:47+0100\n"
+"POT-Creation-Date: 2024-04-03 15:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:98 extension.js:258
-msgid "Noiseclapper - Error"
+#: src/extension.ts:66 src/utilities.ts:110
+msgid "Error"
 msgstr ""
 
-#: extension.js:145
-msgid "Noise Cancelling Mode"
+#: src/extension.ts:66
+msgid "No connected compatible devices found."
 msgstr ""
 
-#: extension.js:147
-msgid "Equalizer Preset"
+#: src/utilities.ts:110
+msgid "Close the Soundcore application on your phone and try again."
 msgstr ""
 
-#: extension.js:153
-msgid "🚋 Transport"
-msgstr ""
-
-#: extension.js:154
-msgid "🏠 Indoor"
-msgstr ""
-
-#: extension.js:155
-msgid "🌳 Outdoor"
-msgstr ""
-
-#: extension.js:157
-msgid "🚫 Normal / No ANC"
-msgstr ""
-
-#: extension.js:158
-msgid "🪟 Transparency / No NC"
-msgstr ""
-
-#: extension.js:164
-msgid "🎵 Soundcore Signature"
-msgstr ""
-
-#: extension.js:165
-msgid "🎸 Acoustic"
-msgstr ""
-
-#: extension.js:166
-msgid "🎸 Bass Booster"
-msgstr ""
-
-#: extension.js:167
-msgid "🚫 Bass Reducer"
-msgstr ""
-
-#: extension.js:168
-msgid "🎻 Classical"
-msgstr ""
-
-#: extension.js:169
-msgid "🎤 Podcast"
-msgstr ""
-
-#: extension.js:170
-msgid "🪩 Dance"
-msgstr ""
-
-#: extension.js:171
-msgid "🖴 Deep"
-msgstr ""
-
-#: extension.js:172
-msgid "⚡ Electronic"
-msgstr ""
-
-#: extension.js:173
-msgid "🚫 Flat"
-msgstr ""
-
-#: extension.js:174
-msgid "🎹 Hip-Hop"
-msgstr ""
-
-#: extension.js:175
-msgid "🎷 Jazz"
-msgstr ""
-
-#: extension.js:176
-msgid "💃🏽 Latin"
-msgstr ""
-
-#: extension.js:177
-msgid "🍸 Lounge"
-msgstr ""
-
-#: extension.js:178
-msgid "🎹 Piano"
-msgstr ""
-
-#: extension.js:179
-msgid "🎸 Pop"
-msgstr ""
-
-#: extension.js:180
-msgid "🎹 RnB"
-msgstr ""
-
-#: extension.js:181
-msgid "🎸 Rock"
-msgstr ""
-
-#: extension.js:182
-msgid "🔉 Small Speaker(s)"
-msgstr ""
-
-#: extension.js:183
-msgid "👄 Spoken Word"
-msgstr ""
-
-#: extension.js:184
-msgid "🎼 Treble Booster"
-msgstr ""
-
-#: extension.js:185
-msgid "🚫 Treble Reducer"
-msgstr ""
-
-#: extension.js:193
+#: ui/prefs.blp:8
 msgid "Settings"
 msgstr ""
 
-#: extension.js:258
-msgid "No connected compatible devices found."
+#: ui/prefs.blp:11
+msgid "Indicator"
+msgstr ""
+
+#: ui/prefs.blp:12
+msgid "Settings related to the panel indicator."
+msgstr ""
+
+#: ui/prefs.blp:15
+msgid "Position in Panel"
+msgstr ""
+
+#: ui/prefs.blp:27
+msgid "Left"
+msgstr ""
+
+#: ui/prefs.blp:28
+msgid "Center"
+msgstr ""
+
+#: ui/prefs.blp:29
+msgid "Right"
+msgstr ""
+
+#: ui/prefs.blp:46
+msgid "Advanced"
+msgstr ""
+
+#: ui/prefs.blp:47
+msgid "Only modify these settings if you know what you're doing."
+msgstr ""
+
+#: ui/prefs.blp:51
+msgid "Enable log messages"
+msgstr ""
+
+#: ui/prefs.blp:57
+msgid "About"
+msgstr ""
+
+#: ui/prefs.blp:60
+msgid "Information"
+msgstr ""
+
+#: ui/prefs.blp:82
+msgid "Credits"
+msgstr ""
+
+#: ui/prefs.blp:83
+msgid "Thank you for using Noiseclapper."
 msgstr ""

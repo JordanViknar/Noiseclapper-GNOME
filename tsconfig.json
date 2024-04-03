@@ -16,9 +16,9 @@
 	  "ambient.d.ts",
 	],
 	"files": [
-	  "extension.ts",
-	  "prefs.ts",
-	  "indicator.ts",
-	  "extra.ts"
+	  "src/extension.ts",
+	  "src/prefs.ts",
+	  "src/indicator.ts",
+	  "src/utilities.ts"
 	],
   }

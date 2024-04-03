@@ -5,7 +5,7 @@ import {Extension, gettext as _, ngettext, pgettext} from 'resource:///org/gnome
 
 // Internal imports
 import NoiseclapperIndicator from './indicator.js';
-import {LogType, logIfEnabled, devicesObjectToArray, sendSignal, SupportedDeviceNames, updateLogging} from './extra.js';
+import {LogType, logIfEnabled, devicesObjectToArray, sendSignal, SupportedDeviceNames, updateLogging} from './utilities.js';
 import GnomeBluetooth from 'gi://GnomeBluetooth'
 
 // ----------------------- Extension -----------------------

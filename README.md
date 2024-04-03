@@ -1,18 +1,13 @@
 # Noiseclapper (Soundcore Life for GNOME)
 
 ![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
-![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=yellow)
+![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=blue)
 ![Commit activity](https://img.shields.io/github/commit-activity/m/JordanViknar/Noiseclapper?color=orange)
 ![Repo size](https://img.shields.io/github/repo-size/JordanViknar/Noiseclapper)
 
 ## Disclaimer
 This is an **unofficial** GNOME Shell extension, designed for use with the Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
 I am **not** partnered with Soundcore or Anker in any way.
-
-## Screenshot
-
-*(Outdated)*
-![Noiseclapper interface screenshot](./assets/screenshots/interface.png)
 
 ## What is Noiseclapper ?
 
@@ -39,7 +34,7 @@ If your device works despite not being marked as supported, don't hesitate to cr
 
 ## Requirements
 
-- GNOME Shell 45 (42 - 44 with previous versions of Noiseclapper)
+- GNOME Shell 45+ (42 - 44 with previous versions of Noiseclapper)
 - Python 3
 - Bluetooth support on the computer
 - *(The Soundcore application must be inactive on your phone, else it will conflict for the control of your headphones with this extension.)*

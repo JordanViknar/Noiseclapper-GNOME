@@ -8,7 +8,7 @@ import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/exte
 
 // Internal Imports
 import NoiseclapperExtension from './extension.js';
-import {LogType, logIfEnabled, NoiseCancellingSignalList, EqualizerPresetSignalList} from './extra.js';
+import {LogType, logIfEnabled, NoiseCancellingSignalList, EqualizerPresetSignalList} from './utilities.js';
 
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
