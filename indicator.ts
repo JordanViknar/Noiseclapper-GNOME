@@ -1,13 +1,14 @@
 // External Imports
 import St from 'gi://St'
 import GObject from 'gi://GObject'
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
-import {Extension, gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
+import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 // Internal Imports
 import NoiseclapperExtension from './extension.js';
-import {LogType, logIfEnabled} from './general.js';
+import {LogType, logIfEnabled, NoiseCancellingSignalList, EqualizerPresetSignalList} from './extra.js';
 
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
@@ -19,22 +20,90 @@ export default GObject.registerClass(
 			super(0, 'Noiseclapper')
 			this.extension = extension
 	
-			//This will add a box object to the panel. It's basically the extension's button.
 			const box = new St.BoxLayout({ vertical: false, styleClass: 'panel-status-menu-box' });
-	
-			//We create a GTK symbolic icon in the panel
 			const icon = new St.Icon({ iconName: 'audio-headphones-symbolic', styleClass: 'system-status-icon' });
-			try {
-				box.add_child(icon); // GNOME 46+
-			} catch {
-				box.add_actor(icon); // GNOME 45
-			}
-	
+			box.add_child(icon);
+
 			//The 2 submenus
 			let NoiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(_('Noise Cancelling Mode'));
 			this.menu.addMenuItem(NoiseCancellingModeMenu);
 			let EqualizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(_('Equalizer Preset'));
 			this.menu.addMenuItem(EqualizerPresetMenu);
+
+			//The submenus' mode/preset lists
+			const NoiseCancellingModeButtonList = [
+				{ label: _('🚋 Transport'), signal: NoiseCancellingSignalList.transport},
+				{ label: _('🏠 Indoor'), signal: NoiseCancellingSignalList.indoor },
+				{ label: _('🌳 Outdoor'), signal: NoiseCancellingSignalList.outdoor },
+				//{ label: _('🔇 Default'), signal: NoiseCancellingSignalList.default }, //Not really necessary, probably better to keep it as a comment.
+				{ label: _('🚫 Normal / No ANC'), signal: NoiseCancellingSignalList.normal },
+				{ label: _('🪟 Transparency / No NC'), signal: NoiseCancellingSignalList.transparency },
+			];
+			this.addAllInListAsButtons(NoiseCancellingModeButtonList, NoiseCancellingModeMenu);
+			const EqualizerPresetButtonList = [
+				{ label: _('🎵 Soundcore Signature'), signal: EqualizerPresetSignalList.Signature },
+				{ label: _('🎸 Acoustic'), signal: EqualizerPresetSignalList.Acoustic },
+				{ label: _('🎸 Bass Booster'), signal: EqualizerPresetSignalList.BassBooster },
+				{ label: _('🚫 Bass Reducer'), signal: EqualizerPresetSignalList.BassReducer },
+				{ label: _('🎻 Classical'), signal:	EqualizerPresetSignalList.Classical },
+				{ label: _('🎤 Podcast'), signal: EqualizerPresetSignalList.Podcast },
+				{ label: _('🪩 Dance'), signal: EqualizerPresetSignalList.Dance },
+				{ label: _('🖴 Deep'), signal: EqualizerPresetSignalList.Deep },
+				{ label: _('⚡ Electronic'), signal:	EqualizerPresetSignalList.Electronic },
+				{ label: _('🚫 Flat'), signal: EqualizerPresetSignalList.Flat },
+				{ label: _('🎹 Hip-Hop'), signal: EqualizerPresetSignalList.HipHop },
+				{ label: _('🎷 Jazz'), signal: EqualizerPresetSignalList.Jazz },
+				{ label: _('💃🏽 Latin'), signal: EqualizerPresetSignalList.Latin },
+				{ label: _('🍸 Lounge'), signal: EqualizerPresetSignalList.Lounge },
+				{ label: _('🎹 Piano'), signal: EqualizerPresetSignalList.Piano },
+				{ label: _('🎸 Pop'), signal: EqualizerPresetSignalList.Pop },
+				{ label: _('🎹 RnB'), signal: EqualizerPresetSignalList.RnB },
+				{ label: _('🎸 Rock'), signal: EqualizerPresetSignalList.Rock },
+				{ label: _('🔉 Small Speaker(s)'), signal: EqualizerPresetSignalList.SmallSpeakers },
+				{ label: _('👄 Spoken Word'), signal: EqualizerPresetSignalList.SpokenWord },
+				{ label: _('🎼 Treble Booster'), signal: EqualizerPresetSignalList.TrebleBooster },
+				{ label: _('🚫 Treble Reducer'), signal: EqualizerPresetSignalList.TrebleReducer },
+			];
+			this.addAllInListAsButtons(EqualizerPresetButtonList, EqualizerPresetMenu);
+
+			//Separation
+			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+			//Add settings button
+			let settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
+			settingsButton.connect('activate', () => this.extension.openPreferences())
+			this.menu.addMenuItem(settingsButton);
+
+			//Logs that startup was successful.
+			logIfEnabled(LogType.Info,"Startup successful.");
+		}
+
+		addAllInListAsButtons (List: {label: string, signal: string}[], Submenu: PopupMenu.PopupSubMenuMenuItem) {
+			for (let i = 0; i < List.length; i++) {
+				//Creates the button
+				let button = new PopupMenu.PopupMenuItem(List[i].label);
+		
+				//Adds it to its respective submenu
+				Submenu.menu.addMenuItem(button);
+		
+				//Binds button to command
+				button.connect('activate', () => this.extension.signalHandler(List[i].signal))
+			}
+		}
+
+		applyPosition(){
+			//this.container.get_parent()!.remove_child(this.container);
+			const boxes: { 0: any; 1: any; 2: any } = {
+				// @ts-expect-error _leftBox not in types
+				0: Main.panel._leftBox,
+				// @ts-expect-error _centerBox not in types
+				1: Main.panel._centerBox,
+				// @ts-expect-error _rightBox not in types
+				2: Main.panel._rightBox
+			};
+			const position = this.extension.settings.get_int('position');
+			const index = this.extension.settings.get_int('position-number');
+			//boxes[position].insert_child_at_index(this.container, index);
 		}
 	
 		destroy(): void {

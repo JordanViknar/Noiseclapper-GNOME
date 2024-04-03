@@ -31,4 +31,4 @@ install: $(NAME)@$(DOMAIN).zip
 	gnome-extensions install $(NAME)@$(DOMAIN).zip --force
 
 clean:
-	@rm -rf dist node_modules $(NAME)@$(DOMAIN).zip
+	@rm -rf dist $(NAME)@$(DOMAIN).zip

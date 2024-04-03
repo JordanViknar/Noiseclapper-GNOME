@@ -19,6 +19,6 @@
 	  "extension.ts",
 	  "prefs.ts",
 	  "indicator.ts",
-	  "general.ts"
+	  "extra.ts"
 	],
   }

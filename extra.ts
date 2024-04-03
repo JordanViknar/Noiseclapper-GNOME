@@ -3,7 +3,7 @@ import Gio from 'gi://Gio'
 import GnomeBluetooth from 'gi://GnomeBluetooth'
 
 //------------------------------Variables----------------------------
-const SupportedDeviceNames: string[] = [
+export const SupportedDeviceNames: string[] = [
 	"Soundcore Life Q35",		//Not tested
 	"Soundcore Life Q30",
 	"Soundcore Life Q20+",		//Not tested
@@ -79,14 +79,17 @@ export function logIfEnabled(type: LogType, message: string) {
             break;
     }
 }
+export function updateLogging(enabled: boolean) {
+	LOGGING = enabled;
+}
 
 //------------------------Bluetooth Functions------------------------
-export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device>): (GnomeBluetooth.Device | null)[] {
+export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device>): (GnomeBluetooth.Device)[] {
     const numberOfDevices = object.get_n_items();
-    const devices: (GnomeBluetooth.Device | null)[] = new Array(numberOfDevices);
+    const devices: (GnomeBluetooth.Device)[] = new Array(numberOfDevices);
 
     for (let i = 0; i < numberOfDevices; i++) {
-        devices[i] = object.get_item(i) as GnomeBluetooth.Device | null;
+        devices[i] = object.get_item(i) as GnomeBluetooth.Device;
     }
 
     return devices;
@@ -94,23 +97,19 @@ export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device
 
 export async function sendSignal(signal: string, address: string) {
 	try {
+		const script = `import socket; s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM); s.connect(("${address}", 12)); s.send(bytearray.fromhex("${signal}")); s.close();`;
+		
 		const proc = Gio.Subprocess.new(
-			["python3", "-c", "\"import socket;\
-			s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM);\
-			s.connect((\'"+address+"\', 12));\
-			s.send(bytearray.fromhex(\'"+signal+"\'));\
-			s.close();\""]
+			['python3', '-c', script]
 			,
 			Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
 		)
-		const cancellable = new Gio.Cancellable();
-		await proc.wait_async(cancellable);
-
-		if (proc.get_successful())
+		
+		if (await proc.wait_check_async(null))
 			logIfEnabled(LogType.Debug, 'Successfully sent signal');
 		else
 			logIfEnabled(LogType.Error, 'Failed to send signal');
 	} catch (error) {
-		logIfEnabled(LogType.Error, 'Failed to send signal: ' + error);
+		logIfEnabled(LogType.Error, 'Failed to send signal : ' + error);
 	}
 }

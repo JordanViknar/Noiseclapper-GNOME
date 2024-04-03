@@ -6,7 +6,6 @@
 	"gettext-domain": "Noiseclapper",
 	"settings-schema": "org.gnome.shell.extensions.noiseclapper",
 	"shell-version": [
-		"45",
 		"46"
 	]
 }

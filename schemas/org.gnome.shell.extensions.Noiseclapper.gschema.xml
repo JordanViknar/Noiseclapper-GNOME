@@ -1,7 +1,5 @@
 <schemalist gettext-domain="gnome-shell-extensions">
-	<schema id="org.gnome.shell.extensions.noiseclapper"
-		path="/org/gnome/shell/extensions/noiseclapper/">
-
+	<schema id="org.gnome.shell.extensions.noiseclapper" path="/org/gnome/shell/extensions/noiseclapper/">
     	<key name="position" type="i">
 			<default>2</default>
 			<summary>Position in the panel</summary>
