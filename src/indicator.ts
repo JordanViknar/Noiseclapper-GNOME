@@ -12,17 +12,18 @@ import {LogType, logIfEnabled, NoiseCancellingSignalList, EqualizerPresetSignalL
 
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
-		private extension!: NoiseclapperExtension;
+		private extension: NoiseclapperExtension;
 	
 		constructor(extension: NoiseclapperExtension) {
 			logIfEnabled(LogType.Debug,"Initializing Noiseclapper indicator...");
 	
-			super(0, 'Noiseclapper')
+			super(0, extension.uuid)
 			this.extension = extension
-	
+			
 			const box = new St.BoxLayout({ vertical: false, styleClass: 'panel-status-menu-box' });
 			const icon = new St.Icon({ iconName: 'audio-headphones-symbolic', styleClass: 'system-status-icon' });
 			box.add_child(icon);
+			this.add_child(box);
 
 			//The 2 submenus
 			let NoiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(_('Noise Cancelling Mode'));
@@ -73,9 +74,6 @@ export default GObject.registerClass(
 			let settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
 			settingsButton.connect('activate', () => this.extension.openPreferences())
 			this.menu.addMenuItem(settingsButton);
-
-			//Logs that startup was successful.
-			logIfEnabled(LogType.Info,"Startup successful.");
 		}
 
 		addAllInListAsButtons (List: {label: string, signal: string}[], Submenu: PopupMenu.PopupSubMenuMenuItem) {
@@ -91,8 +89,8 @@ export default GObject.registerClass(
 			}
 		}
 
+		// Lots of ugly bypasses, will have to fix later.
 		applyPosition(){
-			//this.container.get_parent()!.remove_child(this.container);
 			const boxes: { 0: any; 1: any; 2: any } = {
 				// @ts-expect-error _leftBox not in types
 				0: Main.panel._leftBox,
@@ -103,7 +101,9 @@ export default GObject.registerClass(
 			};
 			const position = this.extension.settings.get_int('position');
 			const index = this.extension.settings.get_int('position-number');
-			//boxes[position].insert_child_at_index(this.container, index);
+
+			// @ts-expect-error
+			Main.panel._addToPanelBox(this.extension.uuid, this, index, boxes[position]);
 		}
 	
 		destroy(): void {

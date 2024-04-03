@@ -24,13 +24,14 @@ export default class NoiseclapperExtension extends Extension {
 		// And create the indicator
 		logIfEnabled(LogType.Debug,"Creating and adding Noiseclapper indicator...");
 		this.Indicator = new NoiseclapperIndicator(this);
-		Main.panel.addToStatusArea('NoiseclapperIndicator', this.Indicator);
+		Main.panel.addToStatusArea(this.uuid, this.Indicator);
 
 		// Apply settings and position
-		this.settings.connect('changed', this.Indicator!.applyPosition.bind(this));
 		this.settings.connect('changed', this.applySettings.bind(this));
 		this.applySettings();
-		this.Indicator.applyPosition()
+
+		//Logs that startup was successful.
+		logIfEnabled(LogType.Info,"Startup successful.");
 	}
 
 	disable() {
