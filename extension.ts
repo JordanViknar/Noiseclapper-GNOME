@@ -63,7 +63,7 @@ export default class NoiseclapperExtension extends Extension {
 		//If we DID find devices, but none were compatible.
 		if (hasFoundAtLeastOneDevice == false) {
 			logIfEnabled(LogType.Error,"No compatible devices found.");
-			Main.notifyError(_("Noiseclapper - Error"),_("No connected compatible devices found."));
+			Main.notifyError("Noiseclapper - "+_("Error"),_("No connected compatible devices found."));
 		}
 	}
 

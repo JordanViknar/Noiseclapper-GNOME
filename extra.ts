@@ -1,4 +1,6 @@
 // Imports
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
 import Gio from 'gi://Gio'
 import GnomeBluetooth from 'gi://GnomeBluetooth'
 
@@ -99,17 +101,12 @@ export async function sendSignal(signal: string, address: string) {
 	try {
 		const script = `import socket; s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM); s.connect(("${address}", 12)); s.send(bytearray.fromhex("${signal}")); s.close();`;
 		
-		const proc = Gio.Subprocess.new(
-			['python3', '-c', script]
-			,
-			Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
-		)
+		const proc = Gio.Subprocess.new(['python3', '-c', script],Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)
 		
-		if (await proc.wait_check_async(null))
-			logIfEnabled(LogType.Debug, 'Successfully sent signal');
-		else
-			logIfEnabled(LogType.Error, 'Failed to send signal');
+		await proc.wait_check_async(null)
+		logIfEnabled(LogType.Debug, 'Successfully sent signal');
 	} catch (error) {
 		logIfEnabled(LogType.Error, 'Failed to send signal : ' + error);
+		Main.notifyError("Noiseclapper - "+_("Error"),_("Close the Soundcore application on your phone and try again."));
 	}
 }
