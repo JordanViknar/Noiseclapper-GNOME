@@ -34,6 +34,7 @@ This extension is meant to be a solution to all these issues. On top of having a
 | Life Q20+ | ? |
 | Life Q20 | ? |
 | Life Q10 | Partial ? |
+| Life P3 | ✓ |
 
 If your device works despite not being marked as supported, don't hesitate to create an issue or a pull request. *(I suppose the Q10 is not fully supported because it seems to lack Active Noise Cancelling.)*
 
