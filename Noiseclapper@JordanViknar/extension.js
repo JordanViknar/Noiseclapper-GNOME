@@ -10,7 +10,8 @@ const SupportedDeviceNames = [
 	"Soundcore Life Q20+",		//Not tested
 	"Soundcore Life Q20",		//Not tested
 	"Soundcore Life Q10",		//Not tested, only partially compatible
-	"BES_BLE"					//Buggy name sometimes applied to the Q30
+	"BES_BLE",					//Buggy name sometimes applied to the Q30
+	"Soundcore Life P3",
 ]
 
 //------------------------------Libraries----------------------------
