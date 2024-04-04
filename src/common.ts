@@ -6,6 +6,7 @@ import GnomeBluetooth from 'gi://GnomeBluetooth'
 
 //------------------------------Variables----------------------------
 export const SupportedDeviceNames: string[] = [
+	"Soundcore Life P3",
 	"Soundcore Life Q35",		//Not tested
 	"Soundcore Life Q30",
 	"Soundcore Life Q20+",		//Not tested

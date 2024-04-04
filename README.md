@@ -28,10 +28,12 @@ This extension is meant to be a solution to all these issues. On top of having a
 ## Supported Devices
 | Soundcore Life Devices | Support |
 | ---- | ---- |
+| Life P3 | ✓ |
 | Life Q35 | ? |
 | Life Q30 | ✓ |
 | Life Q20+ | ? |
 | Life Q20 | ? |
+| Life Q10 | ? |
 | Life Q10 | ? |
 
 If your device works despite not being marked as supported, don't hesitate to create an issue or a pull request.
