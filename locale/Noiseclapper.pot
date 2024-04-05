@@ -1,0 +1,205 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-03 17:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/extension.ts:67 src/utilities.ts:110
+msgid "Error"
+msgstr ""
+
+#: src/extension.ts:67
+msgid "No connected compatible devices found."
+msgstr ""
+
+#. The 2 submenus
+#: src/indicator.ts:29
+msgid "Noise Cancelling Mode"
+msgstr ""
+
+#: src/indicator.ts:31
+msgid "Equalizer Preset"
+msgstr ""
+
+#: src/indicator.ts:36
+msgid "Transport"
+msgstr ""
+
+#: src/indicator.ts:37
+msgid "Indoor"
+msgstr ""
+
+#: src/indicator.ts:38
+msgid "Outdoor"
+msgstr ""
+
+#. { label: '🔇 '+_('Default'), signal: NoiseCancellingSignalList.default }, //Not really necessary, probably better to keep it as a comment.
+#: src/indicator.ts:40
+msgid "Normal / No ANC"
+msgstr ""
+
+#: src/indicator.ts:41
+msgid "Transparency / No NC"
+msgstr ""
+
+#: src/indicator.ts:45
+msgid "Soundcore Signature"
+msgstr ""
+
+#: src/indicator.ts:46
+msgid "Acoustic"
+msgstr ""
+
+#: src/indicator.ts:47
+msgid "Bass Booster"
+msgstr ""
+
+#: src/indicator.ts:48
+msgid "Bass Reducer"
+msgstr ""
+
+#: src/indicator.ts:49
+msgid "Classical"
+msgstr ""
+
+#: src/indicator.ts:50
+msgid "Podcast"
+msgstr ""
+
+#: src/indicator.ts:51
+msgid "Dance"
+msgstr ""
+
+#: src/indicator.ts:52
+msgid "Deep"
+msgstr ""
+
+#: src/indicator.ts:53
+msgid "Electronic"
+msgstr ""
+
+#: src/indicator.ts:54
+msgid "Flat"
+msgstr ""
+
+#: src/indicator.ts:55
+msgid "Hip-Hop"
+msgstr ""
+
+#: src/indicator.ts:56
+msgid "Jazz"
+msgstr ""
+
+#: src/indicator.ts:57
+msgid "Latin"
+msgstr ""
+
+#: src/indicator.ts:58
+msgid "Lounge"
+msgstr ""
+
+#: src/indicator.ts:59
+msgid "Piano"
+msgstr ""
+
+#: src/indicator.ts:60
+msgid "Pop"
+msgstr ""
+
+#: src/indicator.ts:61
+msgid "RnB"
+msgstr ""
+
+#: src/indicator.ts:62
+msgid "Rock"
+msgstr ""
+
+#: src/indicator.ts:63
+msgid "Small Speaker(s)"
+msgstr ""
+
+#: src/indicator.ts:64
+msgid "Spoken Word"
+msgstr ""
+
+#: src/indicator.ts:65
+msgid "Treble Booster"
+msgstr ""
+
+#: src/indicator.ts:66
+msgid "Treble Reducer"
+msgstr ""
+
+#. Add settings button
+#: src/indicator.ts:74 ui/prefs.blp:8
+msgid "Settings"
+msgstr ""
+
+#: src/utilities.ts:110
+msgid "Close the Soundcore application on your phone and try again."
+msgstr ""
+
+#: ui/prefs.blp:11
+msgid "Indicator"
+msgstr ""
+
+#: ui/prefs.blp:12
+msgid "Settings related to the panel indicator."
+msgstr ""
+
+#: ui/prefs.blp:15
+msgid "Position in Panel"
+msgstr ""
+
+#: ui/prefs.blp:27
+msgid "Left"
+msgstr ""
+
+#: ui/prefs.blp:28
+msgid "Center"
+msgstr ""
+
+#: ui/prefs.blp:29
+msgid "Right"
+msgstr ""
+
+#: ui/prefs.blp:46
+msgid "Advanced"
+msgstr ""
+
+#: ui/prefs.blp:47
+msgid "Only modify these settings if you know what you're doing."
+msgstr ""
+
+#: ui/prefs.blp:51
+msgid "Enable log messages"
+msgstr ""
+
+#: ui/prefs.blp:57
+msgid "About"
+msgstr ""
+
+#: ui/prefs.blp:60
+msgid "Information"
+msgstr ""
+
+#: ui/prefs.blp:82
+msgid "Credits"
+msgstr ""
+
+#: ui/prefs.blp:83
+msgid "Thank you for using Noiseclapper."
+msgstr ""

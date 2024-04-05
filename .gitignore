@@ -1,2 +1,7 @@
-# Release zip
-Noiseclapper@JordanViknar.zip
+# Node Modules
+node_modules/
+
+# Leftovers
+unused/
+dist/
+*.zip

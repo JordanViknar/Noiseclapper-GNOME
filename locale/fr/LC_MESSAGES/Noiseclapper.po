@@ -1,0 +1,260 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-03 16:13+0200\n"
+"PO-Revision-Date: 2024-04-03 16:15+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#: src/extension.ts:66 src/utilities.ts:110
+msgid "Error"
+msgstr "Erreur"
+
+#: src/extension.ts:66
+msgid "No connected compatible devices found."
+msgstr "Aucun appareil compatible n'est connecté."
+
+#. The 2 submenus
+#: src/indicator.ts:28
+msgid "Noise Cancelling Mode"
+msgstr "Mode de réduction de bruit"
+
+#: src/indicator.ts:30
+msgid "Equalizer Preset"
+msgstr "Type d'égaliseur"
+
+#: src/indicator.ts:35
+msgid "Transport"
+msgstr "Transport"
+
+#: src/indicator.ts:36
+msgid "Indoor"
+msgstr "Intérieur"
+
+#: src/indicator.ts:37
+msgid "Outdoor"
+msgstr "Extérieur"
+
+#. { label: '🔇 '+_('Default'), signal: NoiseCancellingSignalList.default }, //Not really necessary, probably better to keep it as a comment.
+#: src/indicator.ts:39
+msgid "Normal / No ANC"
+msgstr "Normal / Sans RBA"
+
+#: src/indicator.ts:40
+msgid "Transparency / No NC"
+msgstr "Transparence / Sans RB"
+
+#: src/indicator.ts:44
+msgid "Soundcore Signature"
+msgstr "Signature Soundcore"
+
+#: src/indicator.ts:45
+msgid "Acoustic"
+msgstr "Acoustique"
+
+#: src/indicator.ts:46
+msgid "Bass Booster"
+msgstr "Amplification des graves"
+
+#: src/indicator.ts:47
+msgid "Bass Reducer"
+msgstr "Réduction des graves"
+
+#: src/indicator.ts:48
+msgid "Classical"
+msgstr "Classique"
+
+#: src/indicator.ts:49
+msgid "Podcast"
+msgstr "Podcast"
+
+#: src/indicator.ts:50
+msgid "Dance"
+msgstr "Dance"
+
+#: src/indicator.ts:51
+msgid "Deep"
+msgstr "Deep"
+
+#: src/indicator.ts:52
+msgid "Electronic"
+msgstr "Électronique"
+
+#: src/indicator.ts:53
+msgid "Flat"
+msgstr "Flat"
+
+#: src/indicator.ts:54
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: src/indicator.ts:55
+msgid "Jazz"
+msgstr "Jazz"
+
+#: src/indicator.ts:56
+msgid "Latin"
+msgstr ""
+
+#: src/indicator.ts:57
+msgid "Lounge"
+msgstr "Lounge"
+
+#: src/indicator.ts:58
+msgid "Piano"
+msgstr "Piano"
+
+#: src/indicator.ts:59
+msgid "Pop"
+msgstr ""
+
+#: src/indicator.ts:60
+msgid "RnB"
+msgstr ""
+
+#: src/indicator.ts:61
+msgid "Rock"
+msgstr "Rock"
+
+#: src/indicator.ts:62
+msgid "Small Speaker(s)"
+msgstr "Petit(s) haut-parleur(s)"
+
+#: src/indicator.ts:63
+msgid "Spoken Word"
+msgstr "Mot parlé"
+
+#: src/indicator.ts:64
+msgid "Treble Booster"
+msgstr "Amplification des aigus"
+
+#: src/indicator.ts:65
+msgid "Treble Reducer"
+msgstr "Réduction des aigus"
+
+#. Add settings button
+#: src/indicator.ts:73 ui/prefs.blp:8
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/utilities.ts:110
+msgid "Close the Soundcore application on your phone and try again."
+msgstr "Veuillez fermer l'application Soundcore sur votre téléphone et réessayer."
+
+#: ui/prefs.blp:11
+msgid "Indicator"
+msgstr "Icône"
+
+#: ui/prefs.blp:12
+msgid "Settings related to the panel indicator."
+msgstr "Paramètres de l'icône de la barre supérieure."
+
+#: ui/prefs.blp:15
+msgid "Position in Panel"
+msgstr "Position dans la barre supérieure"
+
+#: ui/prefs.blp:27
+msgid "Left"
+msgstr "Gauche"
+
+#: ui/prefs.blp:28
+msgid "Center"
+msgstr "Centre"
+
+#: ui/prefs.blp:29
+msgid "Right"
+msgstr "Droite"
+
+#: ui/prefs.blp:46
+msgid "Advanced"
+msgstr "Avancé"
+
+#: ui/prefs.blp:47
+msgid "Only modify these settings if you know what you're doing."
+msgstr "Ne modifiez ces paramètres que si vous savez ce que vous faites."
+
+#: ui/prefs.blp:51
+msgid "Enable log messages"
+msgstr "Activer la journalisation"
+
+#: ui/prefs.blp:57
+msgid "About"
+msgstr "À propos"
+
+#: ui/prefs.blp:60
+msgid "Information"
+msgstr "Information"
+
+#: ui/prefs.blp:82
+msgid "Credits"
+msgstr "Crédits"
+
+#: ui/prefs.blp:83
+msgid "Thank you for using Noiseclapper."
+msgstr "Merci pour votre utilisation de Noiseclapper."
+
+#~ msgid "Noiseclapper - Error"
+#~ msgstr "Noiseclapper - Erreur"
+
+#~ msgid "💃🏽 Latin"
+#~ msgstr "💃🏽 Latino"
+
+#~ msgid "🎸 Pop"
+#~ msgstr "🎸 Pop"
+
+#~ msgid "🎹 RnB"
+#~ msgstr "🎹 R&B"
+
+#~ msgid "Noiseclapper failed to obtain Bluetooth devices ("
+#~ msgstr "Noiseclapper n'a pas pu obtenir les appareils Bluetooth ("
+
+#~ msgid "Python binary name"
+#~ msgstr "Nom de l'exécutable Python"
+
+#~ msgid "Use GNOME Console/Terminal"
+#~ msgstr "Utiliser le Terminal/la Console de GNOME"
+
+#~ msgid "Icon position settings"
+#~ msgstr "Paramètres de position de l'icône"
+
+#~ msgid "Priority"
+#~ msgstr "Priorité"
+
+#~ msgid "Main"
+#~ msgstr "Principal"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Extras"
+
+#~ msgid "Misc"
+#~ msgstr "Extras"
+
+#~ msgid "🔇 Default"
+#~ msgstr "🔇 Par défaut"
+
+#~ msgid "Enable terminal (requires gnome-terminal)"
+#~ msgstr "Activer le terminal (requiert gnome-terminal)"
+
+#~ msgid "Soundcore Life settings"
+#~ msgstr "Paramètres Soundcore Life"
+
+#~ msgid "Headphones MAC address"
+#~ msgstr "Adresse MAC du casque"
+
+#~ msgid "Noiseclapper settings"
+#~ msgstr "Paramètres de Noiseclapper"
+
+#~ msgid "Basic"
+#~ msgstr "Base"

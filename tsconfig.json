@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+	  "module": "NodeNext",
+	  "moduleResolution": "NodeNext",
+	  "outDir": "./dist",
+	  "sourceMap": false,
+	  "strict": true,
+	  "target": "ES2022",
+	  "lib": [
+		"ES2022"
+	  ],
+	  "skipLibCheck": true,
+	  "removeComments": true
+	},
+	"include": [
+	  "ambient.d.ts",
+	],
+	"files": [
+	  "src/extension.ts",
+	  "src/prefs.ts",
+	  "src/indicator.ts",
+	  "src/common.ts"
+	],
+  }
