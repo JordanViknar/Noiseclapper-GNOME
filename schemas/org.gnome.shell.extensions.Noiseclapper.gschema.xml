@@ -8,7 +8,7 @@
 		</key>
 
 		<key name="position-number" type="i">
-			<default>-0</default>
+			<default>0</default>
 			<summary>Position of the Noiseclapper icon in the chosen panel side.</summary>
     		<description></description>
 		</key>

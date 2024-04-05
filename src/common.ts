@@ -1,21 +1,22 @@
-// Imports
-import * as Main from 'resource:///org/gnome/shell/ui/main.js';
-import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
+//------------------------ Imports ----------------------------
 import Gio from 'gi://Gio'
 import GnomeBluetooth from 'gi://GnomeBluetooth'
 
-//------------------------------Variables----------------------------
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
+
+//------------------------ Variables ----------------------------
 export const SupportedDeviceNames: string[] = [
 	"Soundcore Life P3",
-	"Soundcore Life Q35",		//Not tested
+	"Soundcore Life Q35",		// Not tested
 	"Soundcore Life Q30",
-	"Soundcore Life Q20+",		//Not tested
-	"Soundcore Life Q20",		//Not tested
-	"Soundcore Life Q10",		//Not tested
-	"BES_BLE"					//Buggy name sometimes applied to the Q30
+	"Soundcore Life Q20+",		// Not tested
+	"Soundcore Life Q20",		// Not tested
+	"Soundcore Life Q10",		// Not tested
+	"BES_BLE"					// Buggy name sometimes applied to the Q30
 ]
 
-// Preset lists
+// Preset signal lists
 const NoiseCancellingSignalBase = "08ee00000006810e000"
 export const NoiseCancellingSignalList = {
 	transport: NoiseCancellingSignalBase+"00001008c",
@@ -52,7 +53,7 @@ export const EqualizerPresetSignalList = {
 	TrebleReducer: EqualizerPresetSignalBase+"1500787878645a50503ca4"
 }
 
-//------------------------Util Functions------------------------
+//------------------------ Logging ------------------------
 let LOGGING: boolean;
 export enum LogType {
 	Info,
@@ -86,11 +87,11 @@ export function updateLogging(enabled: boolean) {
 	LOGGING = enabled;
 }
 
-//------------------------Bluetooth Functions------------------------
+//------------------------ Bluetooth ------------------------
 export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device>): (GnomeBluetooth.Device)[] {
     const numberOfDevices = object.get_n_items();
-    const devices: (GnomeBluetooth.Device)[] = new Array(numberOfDevices);
 
+    const devices: (GnomeBluetooth.Device)[] = new Array(numberOfDevices);
     for (let i = 0; i < numberOfDevices; i++) {
         devices[i] = object.get_item(i) as GnomeBluetooth.Device;
     }
@@ -100,6 +101,7 @@ export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device
 
 export async function sendSignal(signal: string, address: string) {
 	try {
+		// Absolutely necessary to use Python, haven't found a way to send the signals through GJS
 		const script = `import socket; s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM); s.connect(("${address}", 12)); s.send(bytearray.fromhex("${signal}")); s.close();`;
 		
 		const proc = Gio.Subprocess.new(['python3', '-c', script],Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE)

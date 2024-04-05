@@ -1,11 +1,11 @@
-// GI Library Imports
+//------------------------- Imports ----------------------------
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 import Gio from 'gi://Gio';
 
-// Extension Libraries
 import {ExtensionPreferences} from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js"
 
+//----------------------- Preferences ----------------------------
 export default class NoiseclapperPreferences extends ExtensionPreferences {
 	fillPreferencesWindow(window: Adw.PreferencesWindow){
 		// Prepare labels and controls
@@ -23,9 +23,7 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 
 		// Configure dynamic widgets
 		about_name.set_text(this.metadata.name.toString());
-		if (this.metadata.version != undefined) {
-			about_version.set_text(this.metadata.version.toString());
-		}
+		if (this.metadata.version != undefined) about_version.set_text(this.metadata.version.toString());
 		about_description.set_text(this.metadata.description.toString());
 		let url = this.metadata.url!.toString();
 		about_url.set_markup("<a href=\"" + url + "\">" + url + "</a>");

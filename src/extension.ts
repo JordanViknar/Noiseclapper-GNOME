@@ -1,8 +1,9 @@
 //------------------------- Imports ----------------------------
 // External
+import Gio from 'gi://Gio';
+
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension, gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
-import Gio from 'gi://Gio';
 
 // Internal
 import NoiseclapperIndicator from './indicator.js';
@@ -32,17 +33,16 @@ export default class NoiseclapperExtension extends Extension {
 		this.settings_handler = this.settings.connect('changed', this.applySettings.bind(this));
 		this.applySettings();
 
-		//Logs that startup was successful.
 		logIfEnabled(LogType.Info,"Startup successful.");
 	}
 
 	disable() {
 		logIfEnabled(LogType.Info,"Disabling Noiseclapper...");
 		
-		//Disable Bluetooth client if enabled
-		if (this.BluetoothClient != undefined) {this.BluetoothClient = undefined;}
+		// Disable Bluetooth client if enabled
+		this.BluetoothClient = undefined;
 
-		//Remove the indicator
+		// Remove the indicator
 		logIfEnabled(LogType.Debug,"Removing Noiseclapper indicator...");
 		this.Indicator?.destroy();
 		this.Indicator = undefined;
@@ -58,16 +58,15 @@ export default class NoiseclapperExtension extends Extension {
 		
 		let hasFoundAtLeastOneDevice = false;
 		for (const device of devices) {
-			if (device.connected && device.paired && SupportedDeviceNames.includes(device.name!)) {
+			if (device.connected && SupportedDeviceNames.includes(device.name!)) {
 				hasFoundAtLeastOneDevice = true;
 
 				const { name, address } = device;
-				logIfEnabled(LogType.Info, `Sending signal: [${signal}] to device named [${name}] with MAC address [${address}]`);
+				logIfEnabled(LogType.Info, `Sending signal [${signal}] to device [${name}] with MAC address [${address}]`);
 				sendSignal(signal, address!);
 			}
 		}
 
-		//If we DID find devices, but none were compatible.
 		if (hasFoundAtLeastOneDevice == false) {
 			logIfEnabled(LogType.Error,"No compatible devices found.");
 			Main.notifyError("Noiseclapper - "+_("Error"),_("No connected compatible devices found."));
@@ -75,6 +74,7 @@ export default class NoiseclapperExtension extends Extension {
 	}
 
 	applySettings() {
+		logIfEnabled(LogType.Debug,"Applying settings...");
 		updateLogging(this.settings.get_boolean('logging-enabled'));
 		this.Indicator!.applyPosition();
 	}

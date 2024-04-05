@@ -1,15 +1,18 @@
-// External Imports
+//------------------------- Imports ----------------------------
+// External
 import St from 'gi://St'
 import GObject from 'gi://GObject'
+
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import {gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-// Internal Imports
+// Internal
 import NoiseclapperExtension from './extension.js';
 import {LogType, logIfEnabled, NoiseCancellingSignalList, EqualizerPresetSignalList} from './common.js';
 
+// ----------------------- Indicator -----------------------
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
 		private extension: NoiseclapperExtension;
@@ -25,13 +28,13 @@ export default GObject.registerClass(
 			box.add_child(icon);
 			this.add_child(box);
 
-			//The 2 submenus
+			// The 2 submenus
 			let NoiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(_('Noise Cancelling Mode'));
 			this.menu.addMenuItem(NoiseCancellingModeMenu);
 			let EqualizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(_('Equalizer Preset'));
 			this.menu.addMenuItem(EqualizerPresetMenu);
 
-			//The submenus' mode/preset lists
+			// The submenus' mode/preset lists
 			const NoiseCancellingModeButtonList = [
 				{ label: '🚋 '+_('Transport'), signal: NoiseCancellingSignalList.transport},
 				{ label: '🏠 '+_('Indoor'), signal: NoiseCancellingSignalList.indoor },
@@ -67,10 +70,10 @@ export default GObject.registerClass(
 			];
 			this.addAllInListAsButtons(EqualizerPresetButtonList, EqualizerPresetMenu);
 
-			//Separation
+			// Separator
 			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-			//Add settings button
+			// Settings button
 			let settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
 			settingsButton.connect('activate', () => this.extension.openPreferences())
 			this.menu.addMenuItem(settingsButton);
@@ -78,14 +81,9 @@ export default GObject.registerClass(
 
 		addAllInListAsButtons (List: {label: string, signal: string}[], Submenu: PopupMenu.PopupSubMenuMenuItem) {
 			for (let i = 0; i < List.length; i++) {
-				//Creates the button
 				let button = new PopupMenu.PopupMenuItem(List[i].label);
-		
-				//Adds it to its respective submenu
-				Submenu.menu.addMenuItem(button);
-		
-				//Binds button to command
 				button.connect('activate', () => this.extension.signalHandler(List[i].signal))
+				Submenu.menu.addMenuItem(button);
 			}
 		}
 
@@ -107,6 +105,7 @@ export default GObject.registerClass(
 		}
 	
 		destroy(): void {
+			// Apparently, this also destroys children without me having to do it myself.
 			super.destroy();
 		}
 	}
