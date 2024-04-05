@@ -20,14 +20,12 @@ Adw.PreferencesPage page_basic {
 				margin-start: 12;
 				spacing: 12;
 
-				ComboBoxText field_position {
+				DropDown field_position {
 					valign: center;
 
-					items [
-						_("Left"),
-						_("Center"),
-						_("Right")
-					]
+					model: StringList {
+						strings [_("Left"), _("Center"), _("Right")]
+					};
 				}
 
 				SpinButton field_position_number {

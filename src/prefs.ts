@@ -30,7 +30,7 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 	
 		// Bind fields to settings
 		let settings = this.getSettings();
-		settings!.bind('position' , buildable.get_object('field_position')! , 'active' , Gio.SettingsBindFlags.DEFAULT);
+		settings!.bind('position' , buildable.get_object('field_position')! , 'selected' , Gio.SettingsBindFlags.DEFAULT);
 		settings!.bind('position-number' , buildable.get_object('field_position_number')! , 'value' , Gio.SettingsBindFlags.DEFAULT);
 		settings!.bind('logging-enabled' , buildable.get_object('field_logging')! , 'active' , Gio.SettingsBindFlags.DEFAULT);
 	
