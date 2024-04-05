@@ -1,13 +1,17 @@
 # Noiseclapper (Soundcore Life for GNOME)
 
-![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=green&label=license%2C%20GPL%20being%20GPL%2C%20it%27s)
+![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=orange)
 ![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=blue)
 ![Commit activity](https://img.shields.io/github/commit-activity/m/JordanViknar/Noiseclapper?color=orange)
 ![Repo size](https://img.shields.io/github/repo-size/JordanViknar/Noiseclapper)
 
 ## Disclaimer
-This is an **unofficial** GNOME Shell extension, designed for use with the Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
+This is an **unofficial** GNOME Shell extension, designed for use with Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
 I am **not** partnered with Soundcore or Anker in any way.
+
+## Screenshot
+
+![Noiseclapper interface screenshot](./assets/screenshots/interface.png)
 
 ## What is Noiseclapper ?
 
@@ -17,9 +21,9 @@ So what do you do when you're using a computer ?
 
 Well, officially, you're supposed to use the NC button or "pet" the right side of the headphones to change those settings. Again, there is a problem : you cannot choose the Active Noise Cancellation mode you want to use, and the Equalizer settings are nowhere to be seen.
 
-Alternatively, you could use the [SoundcoreDesktop application](https://github.com/KillerBOSS2019/SoundcoreLifeAPI) to modify those settings, but I find it unpractical to use.
+~~Alternatively, you could use the [SoundcoreDesktop application](https://github.com/KillerBOSS2019/SoundcoreLifeAPI) to modify those settings, but I find it unpractical to use.~~ *([OpenSCQ30](https://github.com/Oppzippy/OpenSCQ30) now exists as an alternative, and might be better suited for those looking for advanced configuration of their headphones.)*
 
-This extension is meant to be a solution to all these issues. On top of having all the pros of being a GNOME Shell extension (no interface to clutter your active windows, easy to access), it also provides Linux support for the control of Soundcore Life headphones, on both Wayland and X11, including the current Active Noise Cancellation mode and the current Equalizer preset used.
+This extension is meant to be a solution to all these issues. On top of having all the pros of being a GNOME Shell extension (no interface to clutter your active windows, easy to access), it also provides Linux support for the control of Soundcore Life headphones, including the current Active Noise Cancellation mode and the current Equalizer preset used.
 
 ## Supported Devices
 | Soundcore Life Devices | Support |
@@ -28,9 +32,9 @@ This extension is meant to be a solution to all these issues. On top of having a
 | Life Q30 | ✓ |
 | Life Q20+ | ? |
 | Life Q20 | ? |
-| Life Q10 | Partial ? |
+| Life Q10 | ? |
 
-If your device works despite not being marked as supported, don't hesitate to create an issue or a pull request. *(I suppose the Q10 is not fully supported because it seems to lack Active Noise Cancelling.)*
+If your device works despite not being marked as supported, don't hesitate to create an issue or a pull request.
 
 ## Requirements
 
@@ -39,11 +43,11 @@ If your device works despite not being marked as supported, don't hesitate to cr
 - Bluetooth support on the computer
 - *(The Soundcore application must be inactive on your phone, else it will conflict for the control of your headphones with this extension.)*
 
+### For development
+
+- Make
+- TypeScript (and related dependencies, see `package.json`)
+- Blueprint v0.12.0 (or superior)
+
 ## Bug Reports / Contributions / Suggestions
 You can report bugs or suggest features by making an issue, or you can contribute to this extension directly by forking it and then sending a pull request. Any help will be very much appreciated. Thank you !
-
-[Badge Issues]: https://img.shields.io/github/issues/JordanViknar/Noiseclapper
-[Badge Pull Requests]: https://img.shields.io/github/issues-pr/JordanViknar/Noiseclapper
-[Badge Language]: https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper
-[Badge License]: https://img.shields.io/github/license/JordanViknar/Noiseclapper
-[Badge Lines]: https://img.shields.io/tokei/lines/github/JordanViknar/Noiseclapper

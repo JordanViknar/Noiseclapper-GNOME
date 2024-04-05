@@ -10,7 +10,7 @@ export const SupportedDeviceNames: string[] = [
 	"Soundcore Life Q30",
 	"Soundcore Life Q20+",		//Not tested
 	"Soundcore Life Q20",		//Not tested
-	"Soundcore Life Q10",		//Not tested, only partially compatible
+	"Soundcore Life Q10",		//Not tested
 	"BES_BLE"					//Buggy name sometimes applied to the Q30
 ]
 

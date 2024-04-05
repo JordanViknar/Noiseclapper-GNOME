@@ -19,6 +19,6 @@
 	  "src/extension.ts",
 	  "src/prefs.ts",
 	  "src/indicator.ts",
-	  "src/utilities.ts"
+	  "src/common.ts"
 	],
   }

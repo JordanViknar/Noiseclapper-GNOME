@@ -1,11 +1,12 @@
-//------------------------------Libraries----------------------------
-// External imports
+//------------------------- Imports ----------------------------
+// External
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {Extension, gettext as _, ngettext, pgettext} from 'resource:///org/gnome/shell/extensions/extension.js';
+import Gio from 'gi://Gio';
 
-// Internal imports
+// Internal
 import NoiseclapperIndicator from './indicator.js';
-import {LogType, logIfEnabled, devicesObjectToArray, sendSignal, SupportedDeviceNames, updateLogging} from './utilities.js';
+import {LogType, logIfEnabled, devicesObjectToArray, sendSignal, SupportedDeviceNames, updateLogging} from './common.js';
 import GnomeBluetooth from 'gi://GnomeBluetooth'
 
 // ----------------------- Extension -----------------------
@@ -13,6 +14,7 @@ export default class NoiseclapperExtension extends Extension {
 	private BluetoothClient?: GnomeBluetooth.Client;
 	private Indicator?: InstanceType<typeof NoiseclapperIndicator>;
 	public settings = this.getSettings();
+	private settings_handler?: Gio.SettingsBindFlags;
 
 	enable() {
 		logIfEnabled(LogType.Info,"Enabling Noiseclapper...");
@@ -27,7 +29,7 @@ export default class NoiseclapperExtension extends Extension {
 		Main.panel.addToStatusArea(this.uuid, this.Indicator);
 
 		// Apply settings and position
-		this.settings.connect('changed', this.applySettings.bind(this));
+		this.settings_handler = this.settings.connect('changed', this.applySettings.bind(this));
 		this.applySettings();
 
 		//Logs that startup was successful.
@@ -44,6 +46,9 @@ export default class NoiseclapperExtension extends Extension {
 		logIfEnabled(LogType.Debug,"Removing Noiseclapper indicator...");
 		this.Indicator?.destroy();
 		this.Indicator = undefined;
+
+		// Disconnect settings change handler
+		if (this.settings_handler != undefined) {this.settings.disconnect(this.settings_handler);this.settings_handler = undefined;}
 	}
 
 	signalHandler(signal: string) {
@@ -55,6 +60,7 @@ export default class NoiseclapperExtension extends Extension {
 		for (const device of devices) {
 			if (device.connected && device.paired && SupportedDeviceNames.includes(device.name!)) {
 				hasFoundAtLeastOneDevice = true;
+
 				const { name, address } = device;
 				logIfEnabled(LogType.Info, `Sending signal: [${signal}] to device named [${name}] with MAC address [${address}]`);
 				sendSignal(signal, address!);
