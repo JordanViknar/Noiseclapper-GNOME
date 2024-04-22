@@ -10,10 +10,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    # This is where the download of the latest blueprint-compiler version would go... if Ubuntu had it.
+    - name: Install Arch Linux
+      run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh | su
+
+    - name: Update Arch Linux
+      run: pacman --noconfirm -Syyu
+
+    - name: Install dependencies
+      run: pacman --noconfirm -S blueprint-compiler make npm typescript 
 
     - name: Build & Package Noiseclapper
       run: make pack
+
+    - name: Exit Arch Linux
+      run: |
+        exit
+        exit
 
     - name: Extract current branch name
       id: branch-name
