@@ -1,0 +1,5 @@
+{
+	"env": ["es2022"],
+	"space": false,
+	"prettier": true
+}

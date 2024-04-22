@@ -62,26 +62,26 @@ export enum LogType {
 	Debug
 }
 export function logIfEnabled(type: LogType, message: string) {
-    if (!LOGGING) return;
+	if (!LOGGING) return;
 
-    let prefix = "[Noiseclapper] ";
-    switch (type) {
-        case LogType.Info:
-            console.info(prefix + message);
-            break;
-        case LogType.Warn:
-            console.warn(prefix + message);
-            break;
-        case LogType.Error:
-            logError(prefix + message);
-            break;
-        case LogType.Debug:
-            console.debug(prefix + message);
-            break;
-        default:
-            console.log(prefix + message);
-            break;
-    }
+	let prefix = "[Noiseclapper] ";
+	switch (type) {
+		case LogType.Info:
+			console.info(prefix + message);
+			break;
+		case LogType.Warn:
+			console.warn(prefix + message);
+			break;
+		case LogType.Error:
+			logError(prefix + message);
+			break;
+		case LogType.Debug:
+			console.debug(prefix + message);
+			break;
+		default:
+			console.log(prefix + message);
+			break;
+	}
 }
 export function updateLogging(enabled: boolean) {
 	LOGGING = enabled;
@@ -89,14 +89,14 @@ export function updateLogging(enabled: boolean) {
 
 //------------------------ Bluetooth ------------------------
 export function devicesObjectToArray(object: Gio.ListStore<GnomeBluetooth.Device>): (GnomeBluetooth.Device)[] {
-    const numberOfDevices = object.get_n_items();
+	const numberOfDevices = object.get_n_items();
 
-    const devices: (GnomeBluetooth.Device)[] = new Array(numberOfDevices);
-    for (let i = 0; i < numberOfDevices; i++) {
-        devices[i] = object.get_item(i) as GnomeBluetooth.Device;
-    }
+	const devices: (GnomeBluetooth.Device)[] = new Array(numberOfDevices);
+	for (let i = 0; i < numberOfDevices; i++) {
+		devices[i] = object.get_item(i) as GnomeBluetooth.Device;
+	}
 
-    return devices;
+	return devices;
 }
 
 export async function sendSignal(signal: string, address: string) {
