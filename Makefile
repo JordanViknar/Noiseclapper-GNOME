@@ -21,6 +21,10 @@ node_modules: package.json
 	npm install
 	touch $@
 
+# Check TypeScript files with xo
+check:
+	npx xo
+
 # Compile TypeScript files
 $(DIST_DIR)/%.js: $(SOURCE_FILES) node_modules
 	tsc
