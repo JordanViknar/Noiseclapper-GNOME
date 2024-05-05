@@ -45,11 +45,13 @@ export default GObject.registerClass(
 			const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_('Noise Cancelling Mode'),
 			);
-			this.menu.addMenuItem(noiseCancellingModeMenu);
+			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(noiseCancellingModeMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
 			const equalizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_('Equalizer Preset'),
 			);
-			this.menu.addMenuItem(equalizerPresetMenu);
+			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(equalizerPresetMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
 			// The submenus' mode/preset lists
 			const noiseCancellingModeButtonList = [
@@ -139,14 +141,16 @@ export default GObject.registerClass(
 			);
 
 			// Separator
-			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem()); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
 			// Settings button
 			const settingsButton = new PopupMenu.PopupMenuItem(_('Settings'));
 			settingsButton.connect('activate', () => {
 				this.extension.openPreferences();
 			});
-			this.menu.addMenuItem(settingsButton);
+			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(settingsButton); // eslint-disable-line @typescript-eslint/no-unsafe-call
 		}
 
 		addAllInListAsButtons(
@@ -164,16 +168,17 @@ export default GObject.registerClass(
 
 		// Lots of ugly bypasses, will have to fix later.
 		applyPosition() {
-			const boxes: {0: unknown; 1: unknown; 2: unknown} = {
-				// @ts-expect-error _leftBox not in types
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/naming-convention
-				0: Main.panel._leftBox,
-				// @ts-expect-error _centerBox not in types
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/naming-convention
-				1: Main.panel._centerBox,
-				// @ts-expect-error _rightBox not in types
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/naming-convention
-				2: Main.panel._rightBox,
+			const boxes: {
+				left: St.BoxLayout;
+				center: St.BoxLayout;
+				right: St.BoxLayout;
+			} = {
+				// @ts-expect-error Panel boxes do not exist in the type definitions.
+				left: Main.panel._leftBox as St.BoxLayout,
+				// @ts-expect-error Panel boxes do not exist in the type definitions.
+				center: Main.panel._centerBox as St.BoxLayout,
+				// @ts-expect-error Panel boxes do not exist in the type definitions.
+				right: Main.panel._rightBox as St.BoxLayout,
 			};
 			const position = this.extension.settings.get_int('position');
 			const index = this.extension.settings.get_int('position-number');
@@ -182,8 +187,7 @@ export default GObject.registerClass(
 				this.extension.uuid,
 				this,
 				index,
-				// @ts-expect-error TypeScript doesn't like the workaround I'm using.
-				boxes[position],
+				boxes[position === 0 ? 'left' : position === 1 ? 'center' : 'right'],
 			);
 		}
 
