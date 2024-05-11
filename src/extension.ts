@@ -22,7 +22,7 @@ import {
 
 // ----------------------- Extension -----------------------
 export default class NoiseclapperExtension extends Extension {
-	public settings = this.getSettings();
+	public settings?: Gio.Settings;
 	private bluetoothClient?: GnomeBluetooth.Client;
 	private indicator?: InstanceType<typeof NoiseclapperIndicator>;
 	private settingsHandler?: Gio.SettingsBindFlags;
@@ -43,6 +43,7 @@ export default class NoiseclapperExtension extends Extension {
 		Main.panel.addToStatusArea(this.uuid, this.indicator);
 
 		// Apply settings and position
+		this.settings = this.getSettings();
 		this.settingsHandler = this.settings.connect(
 			'changed',
 			this.applySettings.bind(this),
@@ -65,9 +66,11 @@ export default class NoiseclapperExtension extends Extension {
 
 		// Disconnect settings change handler
 		if (this.settingsHandler !== undefined) {
-			this.settings.disconnect(this.settingsHandler);
+			this.settings!.disconnect(this.settingsHandler);
 			this.settingsHandler = undefined;
 		}
+
+		this.settings = undefined;
 	}
 
 	signalHandler(signal: string) {
@@ -100,7 +103,7 @@ export default class NoiseclapperExtension extends Extension {
 
 	applySettings() {
 		logIfEnabled(LogType.Debug, 'Applying settings...');
-		updateLogging(this.settings.get_boolean('logging-enabled'));
+		updateLogging(this.settings!.get_boolean('logging-enabled'));
 		this.indicator!.applyPosition();
 	}
 }

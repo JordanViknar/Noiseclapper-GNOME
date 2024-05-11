@@ -180,8 +180,8 @@ export default GObject.registerClass(
 				// @ts-expect-error Panel boxes do not exist in the type definitions.
 				right: Main.panel._rightBox as St.BoxLayout,
 			};
-			const position = this.extension.settings.get_int('position');
-			const index = this.extension.settings.get_int('position-number');
+			const position = this.extension.settings!.get_int('position');
+			const index = this.extension.settings!.get_int('position-number');
 
 			Main.panel._addToPanelBox(
 				this.extension.uuid,
