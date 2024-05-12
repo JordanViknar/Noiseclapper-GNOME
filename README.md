@@ -1,9 +1,14 @@
-# Noiseclapper (Soundcore Life for GNOME)
-
-![License](https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=orange)
-![Top language](https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=blue)
-![Commit activity](https://img.shields.io/github/commit-activity/m/JordanViknar/Noiseclapper?color=orange)
-![Repo size](https://img.shields.io/github/repo-size/JordanViknar/Noiseclapper)
+<div align="center">
+  <h1>Noiseclapper (Soundcore Life for GNOME)</h1>
+  <img alt="License" src="https://img.shields.io/github/license/JordanViknar/Noiseclapper?color=orange">
+  <img alt="Top language" src="https://img.shields.io/github/languages/top/JordanViknar/Noiseclapper?color=blue">
+  <img alt="Commit activity" src="https://img.shields.io/github/commit-activity/m/JordanViknar/Noiseclapper?color=orange">
+  <img alt="Repo size" src="https://img.shields.io/github/repo-size/JordanViknar/Noiseclapper">
+  </br>
+  <a href="https://extensions.gnome.org/extension/5526/noiseclapper/">
+    <img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" alt="Get it on GNOME Extensions" height=80>
+  </a>
+</div>
 
 ## Disclaimer
 This is an **unofficial** GNOME Shell extension, designed for use with Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
