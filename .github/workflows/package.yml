@@ -10,22 +10,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Install Arch Linux
-      run: curl -L https://github.com/zaoqi/github-actions-archlinux/raw/master/install.sh | sh | su
-
-    - name: Update Arch Linux
-      run: pacman --noconfirm -Syyu
-
+    - name: Download blueprint-compiler from source
+      run: git clone https://gitlab.gnome.org/jwestman/blueprint-compiler
+    
     - name: Install dependencies
-      run: pacman --noconfirm -S blueprint-compiler make npm typescript 
+      run: sudo apt install -y gobject-introspection blueprint-compiler
+
+    - name: Run blueprint-compiler manually
+      run: mkdir dist && python3 ./blueprint-compiler/blueprint-compiler.py compile ui/prefs.blp > dist/prefs.ui
 
     - name: Build & Package Noiseclapper
       run: make pack
-
-    - name: Exit Arch Linux
-      run: |
-        exit
-        exit
 
     - name: Extract current branch name
       id: branch-name
