@@ -1,23 +1,20 @@
-name: zip-generation
+name: zip-packaging
 
 on: [ push, pull_request ]
 
 jobs:
-  generate-zip:
+  create-zip-package:
     runs-on: ubuntu-latest
+
+    container: # We use the latest Arch Linux image, as we need the latest version of blueprint-compiler. We need make, so base-devel has to be used.
+      image: ghcr.io/archlinux/archlinux:base-devel
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Download blueprint-compiler from source
-      run: git clone https://gitlab.gnome.org/jwestman/blueprint-compiler
-    
     - name: Install dependencies
-      run: sudo apt install -y gobject-introspection blueprint-compiler
-
-    - name: Run blueprint-compiler manually
-      run: mkdir dist && python3 ./blueprint-compiler/blueprint-compiler.py compile ui/prefs.blp > dist/prefs.ui
+      run: pacman -Syu --noconfirm blueprint-compiler npm typescript gobject-introspection libadwaita zip
 
     - name: Build & Package Noiseclapper
       run: make pack
@@ -25,9 +22,13 @@ jobs:
     - name: Extract current branch name
       id: branch-name
       uses: tj-actions/branch-names@v7
+
+    - name: Format branch name # Avoids GitHub Actions panicking about / characters in artifact names.
+      id: format-branch-name
+      run: echo "formatted_branch=$(echo ${{ steps.branch-name.outputs.current_branch }} | tr -s '/' '-')" >> $GITHUB_OUTPUT
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: noiseclapper-artifacts-${{ steps.branch-name.outputs.current_branch }}
+        name: noiseclapper-artifacts-${{ steps.format-branch-name.outputs.formatted_branch }}
         path: Noiseclapper@JordanViknar.zip
