@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"files": {
+		"ignore": ["dist/**/*"]
+	},
+	"linter": {
+		"rules": {
+			"all": true,
+			"style": {
+				"noNonNullAssertion": "off",
+				"noDefaultExport": "off",
+				"useNamingConvention": "off",
+				"noNamespaceImport": "off"
+			},
+			"suspicious": {
+				"noConsole": "off"
+			}
+		}
+	},
+	"javascript": {
+		"globals": ["logError"]
+	}
+}

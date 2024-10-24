@@ -21,9 +21,9 @@ node_modules: package.json
 	npm install
 	touch $@
 
-# Check TypeScript files with xo
+# Check TypeScript files with biome
 check:
-	npx xo
+	npx biome ci .
 
 # Compile TypeScript files
 $(DIST_DIR)/%.js: $(SOURCE_FILES) node_modules
@@ -33,10 +33,6 @@ $(DIST_DIR)/%.js: $(SOURCE_FILES) node_modules
 $(LOCALE_DIR)/$(NAME).pot: $(SOURCE_FILES) $(UI_FILES)
 	xgettext --from-code=UTF-8 --output=$@ $^ --add-comments --keyword=_ --keyword=C_:1c,2 --language=JavaScript
 locale: $(LOCALE_DIR)/$(NAME).pot
-
-# Compile schema files
-# $(SCHEMA_DIR)/gschemas.compiled: $(SCHEMA_DIR)/org.gnome.shell.extensions.$(NAME).gschema.xml
-#	glib-compile-schemas $(SCHEMA_DIR)
 
 # Compile UI files
 $(DIST_DIR)/prefs.ui: $(UI_FILES)

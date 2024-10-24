@@ -1,14 +1,16 @@
-name: xo-lint-check
+name: biome-lint-check
 
 on: [ push, pull_request ]
 
 jobs:
-  xo-lint-check:
+  biome-lint-check:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Install dependencies
       run: npm install
-    - name: XO Lint
-      run: npx xo
+    - name: Setup Biome
+      uses: biomejs/setup-biome@v2
+    - name: Run Biome
+      run: biome ci .
