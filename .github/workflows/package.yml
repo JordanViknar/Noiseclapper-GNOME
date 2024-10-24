@@ -12,6 +12,14 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Cache Bun dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
     
     - name: Install dependencies
       run: pacman -Syu --noconfirm blueprint-compiler typescript gobject-introspection libadwaita zip unzip
