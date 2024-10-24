@@ -6,11 +6,10 @@ jobs:
   biome-lint-check:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: oven-sh/setup-bun@v2
     - name: Install dependencies
-      run: npm install
-    - name: Setup Biome
-      uses: biomejs/setup-biome@v2
+      run: bun install
+    - uses: biomejs/setup-biome@v2
     - name: Run Biome
       run: biome ci .

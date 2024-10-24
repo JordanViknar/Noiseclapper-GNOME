@@ -18,12 +18,12 @@ all: $(JS_FILES)
 
 # Dependencies
 node_modules: package.json
-	npm install
+	bun install
 	touch $@
 
 # Check TypeScript files with biome
 check:
-	npx biome ci .
+	bunx biome ci .
 
 # Compile TypeScript files
 $(DIST_DIR)/%.js: $(SOURCE_FILES) node_modules
