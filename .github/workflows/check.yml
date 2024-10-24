@@ -1,14 +1,22 @@
-name: xo-lint-check
+name: biome-lint-check
 
 on: [ push, pull_request ]
 
 jobs:
-  xo-lint-check:
+  biome-lint-check:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - name: Cache Bun dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.bun/install/cache
+        key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+    - uses: oven-sh/setup-bun@v2
     - name: Install dependencies
-      run: npm install
-    - name: XO Lint
-      run: npx xo
+      run: bun install
+    - uses: biomejs/setup-biome@v2
+    - name: Run Biome
+      run: biome ci .

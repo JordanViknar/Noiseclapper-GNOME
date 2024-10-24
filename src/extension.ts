@@ -1,24 +1,22 @@
 // ------------------------- Imports ----------------------------
 // External
-import type Gio from 'gi://Gio';
-import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import type Gio from "gi://Gio";
+import GnomeBluetooth from "gi://GnomeBluetooth";
 import {
 	Extension,
 	gettext as _,
-	ngettext,
-	pgettext,
-} from 'resource:///org/gnome/shell/extensions/extension.js';
-import GnomeBluetooth from 'gi://GnomeBluetooth';
-// Internal
-import NoiseclapperIndicator from './indicator.js';
+} from "resource:///org/gnome/shell/extensions/extension.js";
+import { notifyError, panel } from "resource:///org/gnome/shell/ui/main.js";
 import {
 	LogType,
-	logIfEnabled,
 	devicesObjectToArray,
+	logIfEnabled,
 	sendSignal,
 	supportedDeviceNames,
 	updateLogging,
-} from './common.js';
+} from "./common.js";
+// Internal
+import NoiseclapperIndicator from "./indicator.js";
 
 // ----------------------- Extension -----------------------
 export default class NoiseclapperExtension extends Extension {
@@ -28,39 +26,39 @@ export default class NoiseclapperExtension extends Extension {
 	private settingsHandler?: Gio.SettingsBindFlags;
 
 	enable() {
-		logIfEnabled(LogType.Info, 'Enabling Noiseclapper...');
+		logIfEnabled(LogType.Info, "Enabling Noiseclapper...");
 
 		// We enable the bluetooth client
-		logIfEnabled(LogType.Debug, 'Enabling Bluetooth client...');
+		logIfEnabled(LogType.Debug, "Enabling Bluetooth client...");
 		this.bluetoothClient = new GnomeBluetooth.Client();
 
 		// And create the indicator
 		logIfEnabled(
 			LogType.Debug,
-			'Creating and adding Noiseclapper indicator...',
+			"Creating and adding Noiseclapper indicator...",
 		);
 		this.indicator = new NoiseclapperIndicator(this);
-		Main.panel.addToStatusArea(this.uuid, this.indicator);
+		panel.addToStatusArea(this.uuid, this.indicator);
 
 		// Apply settings and position
 		this.settings = this.getSettings();
 		this.settingsHandler = this.settings.connect(
-			'changed',
+			"changed",
 			this.applySettings.bind(this),
 		);
 		this.applySettings();
 
-		logIfEnabled(LogType.Info, 'Startup successful.');
+		logIfEnabled(LogType.Info, "Startup successful.");
 	}
 
 	disable() {
-		logIfEnabled(LogType.Info, 'Disabling Noiseclapper...');
+		logIfEnabled(LogType.Info, "Disabling Noiseclapper...");
 
 		// Disable Bluetooth client if enabled
 		this.bluetoothClient = undefined;
 
 		// Remove the indicator
-		logIfEnabled(LogType.Debug, 'Removing Noiseclapper indicator...');
+		logIfEnabled(LogType.Debug, "Removing Noiseclapper indicator...");
 		this.indicator?.destroy();
 		this.indicator = undefined;
 
@@ -74,36 +72,40 @@ export default class NoiseclapperExtension extends Extension {
 	}
 
 	signalHandler(signal: string) {
-		logIfEnabled(LogType.Debug, 'Preparing to send signal : [' + signal + ']');
+		logIfEnabled(LogType.Debug, `Preparing to send signal : [${signal}]`);
 
-		const devices = devicesObjectToArray(this.bluetoothClient!.get_devices());
+		const devices = devicesObjectToArray(
+			this.bluetoothClient!.get_devices() as Gio.ListStore<GnomeBluetooth.Device>,
+		);
 
 		let hasFoundAtLeastOneDevice = false;
 		for (const device of devices) {
 			if (device.connected && supportedDeviceNames.includes(device.name!)) {
 				hasFoundAtLeastOneDevice = true;
 
-				const {name, address} = device;
+				const { name, address } = device;
 				logIfEnabled(
 					LogType.Info,
 					`Sending signal [${signal}] to device [${name}] with MAC address [${address}]`,
 				);
-				void sendSignal(signal, address!);
+				sendSignal(signal, address!).catch((error) => {
+					logIfEnabled(LogType.Error, `Failed to send signal: ${error}`);
+				});
 			}
 		}
 
 		if (!hasFoundAtLeastOneDevice) {
-			logIfEnabled(LogType.Error, 'No compatible devices found.');
-			Main.notifyError(
-				'Noiseclapper - ' + _('Error'),
-				_('No connected compatible devices found.'),
+			logIfEnabled(LogType.Error, "No compatible devices found.");
+			notifyError(
+				`Noiseclapper - ${_("Error")}`,
+				_("No connected compatible devices found."),
 			);
 		}
 	}
 
 	applySettings() {
-		logIfEnabled(LogType.Debug, 'Applying settings...');
-		updateLogging(this.settings!.get_boolean('logging-enabled'));
+		logIfEnabled(LogType.Debug, "Applying settings...");
+		updateLogging(this.settings!.get_boolean("logging-enabled"));
 		this.indicator!.applyPosition();
 	}
 }
