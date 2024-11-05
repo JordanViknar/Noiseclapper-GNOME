@@ -6,8 +6,8 @@ jobs:
   create-zip-package:
     runs-on: ubuntu-latest
 
-    container: # We use the latest Arch Linux image, as we need the latest version of blueprint-compiler. We need make, so base-devel has to be used.
-      image: ghcr.io/archlinux/archlinux:base-devel
+    container:
+      image: ghcr.io/linuxcontainers/alpine:latest
 
     steps:
     - name: Checkout repository
@@ -22,7 +22,7 @@ jobs:
           ${{ runner.os }}-bun-
     
     - name: Install dependencies
-      run: pacman -Syu --noconfirm blueprint-compiler typescript gobject-introspection libadwaita zip unzip
+      run: apk add blueprint-compiler typescript zip unzip make
 
     - uses: oven-sh/setup-bun@v2
 
