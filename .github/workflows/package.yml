@@ -22,7 +22,7 @@ jobs:
           ${{ runner.os }}-bun-
     
     - name: Install dependencies
-      run: apk add blueprint-compiler typescript zip unzip make
+      run: apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing blueprint-compiler typescript zip unzip make
 
     - uses: oven-sh/setup-bun@v2
 
