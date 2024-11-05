@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: ghcr.io/linuxcontainers/alpine:latest
+      image: alpine:edge
 
     steps:
     - name: Checkout repository
