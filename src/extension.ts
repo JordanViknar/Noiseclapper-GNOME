@@ -17,6 +17,7 @@ import {
 } from "./common.js";
 // Internal
 import NoiseclapperIndicator from "./indicator.js";
+import { OpenSCQ30Client } from "./openSCQ30.js"
 
 // ----------------------- Extension -----------------------
 export default class NoiseclapperExtension extends Extension {
@@ -37,7 +38,11 @@ export default class NoiseclapperExtension extends Extension {
 			LogType.Debug,
 			"Creating and adding Noiseclapper indicator...",
 		);
-		this.indicator = new NoiseclapperIndicator(this);
+
+		const openSCQ30Client = new OpenSCQ30Client("/home/elias/Projects/OpenSCQ30/target/debug/openscq30")
+
+		this.indicator = new NoiseclapperIndicator(this, openSCQ30Client, this.bluetoothClient);
+		
 		panel.addToStatusArea(this.uuid, this.indicator);
 
 		// Apply settings and position
@@ -49,6 +54,7 @@ export default class NoiseclapperExtension extends Extension {
 		this.applySettings();
 
 		logIfEnabled(LogType.Info, "Startup successful.");
+
 	}
 
 	disable() {
