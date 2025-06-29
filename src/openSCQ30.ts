@@ -6,8 +6,8 @@ export interface Device {
 }
 
 export class OpenSCQ30Client {
-    constructor(private path: string) {
 
+    constructor(private path: string) {
     }
 
     private async processCommand(args: string[]): Promise<string> {
@@ -24,7 +24,7 @@ export class OpenSCQ30Client {
                         reject(new Error("Process is null"));
                         return;
                     }
-                    
+
                     const [success, stdout, stderr] = proc.communicate_utf8_finish(result);
                     if (success) {
                         resolve(stdout);
@@ -77,6 +77,10 @@ export class OpenSCQ30Client {
 
     public async addNewDevice(mac: string, model: string): Promise<void> {
         await this.processCommand(["paired-devices", "add", "--mac-address", mac, "--model", model])
+    }
+
+    public async getVersion() {
+        return await this.processCommand(["--version"])
     }
 
     public async getSettings(mac: string): Promise<Record<string, string>> {

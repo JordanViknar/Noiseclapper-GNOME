@@ -39,21 +39,35 @@ export default class NoiseclapperExtension extends Extension {
 			"Creating and adding Noiseclapper indicator...",
 		);
 
-		const openSCQ30Client = new OpenSCQ30Client("/home/elias/Projects/OpenSCQ30/target/debug/openscq30")
-
-		this.indicator = new NoiseclapperIndicator(this, openSCQ30Client, this.bluetoothClient);
-		
-		panel.addToStatusArea(this.uuid, this.indicator);
-
 		// Apply settings and position
 		this.settings = this.getSettings();
 		this.settingsHandler = this.settings.connect(
 			"changed",
 			this.applySettings.bind(this),
 		);
-		this.applySettings();
 
-		logIfEnabled(LogType.Info, "Startup successful.");
+		let path
+		try {
+			path = this.settings!.get_string("openscq30")
+		} catch(e) {
+			path = "openscq30"
+		}
+		const openSCQ30Client = new OpenSCQ30Client(path)
+
+		let client: OpenSCQ30Client | undefined;
+		openSCQ30Client
+			.getVersion()
+			.then(() => client = openSCQ30Client)
+			.catch(() => client = undefined)
+			.finally(() => {
+				this.indicator = new NoiseclapperIndicator(this, this.bluetoothClient!, client);
+				panel.addToStatusArea(this.uuid, this.indicator);
+		
+				this.applySettings();
+			
+				logIfEnabled(LogType.Info, "Startup successful.");
+			})
+
 
 	}
 
@@ -76,7 +90,7 @@ export default class NoiseclapperExtension extends Extension {
 
 		this.settings = undefined;
 	}
-
+ 
 	signalHandler(signal: string) {
 		logIfEnabled(LogType.Debug, `Preparing to send signal : [${signal}]`);
 

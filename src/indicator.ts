@@ -20,15 +20,19 @@ import type NoiseclapperExtension from "./extension.js";
 import { Device, OpenSCQ30Client } from "./openSCQ30.js";
 import { notify, notifyError } from "resource:///org/gnome/shell/ui/main.js";
 
+const MODEL_NAMES: Record<string, string> = {
+	"soundcore q20i": "SoundcoreA3004",
+}
+
 // ----------------------- Indicator -----------------------
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
 		private readonly extension: NoiseclapperExtension;
-		private readonly openSCQ30Client: OpenSCQ30Client;
+		private readonly openSCQ30Client?: OpenSCQ30Client;
 		private readonly bluetoothClient: GnomeBluetooth.Client;
 
 		// TODO: Remove bluetooth client from this class dependancies
-		constructor(extension: NoiseclapperExtension, openSCQ30Client: OpenSCQ30Client, bluetoothClient: GnomeBluetooth.Client) {
+		constructor(extension: NoiseclapperExtension, bluetoothClient: GnomeBluetooth.Client, openSCQ30Client?: OpenSCQ30Client, ) {
 			logIfEnabled(LogType.Debug, "Initializing Noiseclapper indicator...");
 
 			super(0, extension.uuid);
@@ -56,34 +60,41 @@ export default GObject.registerClass(
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
 			this.menu.addMenuItem(settingsButton); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
-			this
-				.addUnknownDevices()
-				.then(() => this.openSCQ30Client.getDevices())
-				.then(devices => Promise.all(devices.map((device) => this.addDeviceOptions(device))))
-				.catch(error => logIfEnabled(LogType.Error, `Failed to get devices: ${error}`));
-
-			// this.addNoiseCancellingMenu()
-			// this.addEqualizerMenu()
+			if (this.openSCQ30Client) {
+				this
+					.addUnknownDevices()
+					.then(() => this.openSCQ30Client!.getDevices())
+					.then(devices => Promise.all(devices.map((device) => this.addDeviceOptions(device))))
+					.catch(error => logIfEnabled(LogType.Error, `Failed to get devices: ${error}`));
+			} else {
+				this.addNoiseCancellingMenu()
+				this.addEqualizerMenu()
+			}
 
 			// Separator
 			// this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem()); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
 
-			// @ts-expect-error for some reason there isn't this signal in type definitions even though it works
-			this.menu.connect("open-state-changed", async (obj) => {
-				if (!obj.isOpen) {
-					return
-				}
 
-				const newDevices = await this.addUnknownDevices()
-				if (newDevices.length === 0) {
-					return
-				}
+			if (this.openSCQ30Client) {
+				// @ts-expect-error for some reason there isn't this signal in type definitions even though it works
 
-				for (const device of newDevices) {
-					this.addDeviceOptions(device)
-				}
-			})
+				this.menu.connect("open-state-changed", async (obj) => {
+					if (!obj.isOpen) {
+						return
+					}
+
+					const newDevices = await this.addUnknownDevices()
+					if (newDevices.length === 0) {
+						return
+					}
+
+					for (const device of newDevices) {
+						this.addDeviceOptions(device)
+					}
+				})
+			}
+
 		}
 
 
@@ -93,19 +104,17 @@ export default GObject.registerClass(
 			);
 
 			// TODO: Probably it's better to use something else instead of device name
-			const modelNames: Record<string, string> = {
-				"soundcore q20i": "SoundcoreA3004"
-			}
 
-			const dbDevices = await this.openSCQ30Client.getDevices();
+
+			const dbDevices = await this.openSCQ30Client!.getDevices();
 			const devicesToAdd: Device[] = bluetoothDevices
 				.filter(bluetoothDevice => bluetoothDevice.connected)
-				.map(bluetoothDevice => ({ mac: bluetoothDevice.address, model: modelNames[bluetoothDevice.name.toLowerCase()] }))
+				.map(bluetoothDevice => ({ mac: bluetoothDevice.address, model: MODEL_NAMES[bluetoothDevice.name.toLowerCase()] }))
 				.filter(({ model }) => model !== undefined)
 				.filter(bluetoothDevice => !dbDevices.find(dbDevice => dbDevice.mac === bluetoothDevice.mac))
 
 			for (const bluetoothDevice of devicesToAdd) {
-				await this.openSCQ30Client.addNewDevice(bluetoothDevice.mac, bluetoothDevice.model);
+				await this.openSCQ30Client!.addNewDevice(bluetoothDevice.mac, bluetoothDevice.model);
 			}
 
 			return devicesToAdd;
@@ -113,10 +122,17 @@ export default GObject.registerClass(
 		}
 
 		async addDeviceOptions(device: Device) {
+			const format = (battery: string) => `${(battery === "0" ? 0 : parseInt(battery) / 5) * 100}%`;
+			const settings = await this.openSCQ30Client!.getSettings(device.mac);
+
+			const batteryInfo = "batteryLevel" in settings 
+				? `(${format(settings.batteryLevel)})`
+				: `(${format(settings.batteryLevelRight)}, ${format(settings.batteryLevelLeft)}`
+
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(`${device.model}${batteryInfo}`)); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
-			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(`${device.model}`)); // eslint-disable-line @typescript-eslint/no-unsafe-call
-
+		
 			{
 				const SETTING_NAME = "ambientSoundMode"
 				const SETTING_VALUES = ["NoiseCanceling", "Transparency", "Normal"];
@@ -140,7 +156,7 @@ export default GObject.registerClass(
 
 						button.setOrnament(PopupMenu.Ornament.DOT);
 
-						this.openSCQ30Client.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
+						this.openSCQ30Client!.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
 							logIfEnabled(LogType.Error, `Failed to set ${SETTING_NAME} for device ${device.mac}: ${error}`);
 						});
 					});
@@ -149,7 +165,7 @@ export default GObject.registerClass(
 					buttons.push(button);
 				});
 
-				this.openSCQ30Client.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
+				this.openSCQ30Client!.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
 					buttons.forEach(button => {
 						const buttonMode = SETTING_VALUES.find(mode => _(mode) === button.label.text);
 						if (buttonMode === currentValue) {
@@ -184,7 +200,7 @@ export default GObject.registerClass(
 
 						button.setOrnament(PopupMenu.Ornament.DOT);
 
-						this.openSCQ30Client.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
+						this.openSCQ30Client!.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
 							logIfEnabled(LogType.Error, `Failed to set ${SETTING_NAME} for device ${device.mac}: ${error}`);
 						});
 					});
@@ -193,7 +209,7 @@ export default GObject.registerClass(
 					buttons.push(button);
 				});
 
-				this.openSCQ30Client.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
+				this.openSCQ30Client!.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
 					buttons.forEach(button => {
 						const buttonMode = SETTING_VALUES.find(mode => _(mode) === button.label.text);
 						if (buttonMode === currentValue) {
