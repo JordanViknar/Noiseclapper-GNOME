@@ -10,27 +10,23 @@ import GnomeBluetooth from "gi://GnomeBluetooth";
 import type Gio from "gi://Gio";
 import {
 	LogType,
-	devicesObjectToArray,
-	equalizerPresetSignalList,
 	logIfEnabled,
-	noiseCancellingSignalList,
 } from "./common.js";
 // Internal
 import type NoiseclapperExtension from "./extension.js";
-import { Device, OpenSCQ30Client } from "./openSCQ30.js";
+import { Device, OpenSCQ30Client, PythonClient, SoundcoreClient } from "./clients.js";
 import { notify, notifyError } from "resource:///org/gnome/shell/ui/main.js";
 
-const MODEL_NAMES: Record<string, string> = {
-	"soundcore q20i": "SoundcoreA3004",
-}
+
 
 // ----------------------- Indicator -----------------------
 export default GObject.registerClass(
 	class NoiseclapperIndicator extends PanelMenu.Button {
 		private readonly extension: NoiseclapperExtension;
 		private readonly openSCQ30Client?: OpenSCQ30Client;
+		private readonly pythonClient: PythonClient = new PythonClient()
+
 		private readonly bluetoothClient: GnomeBluetooth.Client;
-		private items: PopupMenu.PopupBaseMenuItem[] = []
 
 		// TODO: Remove bluetooth client from this class dependancies
 		constructor(extension: NoiseclapperExtension, bluetoothClient: GnomeBluetooth.Client, openSCQ30Client?: OpenSCQ30Client,) {
@@ -53,52 +49,34 @@ export default GObject.registerClass(
 			box.add_child(icon);
 			this.add_child(box);
 
+			this.init().then(() => this.addSettings())
+		}
 
-			if (!this.openSCQ30Client) {
-				this.addNoiseCancellingMenu()
-				this.addEqualizerMenu()
-
-				this.addSettings()
-
+		async init() {
+			if (!this.openSCQ30Client && !(await this.pythonClient.isWorking())) {
+				this.addMenuInfo(_("Please install python or OpenSCQ30 CLI"))
 				return
 			}
 
-			this.addAllDevices()
-
-			// @ts-expect-error for some reason there isn't this signal in type definitions even though it works
-			this.menu.connect("open-state-changed", async (obj) => {
-				if (!obj.isOpen) {
-					return
-				}
-
-				this.clearMenu();
-				await this.addAllDevices()
-			})
-
-		}
-
-
-		async addAllDevices() {
-			const dbDevices = await this.openSCQ30Client!.getDevices();
-			const bluetoothDevices = await this.getSoundcoreBluetoothDevices();
-
+			const bluetoothDevices = await this.getConnectedSoundcoreDevices();
 			if (bluetoothDevices.length === 0) {
-				// @ts-ignore
-				this.addToMenu(new PopupMenu.PopupMenuItem("No devices found", { activate: false, reactive: false }))
+				this.addMenuInfo(_("No devices found"))
 
-				this.addSettings()
 				return;
 			}
 
-			const bluetoothDevicesThatAreNotInDb = bluetoothDevices
-				.filter(bluetoothDevice => !dbDevices.find(dbDevice => dbDevice.mac === bluetoothDevice.mac));
+			if (this.openSCQ30Client) {
+				const dbDevices = await this.openSCQ30Client!.getDevices();
+				const bluetoothDevicesThatAreNotInDb = bluetoothDevices
+					.filter(bluetoothDevice => !dbDevices.find(dbDevice => dbDevice.mac === bluetoothDevice.mac));
 
-			bluetoothDevicesThatAreNotInDb.forEach(device => this.openSCQ30Client?.addNewDevice(device.mac, device.model))
+				bluetoothDevicesThatAreNotInDb.forEach(device => this.openSCQ30Client?.addNewDevice(device.mac, device.model))
+			}
 
-			bluetoothDevices.forEach(device => this.addDeviceOptions(device))
+			await Promise.all(bluetoothDevices.map(device => this.addDeviceOptions(device)))
 
-			this.addSettings()
 		}
+
 
 		addSettings() {
 			this.addToMenu(new PopupMenu.PopupSeparatorMenuItem())
@@ -112,258 +90,217 @@ export default GObject.registerClass(
 			this.addToMenu(settingsButton)
 		}
 
-		async getSoundcoreBluetoothDevices(): Promise<Device[]> {
-			const bluetoothDevices = devicesObjectToArray(
-				this.bluetoothClient!.get_devices() as Gio.ListStore<GnomeBluetooth.Device>,
+		getBluetoothDevices(): GnomeBluetooth.Device[] {
+			const devices = this.bluetoothClient!.get_devices() as Gio.ListStore<GnomeBluetooth.Device>
+			const numberOfDevices = devices.get_n_items();
+
+			return Array.from(
+				{ length: numberOfDevices },
+				(_, i) => devices.get_item(i) as GnomeBluetooth.Device,
 			);
 
-			return bluetoothDevices
+			// return [{
+			// 	name: "Soundcore Life P3",
+			// 	address: "hello-world",
+			// 	connected: true,
+			// } as GnomeBluetooth.Device]
+		}
+
+		async getConnectedSoundcoreDevices(): Promise<Device[]> {
+			const bluetoothDevices = this.getBluetoothDevices()
+
+			const devices = bluetoothDevices
 				.filter(bluetoothDevice => bluetoothDevice.connected)
-				.map(bluetoothDevice => ({ mac: bluetoothDevice.address, model: MODEL_NAMES[bluetoothDevice.name.toLowerCase()] }))
-				.filter(({ model }) => model !== undefined)
+				.map(async bluetoothDevice => {
+					const device = { mac: bluetoothDevice.address, model: bluetoothDevice.name }
+
+					if (await this.pythonClient.isModelSupported(bluetoothDevice.name)) {
+						return { ...device, supported: true };
+					}
+
+					if (this.openSCQ30Client) {
+						return { ...device, supported: await this.openSCQ30Client.isModelSupported(bluetoothDevice.name) };
+					}
+
+					return { ...device, supported: false };
+				})
+
+
+			return Promise.all(devices).then(devices => devices.filter(({ supported }) => supported))
+		}
+
+		async addSelectSettings(settings: { title: string, values: Record<string, string>, selectedId: string, onSelect: (a: string) => void }) {
+			const submenu = new PopupMenu.PopupSubMenuMenuItem(settings.title);
+			this.addToMenu(submenu);
+
+			const buttons: PopupMenu.PopupMenuItem[] = [];
+
+			for (const [id, label] of Object.entries(settings.values)) {
+				const button = new PopupMenu.PopupMenuItem(label);
+
+				button.setOrnament(settings.selectedId === id ? PopupMenu.Ornament.DOT : PopupMenu.Ornament.NO_DOT);
+
+				button.connect("activate", () => {
+					buttons.forEach(btn => {
+						btn.setOrnament(PopupMenu.Ornament.NO_DOT);
+					});
+
+					button.setOrnament(PopupMenu.Ornament.DOT);
+
+					settings.onSelect(id)
+				});
+
+				submenu.menu.addMenuItem(button);
+				buttons.push(button);
+			}
+		}
+
+		async addDeviceTitle(device: Device) {
+			let batteryInfo = ""
+
+			if (this.openSCQ30Client) {
+				const formatBatteryLevel = (battery: string) => `${(battery === "0" ? 0 : parseInt(battery) / 5) * 100}%`;
+				const formatChargingStatus = (status: string) => status === "true" ? "↑" : ""
+
+				const settings = await this.openSCQ30Client!.getAvailableSettings(device.mac);
+
+				if (settings.includes("batteryLevel")) {
+					const batteryLevel = await this.openSCQ30Client!.getSettingsValue(device.mac, "batteryLevel").then(formatBatteryLevel)
+					const chargingStatus = await this.openSCQ30Client!.getSettingsValue(device.mac, "isCharging").then(formatChargingStatus)
+
+					batteryInfo = `(${batteryLevel}${chargingStatus})`
+				}
+
+				if (settings.includes("batteryLevelLeft") && settings.includes("batteryLevelRight")) {
+					const batteryLevelLeft = await this.openSCQ30Client!.getSettingsValue(device.mac, "batteryLevelLeft").then(formatBatteryLevel)
+					const chargingStatusLeft = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingLeft").then(formatBatteryLevel)
+					const batteryLevelRight = await this.openSCQ30Client!.getSettingsValue(device.mac, "batteryLevelRight").then(formatBatteryLevel)
+					const chargingStatusRight = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingRight").then(formatBatteryLevel)
+
+					batteryInfo = `(${batteryLevelLeft}${chargingStatusLeft}, ${batteryLevelRight}${chargingStatusRight})`
+				}
+			}
+
+			const separator = new PopupMenu.PopupSeparatorMenuItem(`${device.model}${batteryInfo}`)
+			this.addToMenu(separator);
 		}
 
 		async addDeviceOptions(device: Device) {
-			const format = (battery: string) => `${(battery === "0" ? 0 : parseInt(battery) / 5) * 100}%`;
-			const settings = await this.openSCQ30Client!.getSettings(device.mac);
+			await this.addDeviceTitle(device)
 
-			const batteryInfo = "batteryLevel" in settings
-				? `(${format(settings.batteryLevel)})`
-				: `(${format(settings.batteryLevelRight)}, ${format(settings.batteryLevelLeft)}`
+			const client = this.openSCQ30Client ?? this.pythonClient;
+			await this.addSelectSettings({
+				title: _("Equalizer Preset"),
+				values: {
+					"SoundcoreSignature": `🎵 ${_("Soundcore Signature")}`,
+					"Acoustic": `🎸 ${_("Acoustic")}`,
+					"BassBooster": `🎸 ${_("Bass Booster")}`,
+					"BassReducer": `🚫 ${_("Bass Reducer")}`,
+					"Classical": `🎻 ${_("Classical")}`,
+					"Podcast": `🎤 ${_("Podcast")}`,
+					"Dance": `🪩 ${_("Dance")}`,
+					"Deep": `🖴${_("Deep")}`,
+					"Electronic": `⚡ ${_("Electronic")}`,
+					"Flat": `🚫 ${_("Flat")}`,
+					"HipHop": `🎹 ${_("Hip-Hop")}`,
+					"Jazz": `🎷 ${_("Jazz")}`,
+					"Latin": `💃🏽 ${_("Latin")}`,
+					"Lounge": `🍸 ${_("Lounge")}`,
+					"Piano": `🎹 ${_("Piano")}`,
+					"Pop": `🎸 ${_("Pop")}`,
+					"RnB": `🎹 ${_("RnB")}`,
+					"Rock": `🎸 ${_("Rock")}`,
+					"SmallSpeakers": `🔉 ${_("Small Speaker(s)")}`,
+					"SpokenWord": `👄 ${_("Spoken Word")}`,
+					"TrebleBooster": `🎼 ${_("Treble Booster")}`,
+					"TrebleReducer": `🚫 ${_("Treble Reducer")}`,
+				},
+				selectedId: "SoundcoreSignature",
+				onSelect: (value) => client.setSettingsValue(device.mac, "presetEqualizerProfile", value)
+			})
 
-			const separator = new PopupMenu.PopupSeparatorMenuItem(`${device.model}${batteryInfo}`)
-			this.addToMenu(separator); 
+			// Only show IFF 
+			// * there is working python client
+			// * it supports the model
 
+			// This is messy
+			if (await this.pythonClient.isWorking() && await this.pythonClient.isModelSupported(device.model)) {
+				// I can't figure out where is this settings in openscq30
 
-			{
-				const SETTING_NAME = "ambientSoundMode"
-				const SETTING_VALUES = ["NoiseCanceling", "Transparency", "Normal"];
+				await this.addSelectSettings({
+					title: _("Noise Cancelling Mode"),
+					values: {
+						"Transport": `🚋 ${_("Transport")}`,
+						"Indoor": `🏠 ${_("Indoor")}`,
+						"Outdoor": `🌳 ${_("Outdoor")}`,
+						"Normal": `🚫 ${_("Normal / No ANC")}`,
+						"Transparency": `🪟 ${_("Transparency / No NC")}`
+					},
+					selectedId: "Transport",
+					onSelect: (value) => this.pythonClient.setSettingsValue(device.mac, "noiseCancellingMode", value)
+				})
 
-				const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
-					_("Noise Cancelling Mode"),
-				);
-				this.addToMenu(noiseCancellingModeMenu); 
-
-				const buttons: PopupMenu.PopupMenuItem[] = [];
-				SETTING_VALUES.forEach(mode => {
-					const button = new PopupMenu.PopupMenuItem(_(mode));
-
-					button.setOrnament(PopupMenu.Ornament.NO_DOT);
-
-					button.connect("activate", () => {
-						buttons.forEach(btn => {
-							btn.setOrnament(PopupMenu.Ornament.NO_DOT);
-						});
-
-						button.setOrnament(PopupMenu.Ornament.DOT);
-
-						this.openSCQ30Client!.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
-							logIfEnabled(LogType.Error, `Failed to set ${SETTING_NAME} for device ${device.mac}: ${error}`);
-						});
-					});
-
-					noiseCancellingModeMenu.menu.addMenuItem(button);
-					buttons.push(button);
-				});
-
-				this.openSCQ30Client!.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
-					buttons.forEach(button => {
-						const buttonMode = SETTING_VALUES.find(mode => _(mode) === button.label.text);
-						if (buttonMode === currentValue) {
-							button.setOrnament(PopupMenu.Ornament.DOT);
-						}
-					});
-				}).catch(error => {
-					logIfEnabled(LogType.Error, `Failed to get ${SETTING_NAME} for device ${device.mac}: ${error}`);
-				});
+				return
 			}
 
-			{
-				const SETTING_NAME = "presetEqualizerProfile"
-				const SETTING_VALUES = ["SoundcoreSignature", "Acoustic", "BassBooster", "BassReducer", "Classical", "Podcast", "Dance", "Deep", "Electronic", "Flat", "HipHop", "Jazz", "Latin", "Lounge", "Piano", "Pop", "RnB", "Rock", "SmallSpeakers", "SpokenWord", "TrebleBooster", "TrebleReducer"]
-
-				const equalizerMenu = new PopupMenu.PopupSubMenuMenuItem(
-					_("Equalizer Preset"),
-				);
-				this.addToMenu(equalizerMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
-
-				const buttons: PopupMenu.PopupMenuItem[] = [];
-				SETTING_VALUES.forEach(mode => {
-					const button = new PopupMenu.PopupMenuItem(_(mode));
-
-					button.setOrnament(PopupMenu.Ornament.NO_DOT);
-
-					button.connect("activate", () => {
-						buttons.forEach(btn => {
-							btn.setOrnament(PopupMenu.Ornament.NO_DOT);
-						});
-
-						button.setOrnament(PopupMenu.Ornament.DOT);
-
-						this.openSCQ30Client!.setSettingsValue(device.mac, SETTING_NAME, mode).catch(error => {
-							logIfEnabled(LogType.Error, `Failed to set ${SETTING_NAME} for device ${device.mac}: ${error}`);
-						});
-					});
-
-					equalizerMenu.menu.addMenuItem(button);
-					buttons.push(button);
-				});
-
-				this.openSCQ30Client!.getSettingsValue(device.mac, SETTING_NAME).then(currentValue => {
-					buttons.forEach(button => {
-						const buttonMode = SETTING_VALUES.find(mode => _(mode) === button.label.text);
-						if (buttonMode === currentValue) {
-							button.setOrnament(PopupMenu.Ornament.DOT);
-						}
-					});
-				}).catch(error => {
-					logIfEnabled(LogType.Error, `Failed to get ${SETTING_NAME} for device ${device.mac}: ${error}`);
-				});
+			if (!this.openSCQ30Client) {
+				return
+			}
+			// TODO: Add emojis instead of X
+			const settings = await this.openSCQ30Client.getSettings(device.mac)
+			if ("ambientSoundMode" in settings) {
+				await this.addSelectSettings({
+					title: _("Ambient Sound Mode"),
+					values: {
+						// TODO: This is wrong for models that dont's have all 3 modes
+						// We should probably fetch available settings from CLI
+						"NoiseCanceling": `X ${_("Noise canceling")}`,
+						"Transparency": `X ${_("Transparency")}`,
+						"Normal": `X ${_("Normal")}`
+					},
+					selectedId: settings.ambientSoundMode,
+					onSelect: (value) => this.openSCQ30Client?.setSettingsValue(device.mac, "ambientSoundMode", value)
+				})
 			}
 
+			if ("windNoiseSuppression" in settings) {
+				// This looks weird
+				this.addToggleSettings({
+					title: _("Wind Noise Suppression"),
+					active: settings.ambientSoundMode === "true",
+					onActive: (value) => this.openSCQ30Client!.setSettingsValue(device.mac, "windNoiseSuppression", value ? "true" : "false")
+				})
+			}
 
+			if ("transparencyMode" in settings) {
+				await this.addSelectSettings({
+					title: _("Transparency Mode"),
+					values: {
+						"FullyTransparent": `X ${_("Fully Transparent")}`,
+						"VocalMode": `X ${_("Vocal Mode")}`,
+					},
+					selectedId: settings.transparencyMode,
+					onSelect: (value) => this.openSCQ30Client?.setSettingsValue(device.mac, "transparencyMode", value)
+				})
+			}
 		}
 
+		addToggleSettings(settings: { title: string; active: boolean; onActive: (value: boolean) => void; }) {
+			const toggle = new PopupMenu.PopupSwitchMenuItem(settings.title, settings.active);
 
-		addEqualizerMenu() {
-			// The 2 submenus
-			const equalizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(
-				_("Equalizer Preset"),
-			);
-			this.addToMenu(equalizerPresetMenu)
-			const equalizerPresetButtonList = [
-				{
-					label: `🎵 ${_("Soundcore Signature")}`,
-					signal: equalizerPresetSignalList.signature,
-				},
-				{
-					label: `🎸 ${_("Acoustic")}`,
-					signal: equalizerPresetSignalList.acoustic,
-				},
-				{
-					label: `🎸 ${_("Bass Booster")}`,
-					signal: equalizerPresetSignalList.bassBooster,
-				},
-				{
-					label: `🚫 ${_("Bass Reducer")}`,
-					signal: equalizerPresetSignalList.bassReducer,
-				},
-				{
-					label: `🎻 ${_("Classical")}`,
-					signal: equalizerPresetSignalList.classical,
-				},
-				{
-					label: `🎤 ${_("Podcast")}`,
-					signal: equalizerPresetSignalList.podcast,
-				},
-				{ label: `🪩 ${_("Dance")}`, signal: equalizerPresetSignalList.dance },
-				{ label: `🖴${_("Deep")}`, signal: equalizerPresetSignalList.deep },
-				{
-					label: `⚡ ${_("Electronic")}`,
-					signal: equalizerPresetSignalList.electronic,
-				},
-				{ label: `🚫 ${_("Flat")}`, signal: equalizerPresetSignalList.flat },
-				{
-					label: `🎹 ${_("Hip-Hop")}`,
-					signal: equalizerPresetSignalList.hipHop,
-				},
-				{ label: `🎷 ${_("Jazz")}`, signal: equalizerPresetSignalList.jazz },
-				{
-					label: `💃🏽 ${_("Latin")}`,
-					signal: equalizerPresetSignalList.latin,
-				},
-				{
-					label: `🍸 ${_("Lounge")}`,
-					signal: equalizerPresetSignalList.lounge,
-				},
-				{ label: `🎹 ${_("Piano")}`, signal: equalizerPresetSignalList.piano },
-				{ label: `🎸 ${_("Pop")}`, signal: equalizerPresetSignalList.pop },
-				{ label: `🎹 ${_("RnB")}`, signal: equalizerPresetSignalList.rnB },
-				{ label: `🎸 ${_("Rock")}`, signal: equalizerPresetSignalList.rock },
-				{
-					label: `🔉 ${_("Small Speaker(s)")}`,
-					signal: equalizerPresetSignalList.smallSpeakers,
-				},
-				{
-					label: `👄 ${_("Spoken Word")}`,
-					signal: equalizerPresetSignalList.spokenWord,
-				},
-				{
-					label: `🎼 ${_("Treble Booster")}`,
-					signal: equalizerPresetSignalList.trebleBooster,
-				},
-				{
-					label: `🚫 ${_("Treble Reducer")}`,
-					signal: equalizerPresetSignalList.trebleReducer,
-				},
-			];
-			this.addAllInListAsButtons(
-				equalizerPresetButtonList,
-				equalizerPresetMenu,
-			);
+			toggle.connect("toggled", (obj) => settings.onActive(obj.active))
+
+			this.addToMenu(toggle);
 		}
+
+		addMenuInfo(label: string) {
+			this.addToMenu(new PopupMenu.PopupMenuItem(label, { activate: false, reactive: false }))
+		}
+
 
 		addToMenu(item: PopupMenu.PopupBaseMenuItem) {
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
 			this.menu.addMenuItem(item); // eslint-disable-line @typescript-eslint/no-unsafe-call
-			this.items.push(item)
-		}
-
-		clearMenu() {
-			for (const item of this.items) {
-				item.destroy()
-			}
-
-			this.items = []
-		}
-
-		addNoiseCancellingMenu() {
-			const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
-				_("Noise Cancelling Mode"),
-			);
-
-			this.addToMenu(noiseCancellingModeMenu)
-
-			// The submenus' mode/preset lists
-			const noiseCancellingModeButtonList = [
-				{
-					label: `🚋 ${_("Transport")}`,
-					signal: noiseCancellingSignalList.transport,
-				},
-				{
-					label: `🏠 ${_("Indoor")}`,
-					signal: noiseCancellingSignalList.indoor,
-				},
-				{
-					label: `🌳 ${_("Outdoor")}`,
-					signal: noiseCancellingSignalList.outdoor,
-				},
-				{
-					label: `🚫 ${_("Normal / No ANC")}`,
-					signal: noiseCancellingSignalList.normal,
-				},
-				{
-					label: `🪟 ${_("Transparency / No NC")}`,
-					signal: noiseCancellingSignalList.transparency,
-				},
-			];
-			this.addAllInListAsButtons(
-				noiseCancellingModeButtonList,
-				noiseCancellingModeMenu,
-			);
-		}
-
-		addAllInListAsButtons(
-			List: Array<{ label: string; signal: string }>,
-			Submenu: PopupMenu.PopupSubMenuMenuItem,
-		) {
-			for (const element of List) {
-				const button = new PopupMenu.PopupMenuItem(element.label);
-				button.connect("activate", () => {
-					this.extension.signalHandler(element.signal);
-				});
-				Submenu.menu.addMenuItem(button);
-			}
 		}
 
 		// Lots of ugly bypasses, will have to fix later.

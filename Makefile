@@ -6,8 +6,8 @@ LOCALE_DIR = locale
 SCHEMA_DIR = schemas
 UI_DIR = ui
 
-SOURCE_FILES = src/extension.ts src/prefs.ts src/indicator.ts src/common.ts src/openSCQ30.ts
-JS_FILES = $(DIST_DIR)/extension.js $(DIST_DIR)/prefs.js $(DIST_DIR)/indicator.js $(DIST_DIR)/common.js $(DIST_DIR)/openSCQ30.js
+SOURCE_FILES = src/extension.ts src/prefs.ts src/indicator.ts src/common.ts src/clients.ts
+JS_FILES = $(DIST_DIR)/extension.js $(DIST_DIR)/prefs.js $(DIST_DIR)/indicator.js $(DIST_DIR)/common.js $(DIST_DIR)/clients.js
 UI_FILES = $(UI_DIR)/prefs.blp
 
 # Phony targets
