@@ -30,9 +30,10 @@ export default GObject.registerClass(
 		private readonly extension: NoiseclapperExtension;
 		private readonly openSCQ30Client?: OpenSCQ30Client;
 		private readonly bluetoothClient: GnomeBluetooth.Client;
+		private items: PopupMenu.PopupBaseMenuItem[] = []
 
 		// TODO: Remove bluetooth client from this class dependancies
-		constructor(extension: NoiseclapperExtension, bluetoothClient: GnomeBluetooth.Client, openSCQ30Client?: OpenSCQ30Client, ) {
+		constructor(extension: NoiseclapperExtension, bluetoothClient: GnomeBluetooth.Client, openSCQ30Client?: OpenSCQ30Client,) {
 			logIfEnabled(LogType.Debug, "Initializing Noiseclapper indicator...");
 
 			super(0, extension.uuid);
@@ -52,87 +53,88 @@ export default GObject.registerClass(
 			box.add_child(icon);
 			this.add_child(box);
 
+
+			if (!this.openSCQ30Client) {
+				this.addNoiseCancellingMenu()
+				this.addEqualizerMenu()
+
+				this.addSettings()
+
+				return
+			}
+
+			this.addAllDevices()
+
+			// @ts-expect-error for some reason there isn't this signal in type definitions even though it works
+			this.menu.connect("open-state-changed", async (obj) => {
+				if (!obj.isOpen) {
+					return
+				}
+
+				this.clearMenu();
+				await this.addAllDevices()
+			})
+
+		}
+
+
+		async addAllDevices() {
+			const dbDevices = await this.openSCQ30Client!.getDevices();
+			const bluetoothDevices = await this.getSoundcoreBluetoothDevices();
+
+			if (bluetoothDevices.length === 0) {
+				// @ts-ignore
+				this.addToMenu(new PopupMenu.PopupMenuItem("No devices found", { activate: false, reactive: false }))
+
+				this.addSettings()
+				return;
+			}
+
+			const bluetoothDevicesThatAreNotInDb = bluetoothDevices
+				.filter(bluetoothDevice => !dbDevices.find(dbDevice => dbDevice.mac === bluetoothDevice.mac));
+
+			bluetoothDevicesThatAreNotInDb.forEach(device => this.openSCQ30Client?.addNewDevice(device.mac, device.model))
+
+			bluetoothDevices.forEach(device => this.addDeviceOptions(device))
+
+			this.addSettings()
+		}
+
+		addSettings() {
+			this.addToMenu(new PopupMenu.PopupSeparatorMenuItem())
+
 			// Settings button
 			const settingsButton = new PopupMenu.PopupMenuItem(_("Settings"));
 			settingsButton.connect("activate", () => {
 				this.extension.openPreferences();
 			});
-			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(settingsButton); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
-			if (this.openSCQ30Client) {
-				this
-					.addUnknownDevices()
-					.then(() => this.openSCQ30Client!.getDevices())
-					.then(devices => Promise.all(devices.map((device) => this.addDeviceOptions(device))))
-					.catch(error => logIfEnabled(LogType.Error, `Failed to get devices: ${error}`));
-			} else {
-				this.addNoiseCancellingMenu()
-				this.addEqualizerMenu()
-			}
-
-			// Separator
-			// this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem()); // eslint-disable-line @typescript-eslint/no-unsafe-call
-
-
-
-			if (this.openSCQ30Client) {
-				// @ts-expect-error for some reason there isn't this signal in type definitions even though it works
-
-				this.menu.connect("open-state-changed", async (obj) => {
-					if (!obj.isOpen) {
-						return
-					}
-
-					const newDevices = await this.addUnknownDevices()
-					if (newDevices.length === 0) {
-						return
-					}
-
-					for (const device of newDevices) {
-						this.addDeviceOptions(device)
-					}
-				})
-			}
-
+			this.addToMenu(settingsButton)
 		}
 
-
-		async addUnknownDevices(): Promise<Device[]> {
+		async getSoundcoreBluetoothDevices(): Promise<Device[]> {
 			const bluetoothDevices = devicesObjectToArray(
 				this.bluetoothClient!.get_devices() as Gio.ListStore<GnomeBluetooth.Device>,
 			);
 
-			// TODO: Probably it's better to use something else instead of device name
-
-
-			const dbDevices = await this.openSCQ30Client!.getDevices();
-			const devicesToAdd: Device[] = bluetoothDevices
+			return bluetoothDevices
 				.filter(bluetoothDevice => bluetoothDevice.connected)
 				.map(bluetoothDevice => ({ mac: bluetoothDevice.address, model: MODEL_NAMES[bluetoothDevice.name.toLowerCase()] }))
 				.filter(({ model }) => model !== undefined)
-				.filter(bluetoothDevice => !dbDevices.find(dbDevice => dbDevice.mac === bluetoothDevice.mac))
-
-			for (const bluetoothDevice of devicesToAdd) {
-				await this.openSCQ30Client!.addNewDevice(bluetoothDevice.mac, bluetoothDevice.model);
-			}
-
-			return devicesToAdd;
-
 		}
 
 		async addDeviceOptions(device: Device) {
 			const format = (battery: string) => `${(battery === "0" ? 0 : parseInt(battery) / 5) * 100}%`;
 			const settings = await this.openSCQ30Client!.getSettings(device.mac);
 
-			const batteryInfo = "batteryLevel" in settings 
+			const batteryInfo = "batteryLevel" in settings
 				? `(${format(settings.batteryLevel)})`
 				: `(${format(settings.batteryLevelRight)}, ${format(settings.batteryLevelLeft)}`
 
-			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem(`${device.model}${batteryInfo}`)); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			const separator = new PopupMenu.PopupSeparatorMenuItem(`${device.model}${batteryInfo}`)
+			this.addToMenu(separator); 
 
-		
+
 			{
 				const SETTING_NAME = "ambientSoundMode"
 				const SETTING_VALUES = ["NoiseCanceling", "Transparency", "Normal"];
@@ -140,8 +142,7 @@ export default GObject.registerClass(
 				const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
 					_("Noise Cancelling Mode"),
 				);
-				// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-				this.menu.addMenuItem(noiseCancellingModeMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
+				this.addToMenu(noiseCancellingModeMenu); 
 
 				const buttons: PopupMenu.PopupMenuItem[] = [];
 				SETTING_VALUES.forEach(mode => {
@@ -181,11 +182,10 @@ export default GObject.registerClass(
 				const SETTING_NAME = "presetEqualizerProfile"
 				const SETTING_VALUES = ["SoundcoreSignature", "Acoustic", "BassBooster", "BassReducer", "Classical", "Podcast", "Dance", "Deep", "Electronic", "Flat", "HipHop", "Jazz", "Latin", "Lounge", "Piano", "Pop", "RnB", "Rock", "SmallSpeakers", "SpokenWord", "TrebleBooster", "TrebleReducer"]
 
-				const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
+				const equalizerMenu = new PopupMenu.PopupSubMenuMenuItem(
 					_("Equalizer Preset"),
 				);
-				// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-				this.menu.addMenuItem(noiseCancellingModeMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
+				this.addToMenu(equalizerMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
 				const buttons: PopupMenu.PopupMenuItem[] = [];
 				SETTING_VALUES.forEach(mode => {
@@ -205,7 +205,7 @@ export default GObject.registerClass(
 						});
 					});
 
-					noiseCancellingModeMenu.menu.addMenuItem(button);
+					equalizerMenu.menu.addMenuItem(button);
 					buttons.push(button);
 				});
 
@@ -230,8 +230,7 @@ export default GObject.registerClass(
 			const equalizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_("Equalizer Preset"),
 			);
-			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(equalizerPresetMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.addToMenu(equalizerPresetMenu)
 			const equalizerPresetButtonList = [
 				{
 					label: `🎵 ${_("Soundcore Signature")}`,
@@ -304,13 +303,26 @@ export default GObject.registerClass(
 			);
 		}
 
+		addToMenu(item: PopupMenu.PopupBaseMenuItem) {
+			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
+			this.menu.addMenuItem(item); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.items.push(item)
+		}
+
+		clearMenu() {
+			for (const item of this.items) {
+				item.destroy()
+			}
+
+			this.items = []
+		}
+
 		addNoiseCancellingMenu() {
 			const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_("Noise Cancelling Mode"),
 			);
-			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(noiseCancellingModeMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
 
+			this.addToMenu(noiseCancellingModeMenu)
 
 			// The submenus' mode/preset lists
 			const noiseCancellingModeButtonList = [

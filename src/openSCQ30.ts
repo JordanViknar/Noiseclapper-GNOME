@@ -38,6 +38,15 @@ export class OpenSCQ30Client {
         });
     }
 
+    public async isWorking(): Promise<boolean> {
+        try {
+            await this.getVersion();
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     public async getDevices(): Promise<Device[]> {
         const stdout = await this.processCommand(["paired-devices", "list"])
 

@@ -26,7 +26,7 @@ export default class NoiseclapperExtension extends Extension {
 	private indicator?: InstanceType<typeof NoiseclapperIndicator>;
 	private settingsHandler?: Gio.SettingsBindFlags;
 
-	enable() {
+	async enable() {
 		logIfEnabled(LogType.Info, "Enabling Noiseclapper...");
 
 		// We enable the bluetooth client
@@ -54,21 +54,12 @@ export default class NoiseclapperExtension extends Extension {
 		}
 		const openSCQ30Client = new OpenSCQ30Client(path)
 
-		let client: OpenSCQ30Client | undefined;
-		openSCQ30Client
-			.getVersion()
-			.then(() => client = openSCQ30Client)
-			.catch(() => client = undefined)
-			.finally(() => {
-				this.indicator = new NoiseclapperIndicator(this, this.bluetoothClient!, client);
-				panel.addToStatusArea(this.uuid, this.indicator);
-		
-				this.applySettings();
-			
-				logIfEnabled(LogType.Info, "Startup successful.");
-			})
+		this.indicator = new NoiseclapperIndicator(this, this.bluetoothClient!, await openSCQ30Client.isWorking() ? openSCQ30Client : undefined);
+		panel.addToStatusArea(this.uuid, this.indicator);
 
-
+		this.applySettings();
+	
+		logIfEnabled(LogType.Info, "Startup successful.");
 	}
 
 	disable() {
