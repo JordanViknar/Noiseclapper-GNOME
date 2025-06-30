@@ -73,7 +73,9 @@ export default GObject.registerClass(
 				bluetoothDevicesThatAreNotInDb.forEach(device => this.openSCQ30Client?.addNewDevice(device.mac, device.model))
 			}
 
-			await Promise.all(bluetoothDevices.map(device => this.addDeviceOptions(device)))
+			for (const device of bluetoothDevices) {
+				await this.addDeviceOptions(device)
+			}
 
 		}
 
@@ -99,11 +101,7 @@ export default GObject.registerClass(
 				(_, i) => devices.get_item(i) as GnomeBluetooth.Device,
 			);
 
-			// return [{
-			// 	name: "Soundcore Life P3",
-			// 	address: "hello-world",
-			// 	connected: true,
-			// } as GnomeBluetooth.Device]
+
 		}
 
 		async getConnectedSoundcoreDevices(): Promise<Device[]> {
@@ -173,9 +171,9 @@ export default GObject.registerClass(
 
 				if (settings.includes("batteryLevelLeft") && settings.includes("batteryLevelRight")) {
 					const batteryLevelLeft = await this.openSCQ30Client!.getSettingsValue(device.mac, "batteryLevelLeft").then(formatBatteryLevel)
-					const chargingStatusLeft = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingLeft").then(formatBatteryLevel)
+					const chargingStatusLeft = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingLeft").then(formatChargingStatus)
 					const batteryLevelRight = await this.openSCQ30Client!.getSettingsValue(device.mac, "batteryLevelRight").then(formatBatteryLevel)
-					const chargingStatusRight = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingRight").then(formatBatteryLevel)
+					const chargingStatusRight = await this.openSCQ30Client!.getSettingsValue(device.mac, "isChargingRight").then(formatChargingStatus)
 
 					batteryInfo = `(${batteryLevelLeft}${chargingStatusLeft}, ${batteryLevelRight}${chargingStatusRight})`
 				}
@@ -254,9 +252,9 @@ export default GObject.registerClass(
 					values: {
 						// TODO: This is wrong for models that dont's have all 3 modes
 						// We should probably fetch available settings from CLI
-						"NoiseCanceling": `X ${_("Noise canceling")}`,
-						"Transparency": `X ${_("Transparency")}`,
-						"Normal": `X ${_("Normal")}`
+						"NoiseCanceling": `🤫 ${_("Noise canceling")}`,
+						"Transparency": `👂 ${_("Transparency")}`,
+						"Normal": `🎧 ${_("Normal")}`
 					},
 					selectedId: settings.ambientSoundMode,
 					onSelect: (value) => this.openSCQ30Client?.setSettingsValue(device.mac, "ambientSoundMode", value)
@@ -265,7 +263,7 @@ export default GObject.registerClass(
 
 			if ("windNoiseSuppression" in settings) {
 				// This looks weird
-				this.addToggleSettings({
+				await this.addToggleSettings({
 					title: _("Wind Noise Suppression"),
 					active: settings.ambientSoundMode === "true",
 					onActive: (value) => this.openSCQ30Client!.setSettingsValue(device.mac, "windNoiseSuppression", value ? "true" : "false")
@@ -276,8 +274,8 @@ export default GObject.registerClass(
 				await this.addSelectSettings({
 					title: _("Transparency Mode"),
 					values: {
-						"FullyTransparent": `X ${_("Fully Transparent")}`,
-						"VocalMode": `X ${_("Vocal Mode")}`,
+						"FullyTransparent": `🌐 ${_("Fully Transparent")}`,
+						"VocalMode": `🎤 ${_("Vocal Mode")}`,
 					},
 					selectedId: settings.transparencyMode,
 					onSelect: (value) => this.openSCQ30Client?.setSettingsValue(device.mac, "transparencyMode", value)

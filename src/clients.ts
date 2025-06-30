@@ -125,6 +125,8 @@ export class OpenSCQ30Client extends SoundcoreClient {
         "A3004",
         "A3027",
         "A3028",
+        "A3029",
+        "A3030",
         "A3031",
         "A3033",
         "A3926",
@@ -134,6 +136,8 @@ export class OpenSCQ30Client extends SoundcoreClient {
         "A3936",
         "A3945",
         "A3951",
+        "A3939",
+        "A3935",
         "A3959",
     ]
 
