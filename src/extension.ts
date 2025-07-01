@@ -7,14 +7,10 @@ import {
 	gettext as _,
 } from "resource:///org/gnome/shell/extensions/extension.js";
 import { notifyError, panel } from "resource:///org/gnome/shell/ui/main.js";
-import {
-	LogType,
-	logIfEnabled,
-	updateLogging,
-} from "./common.js";
+import { LogType, logIfEnabled, updateLogging } from "./common.js";
 // Internal
 import NoiseclapperIndicator from "./indicator.js";
-import { OpenSCQ30Client } from "./clients.js"
+import { OpenSCQ30Client } from "./clients.js";
 
 // ----------------------- Extension -----------------------
 export default class NoiseclapperExtension extends Extension {
@@ -30,7 +26,6 @@ export default class NoiseclapperExtension extends Extension {
 		logIfEnabled(LogType.Debug, "Enabling Bluetooth client...");
 		this.bluetoothClient = new GnomeBluetooth.Client();
 
-
 		// And create the indicator
 		logIfEnabled(
 			LogType.Debug,
@@ -44,19 +39,23 @@ export default class NoiseclapperExtension extends Extension {
 			this.applySettings.bind(this),
 		);
 
-		let path
+		let path;
 		try {
-			path = this.settings!.get_string("openscq30")
-		} catch(e) {
-			path = "openscq30"
+			path = this.settings!.get_string("openscq30");
+		} catch (e) {
+			path = "openscq30";
 		}
-		const openSCQ30Client = new OpenSCQ30Client(path)
+		const openSCQ30Client = new OpenSCQ30Client(path);
 
-		this.indicator = new NoiseclapperIndicator(this, this.bluetoothClient!, await openSCQ30Client.isWorking() ? openSCQ30Client : undefined);
+		this.indicator = new NoiseclapperIndicator(
+			this,
+			this.bluetoothClient!,
+			(await openSCQ30Client.isWorking()) ? openSCQ30Client : undefined,
+		);
 		panel.addToStatusArea(this.uuid, this.indicator);
 
 		this.applySettings();
-	
+
 		logIfEnabled(LogType.Info, "Startup successful.");
 	}
 

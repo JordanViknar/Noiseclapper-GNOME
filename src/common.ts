@@ -4,8 +4,6 @@ import type GnomeBluetooth from "gi://GnomeBluetooth";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import { notifyError } from "resource:///org/gnome/shell/ui/main.js";
 
-
-
 // ------------------------ Logging ------------------------
 let logging: boolean;
 export enum LogType {
@@ -52,5 +50,3 @@ export function updateLogging(enabled: boolean) {
 }
 
 // ------------------------ Bluetooth ------------------------
-
-
