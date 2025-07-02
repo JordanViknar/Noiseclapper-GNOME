@@ -55,11 +55,6 @@ export default GObject.registerClass(
 			this.bluetoothClient.connect("device-added", async (obj, d) => {
 				const device = d as GnomeBluetooth.Device;
 
-				if (!(await this.isConnectedSoundcore(device))) {
-					return;
-				}
-
-				// TODO: What if it doesn't support it?
 				if (
 					(await this.pythonClient.isWorking()) &&
 					(await this.pythonClient.isModelSupported(device.name))
@@ -68,9 +63,11 @@ export default GObject.registerClass(
 						mac: device.address,
 						model: device.name,
 					});
+
+					return
 				}
 
-				if (this.openSCQ30Client) {
+				if (this.openSCQ30Client && await this.openSCQ30Client.isModelSupported(device.name)) {
 					const dbDevices = await this.openSCQ30Client!.getDevices();
 
 					if (!dbDevices.find((dbDevice) => dbDevice.mac === device.address)) {
@@ -86,6 +83,9 @@ export default GObject.registerClass(
 					});
 				}
 			});
+			this.bluetoothClient.connect("device-removed", (obj, d) => {
+				// TODO
+			})
 
 			this.init().then(() => this.addSettings());
 		}
