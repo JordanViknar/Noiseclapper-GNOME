@@ -14,6 +14,11 @@
 This is an **unofficial** GNOME Shell extension, designed for use with Soundcore Life Q30 headphones (although it may work with other Soundcore headphones). 
 I am **not** partnered with Soundcore or Anker in any way.
 
+> [!WARNING]
+> Noiseclapper is currently only under basic maintenance. My own pair of Soundcore headphones broke, leaving me personally unable to do anything but GNOME version compatibility changes.
+>
+> **Pull requests** are still very much welcome, however.
+
 ## Screenshot
 
 ![Noiseclapper interface screenshot](./assets/screenshots/interface.png)
