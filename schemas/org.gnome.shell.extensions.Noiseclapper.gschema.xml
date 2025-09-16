@@ -18,6 +18,12 @@
 			<summary>Enables or disables logging. Useful for debugging.</summary>
 			<description>"false" will disable logging, this is the default parameter. "true" will enable it.</description>
 		</key>
+
+		<key name="openscq30" type="s">
+			<default>"openscq30"</default>
+			<summary>OpenSCQ30 CLI executable path</summary>
+			<description></description>
+		</key>
 		
 	</schema>
 </schemalist>
