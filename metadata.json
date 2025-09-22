@@ -5,5 +5,5 @@
 	"uuid": "Noiseclapper@JordanViknar",
 	"gettext-domain": "Noiseclapper",
 	"settings-schema": "org.gnome.shell.extensions.noiseclapper",
-	"shell-version": ["45", "46", "47", "48"]
+	"shell-version": ["45", "46", "47", "48", "49"]
 }
