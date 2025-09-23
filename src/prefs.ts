@@ -55,6 +55,12 @@ export default class NoiseclapperPreferences extends ExtensionPreferences {
 			"active",
 			Gio.SettingsBindFlags.DEFAULT,
 		);
+		settings.bind(
+			"openscq30",
+			buildable.get_object("field_openscq30")!,
+			"text",
+			Gio.SettingsBindFlags.DEFAULT,
+		);
 
 		window.add(pageBasic);
 		window.add(pageAbout);
