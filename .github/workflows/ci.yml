@@ -34,7 +34,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Upload dependencies artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: bun-deps
           path: |
@@ -63,7 +63,7 @@ jobs:
             ${{ runner.os }}-bun-
 
       - name: Download dependencies
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: bun-deps
 
@@ -99,7 +99,7 @@ jobs:
             ${{ runner.os }}-pacman-
 
       - name: Download dependencies
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: bun-deps
 
@@ -116,7 +116,7 @@ jobs:
         run: echo "formatted_branch=$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-')" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: noiseclapper-artifacts-${{ steps.format-branch-name.outputs.formatted_branch }}
           path: Noiseclapper@JordanViknar.zip
