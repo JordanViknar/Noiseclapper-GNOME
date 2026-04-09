@@ -6,7 +6,7 @@ jobs:
   create-zip-package:
     runs-on: ubuntu-latest
 
-    container: # We use the latest Arch Linux image, as we need the latest version of blueprint-compiler. We need make, so base-devel has to be used.
+    container: # We use the latest Arch Linux image, as we use the latest version of blueprint-compiler. We need make, so base-devel has to be used.
       image: ghcr.io/archlinux/archlinux:base-devel
 
     steps:
@@ -22,12 +22,12 @@ jobs:
           ${{ runner.os }}-bun-
     
     - name: Install dependencies
-      run: pacman -Syu --noconfirm blueprint-compiler typescript gobject-introspection libadwaita zip unzip
-
-    - uses: oven-sh/setup-bun@v2
+      run: pacman -Syu --noconfirm blueprint-compiler bun gobject-introspection libadwaita zip
 
     - name: Build & Package Noiseclapper
       run: make pack
+    
+    # Upload
 
     - name: Extract current branch name
       id: branch-name
