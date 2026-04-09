@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-24 12:50+0200\n"
+"POT-Creation-Date: 2026-04-09 16:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/extension.ts:100 src/common.ts:130
+#: src/extension.ts:100 src/common.ts:146
 msgid "Error"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/common.ts:131
+#: src/common.ts:147
 msgid "Close the Soundcore application on your phone and try again."
 msgstr ""
 

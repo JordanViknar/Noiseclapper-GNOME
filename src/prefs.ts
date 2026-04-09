@@ -6,7 +6,7 @@ import { ExtensionPreferences } from "resource:///org/gnome/Shell/Extensions/js/
 
 // ----------------------- Preferences ----------------------------
 export default class NoiseclapperPreferences extends ExtensionPreferences {
-	fillPreferencesWindow(window: Adw.PreferencesWindow) {
+	async fillPreferencesWindow(window: Adw.PreferencesWindow) {
 		// Prepare labels and controls
 		const buildable = new Gtk.Builder();
 		buildable.add_from_file(`${this.dir.get_path()}/prefs.ui`);

@@ -98,15 +98,31 @@ export function updateLogging(enabled: boolean) {
 
 // ------------------------ Bluetooth ------------------------
 export function devicesObjectToArray(
-	object: Gio.ListStore<GnomeBluetooth.Device>,
+	object: Gio.ListStore,
 ): GnomeBluetooth.Device[] {
 	const numberOfDevices = object.get_n_items();
 
 	return Array.from(
 		{ length: numberOfDevices },
-		(_, i) => object.get_item(i) as GnomeBluetooth.Device,
+		(_, i) => object.get_item(i) as unknown as GnomeBluetooth.Device,
 	);
 }
+
+/*
+export function devicesObjectToArray(
+	object: {
+		get_n_items(): number;
+		get_item(position: number): unknown | null;
+	},
+): GnomeBluetooth.Device[] {
+	const numberOfDevices = object.get_n_items();
+
+	return Array.from(
+		{ length: numberOfDevices },
+		(_, i) => object.get_item(i) as unknown as GnomeBluetooth.Device,
+	);
+}
+*/
 
 export async function sendSignal(signal: string, address: string) {
 	try {

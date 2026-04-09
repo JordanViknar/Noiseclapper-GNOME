@@ -7,8 +7,8 @@ import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import {
-	LogType,
 	equalizerPresetSignalList,
+	LogType,
 	logIfEnabled,
 	noiseCancellingSignalList,
 } from "./common.js";

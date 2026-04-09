@@ -3,13 +3,13 @@
 import type Gio from "gi://Gio";
 import GnomeBluetooth from "gi://GnomeBluetooth";
 import {
-	Extension,
 	gettext as _,
+	Extension,
 } from "resource:///org/gnome/shell/extensions/extension.js";
 import { notifyError, panel } from "resource:///org/gnome/shell/ui/main.js";
 import {
-	LogType,
 	devicesObjectToArray,
+	LogType,
 	logIfEnabled,
 	sendSignal,
 	supportedDeviceNames,
@@ -75,7 +75,7 @@ export default class NoiseclapperExtension extends Extension {
 		logIfEnabled(LogType.Debug, `Preparing to send signal : [${signal}]`);
 
 		const devices = devicesObjectToArray(
-			this.bluetoothClient!.get_devices() as Gio.ListStore<GnomeBluetooth.Device>,
+			this.bluetoothClient!.get_devices() as unknown as Gio.ListStore,
 		);
 
 		let hasFoundAtLeastOneDevice = false;
