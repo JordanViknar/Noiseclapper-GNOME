@@ -44,7 +44,7 @@ export default GObject.registerClass(
 				_("Noise Cancelling Mode"),
 			);
 			noiseCancellingModeMenu.insert_child_at_index(
-				this._createMenuIcon("microphone-sensitivity-muted-symbolic"),
+				this._createMenuIcon("audio-volume-muted-symbolic"),
 				1,
 			);
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
@@ -65,7 +65,7 @@ export default GObject.registerClass(
 			const noiseCancellingModeButtonList = [
 				{
 					label: _("Transport"),
-					iconName: "audio-volume-high-symbolic",
+					iconName: "airplane-mode-symbolic",
 					signal: noiseCancellingSignalList.transport,
 				},
 				{
@@ -75,17 +75,17 @@ export default GObject.registerClass(
 				},
 				{
 					label: _("Outdoor"),
-					iconName: "find-location-symbolic",
+					iconName: "weather-few-clouds-symbolic",
 					signal: noiseCancellingSignalList.outdoor,
 				},
 				{
 					label: _("Normal / No ANC"),
-					iconName: "audio-volume-medium-symbolic",
+					iconName: "audio-volume-high-symbolic",
 					signal: noiseCancellingSignalList.normal,
 				},
 				{
 					label: _("Transparency / No NC"),
-					iconName: "audio-input-microphone-symbolic",
+					iconName: "audio-volume-overamplified-symbolic",
 					signal: noiseCancellingSignalList.transparency,
 				},
 			];

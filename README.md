@@ -21,7 +21,10 @@ I am **not** partnered with Soundcore or Anker in any way.
 
 ## Screenshot
 
-![Noiseclapper interface screenshot](./assets/screenshots/interface.png)
+<div align="center">
+  <img src="./assets/screenshots/interface.png" alt="Noiseclapper interface screenshot" width=40%>
+</div>
+
 
 ## What is Noiseclapper ?
 
