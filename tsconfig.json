@@ -3,17 +3,13 @@
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "./dist",
+		"rootDir": "./src",
 		"sourceMap": false,
 		"strict": true,
-		"target": "ES2022",
-		"lib": ["ES2022"],
+		"target": "ES2023",
+		"lib": ["ES2023"],
 		"skipLibCheck": true
 	},
-	"include": ["ambient.d.ts"],
-	"files": [
-		"src/extension.ts",
-		"src/prefs.ts",
-		"src/indicator.ts",
-		"src/common.ts"
-	]
+	"include": ["ambient.d.ts", "src/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
 }

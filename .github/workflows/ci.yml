@@ -1,0 +1,123 @@
+name: Noiseclapper CI
+
+on: [push, pull_request]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  prepare-deps:
+    name: Prepare dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Upload dependencies artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: bun-deps
+          path: |
+            node_modules
+            bun.lockb
+          retention-days: 1
+
+  biome-lint-check:
+    name: Biome lint check
+    runs-on: ubuntu-latest
+    needs: prepare-deps
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Restore Bun cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Download dependencies
+        uses: actions/download-artifact@v8
+        with:
+          name: bun-deps
+
+      - name: Run Biome
+        run: bunx biome ci .
+
+  create-zip-package:
+    name: Build zip package
+    runs-on: ubuntu-latest
+    needs: biome-lint-check
+
+    container:
+      image: ghcr.io/archlinux/archlinux:base-devel
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Restore Bun cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Manage pacman cache
+        uses: actions/cache@v5
+        with:
+          path: /var/cache/pacman/pkg
+          key: ${{ runner.os }}-pacman-${{ hashFiles('**/bun.lockb') }} # Didn't have a better idea.
+          restore-keys: |
+            ${{ runner.os }}-pacman-
+
+      - name: Download dependencies
+        uses: actions/download-artifact@v8
+        with:
+          name: bun-deps
+
+      - name: Install system dependencies
+        run: pacman -Syu --noconfirm --needed blueprint-compiler bun gobject-introspection libadwaita zip
+
+      - name: Build and package Noiseclapper
+        run: make clean pack
+
+      # Upload
+
+      - name: Format branch name
+        id: format-branch-name
+        run: echo "formatted_branch=$(printf '%s' "$GITHUB_REF_NAME" | tr '/' '-')" >> "$GITHUB_OUTPUT"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: noiseclapper-artifacts-${{ steps.format-branch-name.outputs.formatted_branch }}
+          path: Noiseclapper@JordanViknar.zip
+          if-no-files-found: error

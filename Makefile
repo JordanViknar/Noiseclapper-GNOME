@@ -27,7 +27,7 @@ check:
 
 # Compile TypeScript files
 $(DIST_DIR)/%.js: $(SOURCE_FILES) node_modules
-	tsc
+	bunx tsc
 
 # Generate pot file for translation
 $(LOCALE_DIR)/$(NAME).pot: $(SOURCE_FILES) $(UI_FILES)

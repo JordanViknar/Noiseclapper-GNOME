@@ -1,16 +1,16 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"files": {
-		"ignore": ["dist/**/*"]
+		"includes": ["**", "!dist"]
 	},
 	"linter": {
 		"rules": {
-			"all": true,
+			"recommended": true,
 			"style": {
 				"noNonNullAssertion": "off",
 				"noDefaultExport": "off",
 				"useNamingConvention": "off",
-				"noNamespaceImport": "off"
+				"noNamespace": "off"
 			},
 			"suspicious": {
 				"noConsole": "off"

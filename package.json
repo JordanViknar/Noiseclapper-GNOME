@@ -16,13 +16,11 @@
 	"homepage": "https://github.com/JordanViknar/Noiseclapper-GNOME#readme",
 	"sideEffects": false,
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
-		"eslint": "^9.13.0",
-		"eslint-plugin-jsdoc": "^50.4.3",
-		"typescript": "^5.6.3"
+		"@biomejs/biome": "^2.4.10",
+		"typescript": "^6.0.2"
 	},
 	"dependencies": {
-		"@girs/gjs": "^3.3.0",
-		"@girs/gnome-shell": "^46.0.2"
+		"@girs/gjs": "^4.0.0-rc.1",
+		"@girs/gnome-shell": "^50.0.0-alpha.1"
 	}
 }
