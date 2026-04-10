@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 16:00+0200\n"
+"POT-Creation-Date: 2026-04-10 10:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,127 +25,124 @@ msgstr ""
 msgid "No connected compatible devices found."
 msgstr ""
 
-#: src/indicator.ts:42
+#: src/indicator.ts:43
 msgid "Noise Cancelling Mode"
 msgstr ""
 
-#: src/indicator.ts:47
+#: src/indicator.ts:52
 msgid "Equalizer Preset"
 msgstr ""
 
-#: src/indicator.ts:55
+#: src/indicator.ts:64
 msgid "Transport"
 msgstr ""
 
-#: src/indicator.ts:59
+#: src/indicator.ts:69
 msgid "Indoor"
 msgstr ""
 
-#: src/indicator.ts:63
+#: src/indicator.ts:74
 msgid "Outdoor"
 msgstr ""
 
-#: src/indicator.ts:67
+#: src/indicator.ts:79
 msgid "Normal / No ANC"
 msgstr ""
 
-#: src/indicator.ts:71
+#: src/indicator.ts:84
 msgid "Transparency / No NC"
 msgstr ""
 
-#: src/indicator.ts:81
+#: src/indicator.ts:95
 msgid "Soundcore Signature"
 msgstr ""
 
-#: src/indicator.ts:85
+#: src/indicator.ts:100
 msgid "Acoustic"
 msgstr ""
 
-#: src/indicator.ts:89
+#: src/indicator.ts:105
 msgid "Bass Booster"
 msgstr ""
 
-#: src/indicator.ts:93
+#: src/indicator.ts:110
 msgid "Bass Reducer"
 msgstr ""
 
-#: src/indicator.ts:97
+#: src/indicator.ts:115
 msgid "Classical"
 msgstr ""
 
-#: src/indicator.ts:101
+#: src/indicator.ts:120
 msgid "Podcast"
 msgstr ""
 
-#: src/indicator.ts:104
+#: src/indicator.ts:125
 msgid "Dance"
 msgstr ""
 
-#: src/indicator.ts:105
+#: src/indicator.ts:130
 msgid "Deep"
 msgstr ""
 
-#: src/indicator.ts:107
+#: src/indicator.ts:135
 msgid "Electronic"
 msgstr ""
 
-#: src/indicator.ts:110
+#: src/indicator.ts:140
 msgid "Flat"
 msgstr ""
 
-#: src/indicator.ts:112
+#: src/indicator.ts:145
 msgid "Hip-Hop"
 msgstr ""
 
-#: src/indicator.ts:115
+#: src/indicator.ts:150
 msgid "Jazz"
 msgstr ""
 
-#: src/indicator.ts:117
+#: src/indicator.ts:155
 msgid "Latin"
 msgstr ""
 
-#: src/indicator.ts:121
+#: src/indicator.ts:160
 msgid "Lounge"
 msgstr ""
 
-#: src/indicator.ts:124
+#: src/indicator.ts:165
 msgid "Piano"
 msgstr ""
 
-#: src/indicator.ts:125
+#: src/indicator.ts:170
 msgid "Pop"
 msgstr ""
 
-#: src/indicator.ts:126
+#: src/indicator.ts:175
 msgid "RnB"
 msgstr ""
 
-#: src/indicator.ts:127
+#: src/indicator.ts:180
 msgid "Rock"
 msgstr ""
 
-#: src/indicator.ts:129
+#: src/indicator.ts:185
 msgid "Small Speaker(s)"
 msgstr ""
 
-#: src/indicator.ts:133
+#: src/indicator.ts:190
 msgid "Spoken Word"
 msgstr ""
 
-#: src/indicator.ts:137
+#: src/indicator.ts:195
 msgid "Treble Booster"
 msgstr ""
 
-#: src/indicator.ts:141
+#: src/indicator.ts:200
 msgid "Treble Reducer"
 msgstr ""
 
-#. Separator
-#. @ts-expect-error addMenuItem no longer exists in the type definitions ?
-#. eslint-disable-line @typescript-eslint/no-unsafe-call
 #. Settings button
-#: src/indicator.ts:155 ui/prefs.blp:8
+#: src/indicator.ts:215 ui/prefs.blp:8
 msgid "Settings"
 msgstr ""
 

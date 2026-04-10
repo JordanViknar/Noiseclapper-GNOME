@@ -1,6 +1,7 @@
-import GObject from "gi://GObject";
 // ------------------------- Imports ----------------------------
 // External
+import Gio from "gi://Gio";
+import GObject from "gi://GObject";
 import St from "gi://St";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
@@ -37,38 +38,54 @@ export default GObject.registerClass(
 			box.add_child(icon);
 			this.add_child(box);
 
-			// The 2 submenus
+			// --- The 2 submenus ---
+			// Noise Cancelling
 			const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_("Noise Cancelling Mode"),
 			);
+			noiseCancellingModeMenu.insert_child_at_index(
+				this._createMenuIcon("microphone-sensitivity-muted-symbolic"),
+				1,
+			);
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(noiseCancellingModeMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.menu.addMenuItem(noiseCancellingModeMenu);
+
+			// Equalizer Preset
 			const equalizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(
 				_("Equalizer Preset"),
 			);
+			equalizerPresetMenu.insert_child_at_index(
+				this._createMenuIcon("audio-card-symbolic"),
+				1,
+			);
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(equalizerPresetMenu); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.menu.addMenuItem(equalizerPresetMenu);
 
 			// The submenus' mode/preset lists
 			const noiseCancellingModeButtonList = [
 				{
-					label: `🚋 ${_("Transport")}`,
+					label: _("Transport"),
+					iconName: "audio-volume-high-symbolic",
 					signal: noiseCancellingSignalList.transport,
 				},
 				{
-					label: `🏠 ${_("Indoor")}`,
+					label: _("Indoor"),
+					iconName: "user-home-symbolic",
 					signal: noiseCancellingSignalList.indoor,
 				},
 				{
-					label: `🌳 ${_("Outdoor")}`,
+					label: _("Outdoor"),
+					iconName: "find-location-symbolic",
 					signal: noiseCancellingSignalList.outdoor,
 				},
 				{
-					label: `🚫 ${_("Normal / No ANC")}`,
+					label: _("Normal / No ANC"),
+					iconName: "audio-volume-medium-symbolic",
 					signal: noiseCancellingSignalList.normal,
 				},
 				{
-					label: `🪟 ${_("Transparency / No NC")}`,
+					label: _("Transparency / No NC"),
+					iconName: "audio-input-microphone-symbolic",
 					signal: noiseCancellingSignalList.transparency,
 				},
 			];
@@ -78,67 +95,113 @@ export default GObject.registerClass(
 			);
 			const equalizerPresetButtonList = [
 				{
-					label: `🎵 ${_("Soundcore Signature")}`,
+					label: _("Soundcore Signature"),
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.signature,
 				},
 				{
-					label: `🎸 ${_("Acoustic")}`,
+					label: _("Acoustic"),
+					iconName: "audio-input-microphone-symbolic",
 					signal: equalizerPresetSignalList.acoustic,
 				},
 				{
-					label: `🎸 ${_("Bass Booster")}`,
+					label: _("Bass Booster"),
+					iconName: "audio-volume-high-symbolic",
 					signal: equalizerPresetSignalList.bassBooster,
 				},
 				{
-					label: `🚫 ${_("Bass Reducer")}`,
+					label: _("Bass Reducer"),
+					iconName: "audio-volume-low-symbolic",
 					signal: equalizerPresetSignalList.bassReducer,
 				},
 				{
-					label: `🎻 ${_("Classical")}`,
+					label: _("Classical"),
+					iconName: "emblem-music-symbolic",
 					signal: equalizerPresetSignalList.classical,
 				},
 				{
-					label: `🎤 ${_("Podcast")}`,
+					label: _("Podcast"),
+					iconName: "audio-input-microphone-symbolic",
 					signal: equalizerPresetSignalList.podcast,
 				},
-				{ label: `🪩 ${_("Dance")}`, signal: equalizerPresetSignalList.dance },
-				{ label: `🖴${_("Deep")}`, signal: equalizerPresetSignalList.deep },
 				{
-					label: `⚡ ${_("Electronic")}`,
+					label: _("Dance"),
+					iconName: "media-playback-start-symbolic",
+					signal: equalizerPresetSignalList.dance,
+				},
+				{
+					label: _("Deep"),
+					iconName: "audio-volume-low-symbolic",
+					signal: equalizerPresetSignalList.deep,
+				},
+				{
+					label: _("Electronic"),
+					iconName: "thunderbolt-symbolic",
 					signal: equalizerPresetSignalList.electronic,
 				},
-				{ label: `🚫 ${_("Flat")}`, signal: equalizerPresetSignalList.flat },
 				{
-					label: `🎹 ${_("Hip-Hop")}`,
+					label: _("Flat"),
+					iconName: "view-list-symbolic",
+					signal: equalizerPresetSignalList.flat,
+				},
+				{
+					label: _("Hip-Hop"),
+					iconName: "media-skip-forward-symbolic",
 					signal: equalizerPresetSignalList.hipHop,
 				},
-				{ label: `🎷 ${_("Jazz")}`, signal: equalizerPresetSignalList.jazz },
 				{
-					label: `💃🏽 ${_("Latin")}`,
+					label: _("Jazz"),
+					iconName: "emblem-music-symbolic",
+					signal: equalizerPresetSignalList.jazz,
+				},
+				{
+					label: _("Latin"),
+					iconName: "starred-symbolic",
 					signal: equalizerPresetSignalList.latin,
 				},
 				{
-					label: `🍸 ${_("Lounge")}`,
+					label: _("Lounge"),
+					iconName: "preferences-system-notifications-symbolic",
 					signal: equalizerPresetSignalList.lounge,
 				},
-				{ label: `🎹 ${_("Piano")}`, signal: equalizerPresetSignalList.piano },
-				{ label: `🎸 ${_("Pop")}`, signal: equalizerPresetSignalList.pop },
-				{ label: `🎹 ${_("RnB")}`, signal: equalizerPresetSignalList.rnB },
-				{ label: `🎸 ${_("Rock")}`, signal: equalizerPresetSignalList.rock },
 				{
-					label: `🔉 ${_("Small Speaker(s)")}`,
+					label: _("Piano"),
+					iconName: "input-keyboard-symbolic",
+					signal: equalizerPresetSignalList.piano,
+				},
+				{
+					label: _("Pop"),
+					iconName: "starred-symbolic",
+					signal: equalizerPresetSignalList.pop,
+				},
+				{
+					label: _("RnB"),
+					iconName: "emblem-music-symbolic",
+					signal: equalizerPresetSignalList.rnB,
+				},
+				{
+					label: _("Rock"),
+					iconName: "media-playback-start-symbolic",
+					signal: equalizerPresetSignalList.rock,
+				},
+				{
+					label: _("Small Speaker(s)"),
+					iconName: "audio-volume-low-symbolic",
 					signal: equalizerPresetSignalList.smallSpeakers,
 				},
 				{
-					label: `👄 ${_("Spoken Word")}`,
+					label: _("Spoken Word"),
+					iconName: "audio-input-microphone-symbolic",
 					signal: equalizerPresetSignalList.spokenWord,
 				},
 				{
-					label: `🎼 ${_("Treble Booster")}`,
+					label: _("Treble Booster"),
+					iconName: "audio-volume-high-symbolic",
 					signal: equalizerPresetSignalList.trebleBooster,
 				},
 				{
-					label: `🚫 ${_("Treble Reducer")}`,
+					label: _("Treble Reducer"),
+					iconName: "audio-volume-medium-symbolic",
 					signal: equalizerPresetSignalList.trebleReducer,
 				},
 			];
@@ -149,26 +212,47 @@ export default GObject.registerClass(
 
 			// Separator
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem()); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
 			// Settings button
 			const settingsButton = new PopupMenu.PopupMenuItem(_("Settings"));
+			settingsButton.insert_child_at_index(
+				this._createMenuIcon("preferences-system-symbolic"),
+				1,
+			);
 			settingsButton.connect("activate", () => {
 				this.extension.openPreferences();
 			});
 			// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-			this.menu.addMenuItem(settingsButton); // eslint-disable-line @typescript-eslint/no-unsafe-call
+			this.menu.addMenuItem(settingsButton);
+		}
+
+		_createMenuIcon(iconName: string): St.Icon {
+			const themeContext = St.ThemeContext.get_for_stage(global.stage);
+			const iconSize = 16 * themeContext.scaleFactor;
+			const icon = new St.Icon({
+				gicon: Gio.ThemedIcon.new(iconName),
+				styleClass: "system-status-icon",
+				yExpand: false,
+			});
+			icon.set_size(iconSize, iconSize);
+			return icon;
 		}
 
 		addAllInListAsButtons(
-			List: Array<{ label: string; signal: string }>,
+			List: Array<{ label: string; iconName: string; signal: string }>,
 			Submenu: PopupMenu.PopupSubMenuMenuItem,
 		) {
 			for (const element of List) {
 				const button = new PopupMenu.PopupMenuItem(element.label);
+				// Icon
+				const icon = this._createMenuIcon(element.iconName);
+				button.insert_child_at_index(icon, 1);
+				// Signal
 				button.connect("activate", () => {
 					this.extension.signalHandler(element.signal);
 				});
+				// Add to submenu
 				Submenu.menu.addMenuItem(button);
 			}
 		}

@@ -17,8 +17,6 @@
 	"sideEffects": false,
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.10",
-		"eslint": "^10.2.0",
-		"eslint-plugin-jsdoc": "^62.9.0",
 		"typescript": "^6.0.2"
 	},
 	"dependencies": {
