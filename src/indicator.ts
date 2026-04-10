@@ -101,7 +101,7 @@ export default GObject.registerClass(
 				},
 				{
 					label: _("Acoustic"),
-					iconName: "audio-input-microphone-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.acoustic,
 				},
 				{
@@ -116,7 +116,7 @@ export default GObject.registerClass(
 				},
 				{
 					label: _("Classical"),
-					iconName: "emblem-music-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.classical,
 				},
 				{
@@ -126,62 +126,62 @@ export default GObject.registerClass(
 				},
 				{
 					label: _("Dance"),
-					iconName: "media-playback-start-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.dance,
 				},
 				{
 					label: _("Deep"),
-					iconName: "audio-volume-low-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.deep,
 				},
 				{
 					label: _("Electronic"),
-					iconName: "thunderbolt-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.electronic,
 				},
 				{
 					label: _("Flat"),
-					iconName: "view-list-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.flat,
 				},
 				{
 					label: _("Hip-Hop"),
-					iconName: "media-skip-forward-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.hipHop,
 				},
 				{
 					label: _("Jazz"),
-					iconName: "emblem-music-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.jazz,
 				},
 				{
 					label: _("Latin"),
-					iconName: "starred-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.latin,
 				},
 				{
 					label: _("Lounge"),
-					iconName: "preferences-system-notifications-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.lounge,
 				},
 				{
 					label: _("Piano"),
-					iconName: "input-keyboard-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.piano,
 				},
 				{
 					label: _("Pop"),
-					iconName: "starred-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.pop,
 				},
 				{
 					label: _("RnB"),
-					iconName: "emblem-music-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.rnB,
 				},
 				{
 					label: _("Rock"),
-					iconName: "media-playback-start-symbolic",
+					iconName: "audio-headphones-symbolic",
 					signal: equalizerPresetSignalList.rock,
 				},
 				{
