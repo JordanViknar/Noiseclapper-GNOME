@@ -4,7 +4,6 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import St from "gi://St";
 import { gettext as _ } from "resource:///org/gnome/shell/extensions/extension.js";
-import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as PanelMenu from "resource:///org/gnome/shell/ui/panelMenu.js";
 import * as PopupMenu from "resource:///org/gnome/shell/ui/popupMenu.js";
 import {
@@ -40,6 +39,8 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 		box.add_child(icon);
 		this.add_child(box);
 
+		const menu = this.menu as PopupMenu.PopupMenu;
+
 		// --- The 2 submenus ---
 		// Noise Cancelling
 		const noiseCancellingModeMenu = new PopupMenu.PopupSubMenuMenuItem(
@@ -49,8 +50,7 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 			this._createMenuIcon("audio-volume-muted-symbolic"),
 			1,
 		);
-		// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-		this.menu.addMenuItem(noiseCancellingModeMenu);
+		menu.addMenuItem(noiseCancellingModeMenu);
 
 		// Equalizer Preset
 		const equalizerPresetMenu = new PopupMenu.PopupSubMenuMenuItem(
@@ -60,8 +60,7 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 			this._createMenuIcon("audio-card-symbolic"),
 			1,
 		);
-		// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-		this.menu.addMenuItem(equalizerPresetMenu);
+		menu.addMenuItem(equalizerPresetMenu);
 
 		// The submenus' mode/preset lists
 		const noiseCancellingModeButtonList = [
@@ -210,8 +209,7 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 		this.addAllInListAsButtons(equalizerPresetButtonList, equalizerPresetMenu);
 
 		// Separator
-		// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+		menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
 		// Settings button
 		const settingsButton = new PopupMenu.PopupMenuItem(_("Settings"));
@@ -222,8 +220,7 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 		settingsButton.connect("activate", () => {
 			this.extension.openPreferences();
 		});
-		// @ts-expect-error addMenuItem no longer exists in the type definitions ?
-		this.menu.addMenuItem(settingsButton);
+		menu.addMenuItem(settingsButton);
 	}
 
 	_createMenuIcon(iconName: string): St.Icon {
@@ -254,34 +251,5 @@ export default class NoiseclapperIndicator extends PanelMenu.Button {
 			// Add to submenu
 			Submenu.menu.addMenuItem(button);
 		}
-	}
-
-	// Lots of ugly bypasses, will have to fix later.
-	applyPosition() {
-		const boxes: {
-			left: St.BoxLayout;
-			center: St.BoxLayout;
-			right: St.BoxLayout;
-		} = {
-			// @ts-expect-error Panel boxes do not exist in the type definitions.
-			left: Main.panel._leftBox as St.BoxLayout,
-			// @ts-expect-error Panel boxes do not exist in the type definitions.
-			center: Main.panel._centerBox as St.BoxLayout,
-			// @ts-expect-error Panel boxes do not exist in the type definitions.
-			right: Main.panel._rightBox as St.BoxLayout,
-		};
-		const position = this.extension.settings!.get_int("position");
-		const index = this.extension.settings!.get_int("position-number");
-
-		Main.panel._addToPanelBox(
-			this.extension.uuid,
-			this,
-			index,
-			boxes[position === 0 ? "left" : position === 1 ? "center" : "right"],
-		);
-	}
-
-	destroy() {
-		super.destroy();
 	}
 }
