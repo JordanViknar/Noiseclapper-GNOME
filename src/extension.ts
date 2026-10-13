@@ -22,8 +22,8 @@ import NoiseclapperIndicator from "./indicator.js";
 export default class NoiseclapperExtension extends Extension {
 	public settings?: Gio.Settings;
 	private bluetoothClient?: GnomeBluetooth.Client;
-	private indicator?: InstanceType<typeof NoiseclapperIndicator>;
-	private settingsHandler?: Gio.SettingsBindFlags;
+	private indicator?: NoiseclapperIndicator;
+	private settingsHandler?: number;
 
 	enable() {
 		logIfEnabled(LogType.Info, "Enabling Noiseclapper...");
