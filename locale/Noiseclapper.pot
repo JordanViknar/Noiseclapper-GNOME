@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 12:20+0200\n"
+"POT-Creation-Date: 2026-10-13 23:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,132 +17,132 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/extension.ts:100 src/common.ts:129
+#: src/extension.ts:145 src/common.ts:129
 msgid "Error"
 msgstr ""
 
-#: src/extension.ts:101
+#: src/extension.ts:146
 msgid "No connected compatible devices found."
 msgstr ""
 
-#: src/indicator.ts:44
+#: src/indicator.ts:47
 msgid "Noise Cancelling Mode"
 msgstr ""
 
-#: src/indicator.ts:55
+#: src/indicator.ts:57
 msgid "Equalizer Preset"
 msgstr ""
 
-#: src/indicator.ts:67
+#: src/indicator.ts:68
 msgid "Transport"
 msgstr ""
 
-#: src/indicator.ts:72
+#: src/indicator.ts:73
 msgid "Indoor"
 msgstr ""
 
-#: src/indicator.ts:77
+#: src/indicator.ts:78
 msgid "Outdoor"
 msgstr ""
 
-#: src/indicator.ts:82
+#: src/indicator.ts:83
 msgid "Normal / No ANC"
 msgstr ""
 
-#: src/indicator.ts:87
+#: src/indicator.ts:88
 msgid "Transparency / No NC"
 msgstr ""
 
-#: src/indicator.ts:98
+#: src/indicator.ts:99
 msgid "Soundcore Signature"
 msgstr ""
 
-#: src/indicator.ts:103
+#: src/indicator.ts:104
 msgid "Acoustic"
 msgstr ""
 
-#: src/indicator.ts:108
+#: src/indicator.ts:109
 msgid "Bass Booster"
 msgstr ""
 
-#: src/indicator.ts:113
+#: src/indicator.ts:114
 msgid "Bass Reducer"
 msgstr ""
 
-#: src/indicator.ts:118
+#: src/indicator.ts:119
 msgid "Classical"
 msgstr ""
 
-#: src/indicator.ts:123
+#: src/indicator.ts:124
 msgid "Podcast"
 msgstr ""
 
-#: src/indicator.ts:128
+#: src/indicator.ts:129
 msgid "Dance"
 msgstr ""
 
-#: src/indicator.ts:133
+#: src/indicator.ts:134
 msgid "Deep"
 msgstr ""
 
-#: src/indicator.ts:138
+#: src/indicator.ts:139
 msgid "Electronic"
 msgstr ""
 
-#: src/indicator.ts:143
+#: src/indicator.ts:144
 msgid "Flat"
 msgstr ""
 
-#: src/indicator.ts:148
+#: src/indicator.ts:149
 msgid "Hip-Hop"
 msgstr ""
 
-#: src/indicator.ts:153
+#: src/indicator.ts:154
 msgid "Jazz"
 msgstr ""
 
-#: src/indicator.ts:158
+#: src/indicator.ts:159
 msgid "Latin"
 msgstr ""
 
-#: src/indicator.ts:163
+#: src/indicator.ts:164
 msgid "Lounge"
 msgstr ""
 
-#: src/indicator.ts:168
+#: src/indicator.ts:169
 msgid "Piano"
 msgstr ""
 
-#: src/indicator.ts:173
+#: src/indicator.ts:174
 msgid "Pop"
 msgstr ""
 
-#: src/indicator.ts:178
+#: src/indicator.ts:179
 msgid "RnB"
 msgstr ""
 
-#: src/indicator.ts:183
+#: src/indicator.ts:184
 msgid "Rock"
 msgstr ""
 
-#: src/indicator.ts:188
+#: src/indicator.ts:189
 msgid "Small Speaker(s)"
 msgstr ""
 
-#: src/indicator.ts:193
+#: src/indicator.ts:194
 msgid "Spoken Word"
 msgstr ""
 
-#: src/indicator.ts:198
+#: src/indicator.ts:199
 msgid "Treble Booster"
 msgstr ""
 
-#: src/indicator.ts:203
+#: src/indicator.ts:204
 msgid "Treble Reducer"
 msgstr ""
 
 #. Settings button
-#: src/indicator.ts:218 ui/prefs.blp:8
+#: src/indicator.ts:215 ui/prefs.blp:8
 msgid "Settings"
 msgstr ""
 

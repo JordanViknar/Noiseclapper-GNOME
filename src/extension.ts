@@ -18,14 +18,20 @@ import {
 // Internal
 import NoiseclapperIndicator from "./indicator.js";
 
+// Panel side for each value of the "position" setting
+const panelBoxes = ["left", "center", "right"] as const;
+
 // ----------------------- Extension -----------------------
 export default class NoiseclapperExtension extends Extension {
 	public settings?: Gio.Settings;
 	private bluetoothClient?: GnomeBluetooth.Client;
-	private indicator?: InstanceType<typeof NoiseclapperIndicator>;
-	private settingsHandler?: Gio.SettingsBindFlags;
+	private indicator?: NoiseclapperIndicator;
+	private settingsHandler?: number;
 
 	enable() {
+		// Settings come first, as they decide the logging and the indicator position
+		this.settings = this.getSettings();
+		updateLogging(this.settings.get_boolean("logging-enabled"));
 		logIfEnabled(LogType.Info, "Enabling Noiseclapper...");
 
 		// We enable the bluetooth client
@@ -33,20 +39,14 @@ export default class NoiseclapperExtension extends Extension {
 		this.bluetoothClient = new GnomeBluetooth.Client();
 
 		// And create the indicator
-		logIfEnabled(
-			LogType.Debug,
-			"Creating and adding Noiseclapper indicator...",
-		);
-		this.indicator = new NoiseclapperIndicator(this);
-		panel.addToStatusArea(this.uuid, this.indicator);
+		this.addIndicator();
 
-		// Apply settings and position
-		this.settings = this.getSettings();
 		this.settingsHandler = this.settings.connect(
 			"changed",
-			this.applySettings.bind(this),
+			(_settings, key) => {
+				this.onSettingChanged(key);
+			},
 		);
-		this.applySettings();
 
 		logIfEnabled(LogType.Info, "Startup successful.");
 	}
@@ -58,9 +58,7 @@ export default class NoiseclapperExtension extends Extension {
 		this.bluetoothClient = undefined;
 
 		// Remove the indicator
-		logIfEnabled(LogType.Debug, "Removing Noiseclapper indicator...");
-		this.indicator?.destroy();
-		this.indicator = undefined;
+		this.removeIndicator();
 
 		// Disconnect settings change handler
 		if (this.settingsHandler !== undefined) {
@@ -69,6 +67,53 @@ export default class NoiseclapperExtension extends Extension {
 		}
 
 		this.settings = undefined;
+	}
+
+	private addIndicator() {
+		logIfEnabled(
+			LogType.Debug,
+			"Creating and adding Noiseclapper indicator...",
+		);
+
+		const position = this.settings!.get_int("position");
+		const index = this.settings!.get_int("position-number");
+
+		this.indicator = new NoiseclapperIndicator(this);
+		panel.addToStatusArea(
+			this.uuid,
+			this.indicator,
+			index,
+			panelBoxes[position] ?? "right",
+		);
+	}
+
+	private removeIndicator() {
+		logIfEnabled(LogType.Debug, "Removing Noiseclapper indicator...");
+
+		this.indicator?.destroy();
+		this.indicator = undefined;
+	}
+
+	private onSettingChanged(key: string) {
+		logIfEnabled(LogType.Debug, `Setting changed: [${key}]`);
+
+		switch (key) {
+			case "logging-enabled": {
+				updateLogging(this.settings!.get_boolean(key));
+				break;
+			}
+
+			case "position":
+			case "position-number": {
+				this.removeIndicator();
+				this.addIndicator();
+				break;
+			}
+
+			default: {
+				break;
+			}
+		}
 	}
 
 	signalHandler(signal: string) {
@@ -101,11 +146,5 @@ export default class NoiseclapperExtension extends Extension {
 				_("No connected compatible devices found."),
 			);
 		}
-	}
-
-	applySettings() {
-		logIfEnabled(LogType.Debug, "Applying settings...");
-		updateLogging(this.settings!.get_boolean("logging-enabled"));
-		this.indicator!.applyPosition();
 	}
 }
